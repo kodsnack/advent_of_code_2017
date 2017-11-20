@@ -6,5 +6,7 @@
   :license "MIT"
   :serial t
   :components ((:file "package")
-               (:file "advent-of-code")))
-
+               (:file "aoc")
+               (:file "day01")
+               (:file "tests"))
+  :depends-on (#:alexandria #:fiasco))
