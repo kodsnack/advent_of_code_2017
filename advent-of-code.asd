@@ -8,5 +8,6 @@
   :components ((:file "package")
                (:file "aoc")
                (:file "day01")
+               (:file "day02")
                (:file "tests"))
   :depends-on (#:alexandria #:fiasco))
