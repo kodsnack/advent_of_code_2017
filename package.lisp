@@ -8,6 +8,7 @@
   (:shadow #:step))
 (defpackage #:aoc.day02 (:use #:cl)
   (:import-from #:alexandria #:clamp))
-
+(defpackage #:aoc.day03 (:use #:cl)
+  (:import-from #:alexandria #:curry))
 (fiasco:define-test-package #:aoc.tests
   (:use #:aoc))

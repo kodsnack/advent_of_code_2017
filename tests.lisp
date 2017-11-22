@@ -12,3 +12,7 @@
 (deftest day02 ()
   (is (equal '(4 7 9 7 8) (aoc.day02::part1 (input-for-day 2))))
   (is (equal '(6 5 9 :A :D) (aoc.day02::part2 (input-for-day 2)))))
+
+(deftest day03 ()
+  (is (= 1032 (aoc.day03::part1 (input-for-day 3))))
+  (is (= 1838 (aoc.day03::part2 (input-for-day 3)))))
