@@ -33,10 +33,7 @@
   (map 'list #'move string))
 
 (defun input-from-string (string)
-  (with-input-from-string (stream string)
-    (loop for line = (read-line stream nil)
-          while line
-          collect (moves line))))
+  (mapcar #'moves (aoc:lines string)))
 
 (defun mover (from)
   (lambda (move)

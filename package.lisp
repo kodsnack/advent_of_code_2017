@@ -2,7 +2,7 @@
 
 (defpackage #:aoc
   (:use #:cl)
-  (:export #:input-for-day))
+  (:export #:input-for-day #:lines))
 
 (defpackage #:aoc.day01 (:use #:cl)
   (:shadow #:step))
@@ -10,5 +10,7 @@
   (:import-from #:alexandria #:clamp))
 (defpackage #:aoc.day03 (:use #:cl)
   (:import-from #:alexandria #:curry))
+(defpackage #:aoc.day04 (:use #:cl))
+
 (fiasco:define-test-package #:aoc.tests
   (:use #:aoc))

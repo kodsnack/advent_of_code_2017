@@ -16,3 +16,6 @@
 (deftest day03 ()
   (is (= 1032 (aoc.day03::part1 (input-for-day 3))))
   (is (= 1838 (aoc.day03::part2 (input-for-day 3)))))
+
+(deftest day04 ()
+  (is (= 278221 (aoc.day04::part1 (input-for-day 4)))))
