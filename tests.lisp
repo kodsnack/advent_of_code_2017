@@ -22,4 +22,5 @@
   (is (= 267 (aoc.day04::part2 (input-for-day 4)))))
 
 (deftest day05 ()
-  (is (string= "2414BC77" (aoc.day05::part1 (input-for-day 5)))))
+  (is (string= "2414BC77" (aoc.day05::part1 (input-for-day 5))))
+  (is (string= "437E60FC" (aoc.day05::part2 (input-for-day 5)))))
