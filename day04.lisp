@@ -39,3 +39,32 @@
   (loop for line in (aoc:lines input)
         when (is-real line)
           sum (id line)))
+
+(defun rotate-char (n char)
+  (let* ((a (char-code #\a))
+         (z (char-code #\z))
+         (l (1+ (- z a)))
+         (c (char-code char)))
+    (if (<= a c z)
+        (flet ((ci (c) (- c a))
+               (ic (i) (code-char (+ a i)))
+               (m (i) (mod i l)))
+          (ic (m (+ (ci c) n))))
+        char)))
+
+(defun rotate-string (n string)
+  (map 'string (alexandria:curry #'rotate-char n) string))
+
+(defun name (string)
+  (subseq string 0 (1- (position-if #'digit-char-p string))))
+
+(defun decrypt-name (string)
+  (rotate-string (id string) (name string)))
+
+(defun decrypted-name-test (name)
+  (lambda (string)
+    (string= name (decrypt-name string))))
+
+(defun part2 (input)
+  (id (find-if (decrypted-name-test "northpole-object-storage")
+               (aoc:lines input))))
