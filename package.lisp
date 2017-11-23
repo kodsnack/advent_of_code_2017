@@ -11,6 +11,7 @@
 (defpackage #:aoc.day03 (:use #:cl)
   (:import-from #:alexandria #:curry))
 (defpackage #:aoc.day04 (:use #:cl))
+(defpackage #:aoc.day05 (:use #:cl))
 
 (fiasco:define-test-package #:aoc.tests
   (:use #:aoc))

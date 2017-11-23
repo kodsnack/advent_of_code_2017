@@ -20,3 +20,6 @@
 (deftest day04 ()
   (is (= 278221 (aoc.day04::part1 (input-for-day 4))))
   (is (= 267 (aoc.day04::part2 (input-for-day 4)))))
+
+(deftest day05 ()
+  (is (string= "2414BC77" (aoc.day05::part1 (input-for-day 5)))))
