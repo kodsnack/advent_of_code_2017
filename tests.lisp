@@ -24,3 +24,7 @@
 (deftest day05 ()
   (is (string= "2414BC77" (aoc.day05::part1 (input-for-day 5))))
   (is (string= "437E60FC" (aoc.day05::part2 (input-for-day 5)))))
+
+(deftest day06 ()
+  (is (string= "tsreykjj" (aoc.day06::part1 (input-for-day 6))))
+  (is (string= "hnfbujie" (aoc.day06::part2 (input-for-day 6)))))
