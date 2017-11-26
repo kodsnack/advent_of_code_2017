@@ -20,3 +20,26 @@
 
 (defun part1 (input)
   (length (remove-if-not #'tls (aoc:lines input))))
+
+(defun overlapping-matches-as-strings (regex string)
+  (loop for i upfrom 0 below (length string)
+        for (start end) = (multiple-value-list (cl-ppcre:scan regex string :start i))
+        while start
+        when (< i start) do (setf i start)
+          collect (subseq string start end)))
+
+(defun all-aba (string)
+  (overlapping-matches-as-strings "([a-z])(?!\\1)([a-z])\\1" string))
+
+(defun bab (a b string)
+  (search (coerce (list a b a) 'string) string))
+
+(defun ssl (string)
+  (some (lambda (aba)
+          (bab (char aba 1)
+               (char aba 0)
+               (hypernet string)))
+        (all-aba (supernet string))))
+
+(defun part2 (input)
+  (length (remove-if-not #'ssl (aoc:lines input))))

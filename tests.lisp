@@ -30,4 +30,5 @@
   (is (string= "hnfbujie" (aoc.day06::part2 (input-for-day 6)))))
 
 (deftest day07 ()
-  (is (= 115 (aoc.day07::part1 (input-for-day 7)))))
+  (is (= 115 (aoc.day07::part1 (input-for-day 7))))
+  (is (= 231 (aoc.day07::part2 (input-for-day 7)))))
