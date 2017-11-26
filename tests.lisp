@@ -28,3 +28,6 @@
 (deftest day06 ()
   (is (string= "tsreykjj" (aoc.day06::part1 (input-for-day 6))))
   (is (string= "hnfbujie" (aoc.day06::part2 (input-for-day 6)))))
+
+(deftest day07 ()
+  (is (= 115 (aoc.day07::part1 (input-for-day 7)))))
