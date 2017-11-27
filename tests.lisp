@@ -32,3 +32,14 @@
 (deftest day07 ()
   (is (= 115 (aoc.day07::part1 (input-for-day 7))))
   (is (= 231 (aoc.day07::part2 (input-for-day 7)))))
+
+(deftest day08 ()
+  (is (= 116 (aoc.day08::part1 (input-for-day 8))))
+  (is (equal (aoc:lines (aoc.day08::part2 (input-for-day 8))) '(""
+"X  X XXX   XX    XX XXXX X    XXX   XX  XXXX XXXX "
+"X  X X  X X  X    X X    X    X  X X  X X       X "
+"X  X X  X X  X    X XXX  X    XXX  X    XXX    X  "
+"X  X XXX  X  X    X X    X    X  X X    X     X   "
+"X  X X    X  X X  X X    X    X  X X  X X    X    "
+" XX  X     XX   XX  X    XXXX XXX   XX  XXXX XXXX "
+))))
