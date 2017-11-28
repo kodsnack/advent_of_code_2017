@@ -43,3 +43,6 @@
 "X  X X    X  X X  X X    X    X  X X  X X    X    "
 " XX  X     XX   XX  X    XXXX XXX   XX  XXXX XXXX "
 ))))
+
+(deftest day09 ()
+  (is (= 102239 (aoc.day09::part1 (input-for-day 9)))))

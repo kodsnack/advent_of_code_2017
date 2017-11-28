@@ -15,5 +15,6 @@
                (:file "day06")
                (:file "day07")
                (:file "day08")
+               (:file "day09")
                (:file "tests"))
   :depends-on (#:alexandria #:fiasco #:ironclad #:cl-ppcre))
