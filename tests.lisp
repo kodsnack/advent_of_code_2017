@@ -45,4 +45,5 @@
 ))))
 
 (deftest day09 ()
-  (is (= 102239 (aoc.day09::part1 (input-for-day 9)))))
+  (is (= 102239 (aoc.day09::part1 (input-for-day 9))))
+  (is (= 10780403063 (aoc.day09::part2 (input-for-day 9)))))
