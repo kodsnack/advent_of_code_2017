@@ -1,6 +1,6 @@
 ;;;; day03.lisp
 
-(in-package #:aoc.day03)
+(in-package #:aoc2016.day03)
 
 (defun possible (a b c)
   (and (< a (+ b c))

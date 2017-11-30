@@ -1,6 +1,6 @@
 ;;;; day01.lisp
 
-(in-package #:aoc.day01)
+(in-package #:aoc2016.day01)
 
 (defparameter *cardinals* (alexandria:circular-list 'n 'e 's 'w))
 

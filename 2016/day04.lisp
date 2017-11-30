@@ -1,6 +1,6 @@
 ;;;; day04.lisp
 
-(in-package #:aoc.day04)
+(in-package #:aoc2016.day04)
 
 (defun checksum (string)
   (subseq string

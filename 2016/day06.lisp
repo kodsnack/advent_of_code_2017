@@ -1,6 +1,6 @@
 ;;;; day06.lisp
 
-(in-package #:aoc.day06)
+(in-package #:aoc2016.day06)
 
 (defun char-index (c)
   (- (char-code c) (char-code #\a)))

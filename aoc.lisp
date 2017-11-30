@@ -2,10 +2,10 @@
 
 (in-package #:aoc)
 
-(defun input-for-day (day)
+(defun input-for (year day)
   (let ((pathname (asdf:system-relative-pathname
                    :advent-of-code
-                   (format nil "day~2,'0d.input.txt" day))))
+                   (format nil "~4,'0d/day~2,'0d.input.txt" year day))))
     (alexandria:read-file-into-string pathname)))
 
 (defun lines (string)

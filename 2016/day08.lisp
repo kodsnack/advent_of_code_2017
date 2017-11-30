@@ -1,6 +1,6 @@
 ;;;; day08.lisp
 
-(in-package #:aoc.day08)
+(in-package #:aoc2016.day08)
 
 (defun parse (string)
   (cl-ppcre:register-groups-bind (command a b)

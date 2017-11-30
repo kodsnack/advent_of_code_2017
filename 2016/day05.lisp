@@ -1,6 +1,6 @@
 ;;;; day05.lisp
 
-(in-package #:aoc.day05)
+(in-package #:aoc2016.day05)
 
 (defun octets (string)
   (map '(simple-array (unsigned-byte 8) (*))

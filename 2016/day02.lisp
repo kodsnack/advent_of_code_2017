@@ -1,6 +1,6 @@
 ;;;; day02.lisp
 
-(in-package #:aoc.day02)
+(in-package #:aoc2016.day02)
 
 (defparameter *keypad*
   (make-array '(3 3) :initial-contents '((1 2 3)

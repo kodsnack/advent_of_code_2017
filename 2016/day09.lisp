@@ -1,6 +1,6 @@
 ;;;; day09.lisp
 
-(in-package #:aoc.day09)
+(in-package #:aoc2016.day09)
 
 (defparameter *version* 1)
 

@@ -1,6 +1,6 @@
 ;;;; day10.lisp
 
-(in-package #:aoc.day10)
+(in-package #:aoc2016.day10)
 
 (defclass node ()
   ((num :initarg :num :reader num)))

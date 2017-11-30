@@ -1,6 +1,6 @@
 ;;;; day07.lisp
 
-(in-package #:aoc.day07)
+(in-package #:aoc2016.day07)
 
 (defparameter *hypernet*
   (cl-ppcre:create-scanner "\\[([^][]*)\\]"))
