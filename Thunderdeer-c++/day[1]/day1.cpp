@@ -25,8 +25,26 @@ int day1()
 	return sum;
 }
 
+int day1part2()
+{
+	auto max = input.size();
+	int mid = 0;
+	int sum = 0;
+
+	for(int min=0;min<max;min++)
+	{
+		mid=(min+max/2)%max;
+
+		if(input[min]==input[mid])
+		{
+			sum+=input[min]-'0';
+		}
+	}
+	return sum;
+}
+
 int main()
 {
-	std::cout << day1();
+	std::cout << day1() << std::endl << day1part2();
 	return 0;
 }
