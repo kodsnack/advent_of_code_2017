@@ -13,6 +13,17 @@ const result = input
       return sum + digit;
     }
     return sum;
-  });
+  }, 0);
 
-console.log(result);
+const result2 = input
+  .split("")
+  .map(digit => parseInt(digit))
+  .reduce((sum, digit, i, array) => {
+    const halfway = array.length / 2;
+    if (i < halfway && digit === array[i + halfway]) {
+      return sum + 2 * digit;
+    }
+    return sum;
+  }, 0);
+
+console.log(result, result2);
