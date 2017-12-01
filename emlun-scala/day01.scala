@@ -2,7 +2,7 @@ object Main extends App {
   val digits: List[Int] = (for {
     line <- io.Source.stdin.getLines
     digit <- line.trim
-  } yield (digit.toString).toInt).toList
+  } yield digit.toString.toInt).toList
 
   def solve(lookahead: Int): Int = {
     val (front, back) = digits.splitAt(lookahead)
