@@ -7,6 +7,9 @@ all: $(SRC)
 clean:
 	rm *.emojib
 
+test: all
+	bats *.bats
+
 # %.emojic: %.emojic
 
 
