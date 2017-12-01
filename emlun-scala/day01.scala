@@ -5,12 +5,16 @@ object Main extends App {
     digit <- line.trim
   } yield ("" + digit).toInt).toList
 
-  val s = (digits :+ digits.head).sliding(2).foldLeft(0) { (sum, nextPair) =>
-    nextPair match {
-      case List(a, b) if a == b => sum + a
-      case _ => sum
-    }
-  }
+  def solve(lookahead: Int): Int =
+    (0 until (digits.length)).foldLeft(0) { (sum, i) =>
+      val j = (i + lookahead) % digits.length
 
-  println(s)
+      if (digits(i) == digits(j))
+        sum + digits(i)
+      else
+        sum
+    }
+
+  println(s"A: ${solve(1)}")
+  println(s"B: ${solve(digits.length / 2)}")
 }
