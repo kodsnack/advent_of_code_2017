@@ -10,3 +10,6 @@
 [submodule "martin-pettersson-c++"]
 	path = martin-pettersson-c++
 	url = https://github.com/martin-pettersson/advent_of_code_2017.git
+[submodule "k0nserv-rust"]
+	path = k0nserv-rust
+	url = https://github.com/k0nserv/advent-of-code-2017.git
