@@ -4,3 +4,6 @@
 [submodule "albert-arvidsson-elixir"]
 	path = albert-arvidsson-elixir
 	url = git@github.com:scmx/advent-of-code-2017-elixir
+[submodule "meck-haskell"]
+	path = meck-haskell
+	url = https://github.com/meck/AoC2017.git
