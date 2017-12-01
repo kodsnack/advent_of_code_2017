@@ -11,7 +11,7 @@ Solution in Python 2.7
 - or `python day*.py` and paste input data to command line
 
 ## Input data
-Using [curl](curl.haxx.se)
+Using [curl](https://curl.haxx.se)
 - Copy session cookie string from browser and save in a file
   `echo paste | cookie`
 - Save input data
