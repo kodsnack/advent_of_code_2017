@@ -1,14 +1,18 @@
-# Advent-of-code-2016
-Solution in Python.
+# Advent of Code 2017
+Solution in Python 2.7
 
 ## Code
 - `day*.py` code for the day
 - `day*.in` input data for the day
 
 ## How to
-- Run with `cat day*.in | python day*.py` or `python day*.py` and paste input data to command line
+- run with `python day*.py < day*.in`
+- or `cat day*.in | python day*.py`
+- or `python day*.py` and paste input data to command line
 
 ## Input data
-Using curl
-- Copy session cookie string from browser and save in a file `echo paste | cookie`
-- Save input data `curl -s -f -b session=$(cat cookie) 'http://adventofcode.com/2017/day/*/input' > day*.in`
+Using [curl](curl.haxx.se)
+- Copy session cookie string from browser and save in a file
+  `echo paste | cookie`
+- Save input data
+  `curl -s -f -b session=$(cat cookie) 'http://adventofcode.com/2017/day/*/input' > day*.in`
