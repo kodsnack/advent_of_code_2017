@@ -1,3 +1,6 @@
 [submodule "tlycken-fsharp"]
 	path = tlycken-fsharp
 	url = https://github.com/tlycken/advent-of-code-2017.git
+[submodule "albert-arvidsson-elixir"]
+	path = albert-arvidsson-elixir
+	url = git@github.com:scmx/advent-of-code-2017-elixir
