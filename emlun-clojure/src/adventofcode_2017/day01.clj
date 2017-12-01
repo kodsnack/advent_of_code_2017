@@ -1,7 +1,6 @@
 (ns adventofcode-2017.day01
   (:gen-class)
   (:require [clojure.string])
-  (:require [adventofcode-2017.util :refer (abs first-recurrence)])
 )
 
 (defn rotate [lookahead xs]
