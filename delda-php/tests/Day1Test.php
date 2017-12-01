@@ -34,6 +34,42 @@ class Day1Test extends TestCase
     public function testFirstPartSolution()
     {
         $aoc = new Day1(file_get_contents(__DIR__.'/../src/Resources/Day1Input'));
-        $this->assertEquals(0, $aoc->firstPart());
+        $this->assertEquals(1097, $aoc->firstPart());
+    }
+
+    public function testSecondPartAllDigitsMatch()
+    {
+        $aoc = new Day1('1212');
+        $this->assertEquals(6, $aoc->secondPart());
+    }
+
+    public function testSecondPartNoDigitsMatch()
+    {
+        $aoc = new Day1('1221');
+        $this->assertEquals(0, $aoc->secondPart());
+    }
+
+    public function testSecondPartOnly2dMatches()
+    {
+        $aoc = new Day1('123425');
+        $this->assertEquals(4, $aoc->secondPart());
+    }
+
+    public function testSecondPartAllDigitsMatchExtended()
+    {
+        $aoc = new Day1('123123');
+        $this->assertEquals(12, $aoc->secondPart());
+    }
+
+    public function testSecondPartLastExample()
+    {
+        $aoc = new Day1('12131415');
+        $this->assertEquals(4, $aoc->secondPart());
+    }
+
+    public function testSecondPartSolution()
+    {
+        $aoc = new Day1(file_get_contents(__DIR__.'/../src/Resources/Day1Input'));
+        $this->assertEquals(0, $aoc->secondPart());
     }
 }
