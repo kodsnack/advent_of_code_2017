@@ -1,3 +1,15 @@
 [submodule "tlycken-fsharp"]
 	path = tlycken-fsharp
 	url = https://github.com/tlycken/advent-of-code-2017.git
+[submodule "albert-arvidsson-elixir"]
+	path = albert-arvidsson-elixir
+	url = git@github.com:scmx/advent-of-code-2017-elixir
+[submodule "meck-haskell"]
+	path = meck-haskell
+	url = https://github.com/meck/AoC2017.git
+[submodule "martin-pettersson-c++"]
+	path = martin-pettersson-c++
+	url = https://github.com/martin-pettersson/advent_of_code_2017.git
+[submodule "k0nserv-rust"]
+	path = k0nserv-rust
+	url = https://github.com/k0nserv/advent-of-code-2017.git
