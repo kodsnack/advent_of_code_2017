@@ -1,0 +1,3 @@
+[submodule "tlycken-fsharp"]
+	path = tlycken-fsharp
+	url = https://github.com/tlycken/advent-of-code-2017.git
