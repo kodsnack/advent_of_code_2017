@@ -4,7 +4,7 @@ solve :: Int -> [Int] -> Int
 solve lookahead digits = sum matches
   where
     matches :: [Int]
-    matches = map fst . filter (\(a, b) -> a == b) $ zip digits rotated
+    matches = fst . unzip . filter (uncurry (==)) $ zip digits rotated
 
     rotated :: [Int]
     rotated = uncurry (flip (++)) $ splitAt lookahead digits
