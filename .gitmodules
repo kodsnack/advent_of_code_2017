@@ -7,3 +7,6 @@
 [submodule "meck-haskell"]
 	path = meck-haskell
 	url = https://github.com/meck/AoC2017.git
+[submodule "martin-pettersson-c++"]
+	path = martin-pettersson-c++
+	url = https://github.com/martin-pettersson/advent_of_code_2017.git
