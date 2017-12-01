@@ -8,7 +8,6 @@ Solution in Python 2.7
 ## How to
 - run with `python day*.py < day*.in`
 - or `cat day*.in | python day*.py`
-- or `python day*.py` and paste input data to command line
 
 ## Input data
 Using [curl](https://curl.haxx.se)
