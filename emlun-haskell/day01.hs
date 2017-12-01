@@ -1,14 +1,13 @@
-import qualified Util
 import qualified Data.Char
 
 solve :: Int -> [Int] -> Int
 solve lookahead digits = sum matches
   where
     matches :: [Int]
-    matches = map fst . filter sameDigitAsLookahead . Util.zipWithIndex $ digits
+    matches = map fst . filter (\(a, b) -> a == b) $ zip digits rotated
 
-    sameDigitAsLookahead :: (Int, Int) -> Bool
-    sameDigitAsLookahead (digit, index) = (Just digit) == (Util.get digits $ mod (index + lookahead) (length digits))
+    rotated :: [Int]
+    rotated = uncurry (flip (++)) $ splitAt lookahead digits
 
 main = do
   contents <- getContents

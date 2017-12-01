@@ -4,11 +4,13 @@ object Main extends App {
     digit <- line.trim
   } yield ("" + digit).toInt).toList
 
-  def solve(lookahead: Int): Int = (for {
-    i <- 0 until digits.length
-    j = (i + lookahead) % digits.length
-    if digits(i) == digits(j)
-  } yield digits(i)).sum
+  def solve(lookahead: Int): Int = {
+    val (front, back) = digits.splitAt(lookahead)
+    digits.zip(back ++ front).flatMap({
+      case (a, b) if a == b => Some(a)
+      case _ => None
+    }).sum
+  }
 
   println(s"A: ${solve(1)}")
   println(s"B: ${solve(digits.length / 2)}")
