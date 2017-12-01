@@ -1,0 +1,24 @@
+(defn wrapped-nth [xs i]
+  @(Array.nth xs (Int.mod i (Array.count xs))))
+
+(defn match-value [xs i]
+  (let [a (wrapped-nth xs i)
+        b (wrapped-nth xs (Int.inc i))]
+    (if (= a b) a 0)))
+
+(defn pos-ref? [x]
+  (Int.< -1 @x))
+
+(defn parse [s]
+  (let [cs (String.chars s)]
+    (Array.filter pos-ref? (Array.copy-map Char.meaning &cs))))
+
+(defn main []
+  (let [input (IO.read-file "day1.txt")
+        ints (parse &input)]
+    (let [sum 0
+          len (Array.count &ints)]
+      (do
+        (for [i 0 len]
+          (set! &sum (Int.+ sum (match-value &ints i))))
+        (IO.println (refstr sum))))))
