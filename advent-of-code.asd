@@ -7,17 +7,8 @@
   :serial t
   :components ((:file "package")
                (:file "aoc")
-               (:module "2016"
+               (:module "2017"
                 :components
                 ((:file "day01")
-                 (:file "day02")
-                 (:file "day03")
-                 (:file "day04")
-                 (:file "day05")
-                 (:file "day06")
-                 (:file "day07")
-                 (:file "day08")
-                 (:file "day09")
-                 (:file "day10")
                  (:file "tests"))))
-  :depends-on (#:alexandria #:fiasco #:ironclad #:cl-ppcre))
+  :depends-on (#:alexandria #:fiasco))
