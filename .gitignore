@@ -3,3 +3,6 @@
 ################################################################################
 
 /tor_selden-csharp/tor_selden-csharp/bin/Debug
+/.vs
+/tor_selden-csharp/tor_selden-csharp/obj
+/tor_selden-csharp/.vs
