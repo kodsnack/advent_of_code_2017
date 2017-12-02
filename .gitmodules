@@ -25,3 +25,6 @@
 [submodule "knyl-elixir"]
 	path = knyl-elixir
 	url = https://github.com/knyl/aoc2017.git
+[submodule "timofurrer-python3"]
+	path = timofurrer-python3
+	url = https://github.com/timofurrer/advent-of-code
