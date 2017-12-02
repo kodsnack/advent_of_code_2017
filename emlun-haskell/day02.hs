@@ -1,5 +1,5 @@
-import qualified Data.List
-import qualified Data.Maybe
+import Data.List (find)
+import Data.Maybe (fromJust)
 
 solve :: String -> ([Int] -> Int) -> Int
 solve stdin metric = sum . map metric . rows $ stdin
@@ -11,7 +11,7 @@ spread :: [Int] -> Int
 spread nums = (foldl1 max nums) - (foldl1 min nums)
 
 quotient :: [Int] -> Int
-quotient = uncurry div . Data.Maybe.fromJust . Data.List.find ((== 0) . uncurry mod) . pairs
+quotient = uncurry div . fromJust . find ((== 0) . uncurry mod) . pairs
 
 pairs :: [a] -> [(a, a)]
 pairs [] = []
