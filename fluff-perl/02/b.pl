@@ -2,7 +2,6 @@
 
 use strict;
 use warnings;
-use Data::Dumper;
 
 my $sum = 0;
 while(my $r = <STDIN>) {
@@ -11,7 +10,8 @@ while(my $r = <STDIN>) {
     for(my $i = 0; $i <= $#n; $i++) {
 	for(my $j = 0; $j <= $#n; $j++) {
 	    next if($i == $j);
-	    $sum += $n[$i]/$n[$j] if($n[$i]/$n[$j] == int($n[$i]/$n[$j]));		
+	    my $div = $n[$i]/$n[$j];
+	    $sum += $div if($div == int($div));		
 	}
     }
 }
