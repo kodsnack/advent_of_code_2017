@@ -34,3 +34,6 @@
 [submodule "maddox-python"]
 	path = maddox-python
 	url = git@github.com:AmandaNilsson/Advent-of-code-17.git
+[submodule "olssonm-php"]
+	path = olssonm-php
+	url = git@github.com:olssonm/advent-of-code.git
