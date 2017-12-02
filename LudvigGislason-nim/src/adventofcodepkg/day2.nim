@@ -1,4 +1,5 @@
 import strutils
+import options
 from os import getAppDir
 from utils import getInputForProblem, charToInt, addMod
 from sequtils import foldl, mapIt
@@ -16,22 +17,41 @@ proc updateMinMax[T](a: MinMax, b: T): MinMax =
   else:
     a
 
-
 proc distance(x: MinMax): int =
   x.max - x.min
 
+proc minMax[T](a: T, b: T): MinMax =
+  if b < a.min:
+    (min: b, max: a)
+  else:
+    (min: a, max: b)
+
+template `modMaxByMin`[T](a: T, b: T): T =
+  if a > b:
+    a mod b
+  else:
+    b mod a
+
+proc divideMaxByMin(a: int, b: int): int =
+  if a > b:
+    int(a / b)
+  else:
+    int(b / a)
+
+proc findFirstEvenDivisiblePair[T](xs: seq[T]): Option[tuple[a: T, b: T]] =
+  for i in 0..len(xs)-1:
+    for j in i+1..len(xs)-1:
+      if modMaxByMin(xs[i], xs[j]) == 0:
+        return some((xs[i], xs[j]))
 
 proc problem3*: int =
   let inputRows = getInputForProblem(2)
   var sum = 0
   for row in inputRows:
     let xs = mapIt(row.split(), parseInt(it))
-    if len(xs) == 0:
-      continue
-    let init = (min: xs[0], max: xs[0])
-    let rest = xs[1 .. len(xs)-1]
-    let res = foldl(rest, updateMinMax(a, b), init)
-    sum += distance(res)
+    if (len(xs) > 0):
+      let res = foldl(xs[1 .. len(xs)-1], updateMinMax(a, b), (min: xs[0], max: xs[0]))
+      sum += distance(res)
   sum
 
 proc problem4*: int =
@@ -39,22 +59,9 @@ proc problem4*: int =
   var sum = 0
   for row in inputRows:
     let xs = mapIt(row.split(), parseInt(it))
-    if len(xs) == 0:
-      continue
-    var
-      i = 0
-      found = false
-    while (not found and i < len(xs)):
-      var j = i + 1
-      while (j < len(xs)):
-        let a = xs[i]
-        let b = xs[j]
-        let minMax = if a < b: (min: a, max: b) else: (min: b, max: a)
-        let modRes = minMax.max mod minMax.min
-        if modRes == 0:
-          sum += int(minMax.max / minMax.min)
-          found = true
-          break
-        inc j
-      inc i
+    if (len(xs) > 0):
+      let res = findFirstEvenDivisiblePair(xs)
+      if res.isSome():
+        let p = res.get()
+        sum += divideMaxByMin(p.a, p.b)
   sum
