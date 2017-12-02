@@ -16,3 +16,6 @@
 [submodule "cruzzan-golang"]
 	path = cruzzan-golang
 	url = git@github.com:cruzzan/AdventOfCode2017.git
+[submodule "simon-nystrom-python"]
+	path = simon-nystrom-python
+	url = git@github.com:simon-nystrom/adventofcode-2017.git
