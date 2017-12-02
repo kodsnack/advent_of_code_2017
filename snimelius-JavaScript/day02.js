@@ -29,9 +29,7 @@ const solvePuzzleTwo = () => {
     let sum = 0;
     lines.map( line => {
 		line.map((val, index, array) => {
-			array
-				.filter( i => i !== val)
-				.map(v => { if ( val % v === 0 ) sum += (val/v); });
+			array.filter( i => i !== val).map(v => { if ( val % v === 0 ) sum += (val/v); });
 		})
     });
     return sum;
