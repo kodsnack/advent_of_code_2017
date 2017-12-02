@@ -6,8 +6,16 @@
         
         static void Main(string[] args)
         {
-            Day1.A();
-            Day1.B();
+            //Day1.A();
+            //Day1.B();
+            //Day2.A();
+            //Day2.B();
+            //Day3.A();
+            //Day3.B();
+            //Day4.A();
+            //Day4.B();
+            Day5.A();
+            Day5.B();
         }
 
 
