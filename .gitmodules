@@ -22,3 +22,6 @@
 [submodule "bowald-python2.7"]
 	path = bowald-python2.7
 	url = git@github.com:bowald/advent-of-code-2017.git
+[submodule "knyl-elixir"]
+	path = knyl-elixir
+	url = https://github.com/knyl/aoc2017.git
