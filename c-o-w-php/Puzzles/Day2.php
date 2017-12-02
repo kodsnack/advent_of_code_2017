@@ -24,7 +24,6 @@ class Day2
         $matrixChecksums = [];
 
         foreach ($matrix as $row) {
-            $rowMaxKey = \max(array_keys($row));
             $rowTestedKeys = [];
 
             foreach ($row as $key => $value) {
