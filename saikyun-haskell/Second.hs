@@ -1,14 +1,5 @@
-split :: Char -> String -> [String]
-split c ""     = []
-split c (s:ss) | c == s    = [] : split c ss
-               | otherwise = [s : first] ++ rest
-                 where
-                   all = split c ss
-                   first = if (length all) > 0 then head all else []
-                   rest  = if (length all) > 1 then tail all else []
-
 toTable :: String -> [[Int]]
-toTable s = map ((map read) . (split '\t')) $ split '\n' s
+toTable s = map ((map read) . words) $ lines s
 
 checkSum :: String -> Int
 checkSum s = sum $ map diffMinmax $ toTable s
