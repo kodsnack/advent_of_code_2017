@@ -15,8 +15,23 @@ const input = `1364	461	1438	1456	818	999	105	1065	314	99	1353	148	837	590	404	1
 378	171	155	1100	184	937	792	1436	1734	179	1611	1349	647	1778	1723	1709
 4463	4757	201	186	3812	2413	2085	4685	5294	5755	2898	200	5536	5226	1028	180`;
 
-const result = input
+const parsedInput = input
   .split("\n")
-  .map(row => row.split("\t").map(number => parseInt(number)))
-  .reduce((sum, row) => sum + Math.max(...row) - Math.min(...row), 0);
-console.log(result);
+  .map(row => row.split("\t").map(number => parseInt(number)));
+
+const result = parsedInput.reduce(
+  (sum, row) => sum + Math.max(...row) - Math.min(...row),
+  0
+);
+
+const result2 = parsedInput.reduce((sum, row) => {
+  for (let i = 0; i < row.length; i += 1) {
+    for (let j = i + 1; j < row.length; j += 1) {
+      if (Math.max(row[i], row[j]) % Math.min(row[i], row[j]) === 0) {
+        return sum + Math.max(row[i], row[j]) / Math.min(row[i], row[j]);
+      }
+    }
+  }
+}, 0);
+
+console.log(result, result2);
