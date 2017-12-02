@@ -13,3 +13,6 @@
 [submodule "k0nserv-rust"]
 	path = k0nserv-rust
 	url = https://github.com/k0nserv/advent-of-code-2017.git
+[submodule "cruzzan-golang"]
+	path = cruzzan-golang
+	url = git@github.com:cruzzan/AdventOfCode2017.git
