@@ -56,6 +56,6 @@ proc problem4*: int =
     if (len(xs) > 0):
       let res = findFirstEvenDivisiblePair(xs)
       if res.isSome():
-        let p = res.get()
-        sum += divideMaxByMin(p.a, p.b)
+        let (a, b) = res.get()
+        sum += divideMaxByMin(a, b)
   sum
