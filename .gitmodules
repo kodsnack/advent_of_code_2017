@@ -13,3 +13,6 @@
 [submodule "k0nserv-rust"]
 	path = k0nserv-rust
 	url = https://github.com/k0nserv/advent-of-code-2017.git
+[submodule "masssssy-python"]
+	path = masssssy-python
+	url = git@github.com:Masssssy/adventofcode2017.git
