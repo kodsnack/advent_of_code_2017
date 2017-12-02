@@ -28,3 +28,6 @@
 [submodule "timofurrer-python3"]
 	path = timofurrer-python3
 	url = https://github.com/timofurrer/advent-of-code
+[submodule "masssssy-python"]
+	path = masssssy-python
+	url = https://github.com/Masssssy/adventofcode2017.git
