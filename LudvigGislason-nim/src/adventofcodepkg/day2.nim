@@ -47,7 +47,6 @@ proc problem4*: int =
     while (not found and i < len(xs)):
       var j = i + 1
       while (j < len(xs)):
-        found = false
         let a = xs[i]
         let b = xs[j]
         let minMax = if a < b: (min: a, max: b) else: (min: b, max: a)
