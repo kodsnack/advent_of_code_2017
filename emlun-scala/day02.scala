@@ -6,7 +6,21 @@ object Main extends App {
       number <- line.trim.split("\t")
     } yield number.toInt).toList
 
-    numbers.max - numbers.min
+    val quotients = (for {
+      as: List[Int] <- numbers.tails
+      if as.length >= 2
+      bs: List[Int] = as.tail
+      a = as.head
+      b <- bs
+      if a % b == 0 || b % a == 0
+    } yield {
+      if (a > b)
+        a / b
+      else
+        b / a
+    }).toList
+
+    quotients.head
   }).toList.sum
 
   println(diffs)
