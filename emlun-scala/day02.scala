@@ -1,28 +1,25 @@
 object Main extends App {
-  val diffs = (for {
+  val lineChecksums = for {
     line <- io.Source.stdin.getLines
   } yield {
-    val numbers = (for {
-      number <- line.trim.split("\t")
-    } yield number.toInt).toList
+    val numbers = line
+      .trim
+      .split(raw"\s+")
+      .map(_.toInt)
+      .toList
 
-    val quotients = (for {
+    val quotients = for {
       as: List[Int] <- numbers.tails
       if as.length >= 2
-      bs: List[Int] = as.tail
       a = as.head
-      b <- bs
+      b <- as.tail
       if a % b == 0 || b % a == 0
-    } yield {
-      if (a > b)
-        a / b
-      else
-        b / a
-    }).toList
+    } yield Math.max(a / b, b / a)
 
-    quotients.head
-  }).toList.sum
+    (numbers.max - numbers.min, quotients.toSeq.head)
+  }
 
-  println(diffs)
-
+  val (a, b) = lineChecksums.toSeq.unzip
+  println(s"A: ${a.sum}")
+  println(s"B: ${b.sum}")
 }
