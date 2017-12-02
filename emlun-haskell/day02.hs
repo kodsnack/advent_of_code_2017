@@ -1,5 +1,6 @@
 import Data.List (find)
 import Data.Maybe (fromJust)
+import Util (pairs)
 
 solve :: String -> ([Int] -> Int) -> Int
 solve stdin metric = sum . map metric . rows $ stdin
@@ -12,14 +13,6 @@ spread nums = (foldl1 max nums) - (foldl1 min nums)
 
 quotient :: [Int] -> Int
 quotient = uncurry div . fromJust . find ((== 0) . uncurry mod) . pairs
-
-pairs :: [a] -> [(a, a)]
-pairs [] = []
-pairs [a] = []
-pairs (a : bs) = (pairWithEach bs a) ++ (pairs bs)
-  where
-    pairWithEach :: [a] -> a -> [(a, a)]
-    pairWithEach bs a = concatMap (\b -> [(a, b), (b, a)]) bs
 
 main = do
   contents <- getContents
