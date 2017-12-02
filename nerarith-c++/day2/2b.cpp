@@ -12,16 +12,6 @@ using namespace std;
 #define PRINTSP(x)
 #endif
 
-template<class T> void amax(T & a, const T & b) { a = max(a,b); }
-template<class T> void amin(T & a, const T & b) { a = min(a,b); }
-
-template<class T> T getinword () {
-    T temp;
-    cin >> temp;
-    return temp;
-}
-
-
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
