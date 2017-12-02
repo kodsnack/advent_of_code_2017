@@ -5,10 +5,16 @@ const val BYTE_SUBTRACTION: Byte = 48
 
 fun main(args: Array<String>)
 {
-	val result: Int = INPUT.toCharArray().asSequence()
+	println(processDigits(1))
+	println(processDigits(INPUT.length/2))
+}
+
+fun processDigits(steps: Int): Int
+{
+	return INPUT.toCharArray().asSequence()
 			.map { it.literalByteValue() }
 			.mapIndexed { index, c ->
-				val nextIndex: Int = (index + 1) % INPUT.length
+				val nextIndex: Int = (index + steps) % INPUT.length
 				val nextDigit: Byte = INPUT[nextIndex].literalByteValue()
 				when(c == nextDigit)
 				{
@@ -17,8 +23,6 @@ fun main(args: Array<String>)
 				}
 			}
 			.sum()
-
-	println(result)
 }
 
 fun Char.literalByteValue(): Byte = (this.toByte() - BYTE_SUBTRACTION).toByte()
