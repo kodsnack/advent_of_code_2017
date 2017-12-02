@@ -16,8 +16,9 @@ CL-USER> (fiasco:all-tests)
 ALL-TESTS (Suite)
   AOC2017.TESTS (Suite)
     DAY01                                                                 [ OK ]
+    DAY02                                                                 [ OK ]
 
 T
-(#<test-run of ALL-TESTS: 2 tests, 0 assertions, 0 failures in 0.0 sec>)
+(#<test-run of ALL-TESTS: 4 tests, 4 assertions, 0 failures in 0.0 sec>)
 CL-USER>
 ```
