@@ -19,6 +19,7 @@ class Day02 {
     
     static function main() {
         day02();
+        day02plus();
     }
     
     static function day02(){
@@ -39,6 +40,28 @@ class Day02 {
         }
 	
 		trace('Day 2: $sum');
+
+    }
+        
+    static function day02plus(){
+		var rows = data.split('\n');
+		var sum = 0;
+        var index = 0;
+		for (row in rows) {
+            var cells = row.split('\t');
+        	for (i in 0 ... cells.length) {
+                var a = Std.parseInt(cells[i]);
+        		for (j in i + 1 ... cells.length){
+                    var b = Std.parseInt(cells[j]);
+        			var mod = a > b ? a % b : b % a;
+        			if (mod != 0) continue;
+        			sum += Std.int(a > b ? a / b : b / a);
+                }
+            }
+    		index++;
+        }
+	
+		trace('Day 2 plus: $sum');
 
     }
     
