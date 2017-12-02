@@ -19,3 +19,6 @@
 [submodule "simon-nystrom-python"]
 	path = simon-nystrom-python
 	url = git@github.com:simon-nystrom/adventofcode-2017.git
+[submodule "bowald-python2.7"]
+	path = bowald-python2.7
+	url = git@github.com:bowald/advent-of-code-2017.git
