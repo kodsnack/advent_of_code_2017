@@ -4,3 +4,33 @@
 [submodule "albert-arvidsson-elixir"]
 	path = albert-arvidsson-elixir
 	url = git@github.com:scmx/advent-of-code-2017-elixir
+[submodule "meck-haskell"]
+	path = meck-haskell
+	url = https://github.com/meck/AoC2017.git
+[submodule "martin-pettersson-c++"]
+	path = martin-pettersson-c++
+	url = https://github.com/martin-pettersson/advent_of_code_2017.git
+[submodule "k0nserv-rust"]
+	path = k0nserv-rust
+	url = https://github.com/k0nserv/advent-of-code-2017.git
+[submodule "cruzzan-golang"]
+	path = cruzzan-golang
+	url = git@github.com:cruzzan/AdventOfCode2017.git
+[submodule "simon-nystrom-python"]
+	path = simon-nystrom-python
+	url = git@github.com:simon-nystrom/adventofcode-2017.git
+[submodule "bowald-python2.7"]
+	path = bowald-python2.7
+	url = git@github.com:bowald/advent-of-code-2017.git
+[submodule "knyl-elixir"]
+	path = knyl-elixir
+	url = https://github.com/knyl/aoc2017.git
+[submodule "timofurrer-python3"]
+	path = timofurrer-python3
+	url = https://github.com/timofurrer/advent-of-code
+[submodule "masssssy-python"]
+	path = masssssy-python
+	url = https://github.com/Masssssy/adventofcode2017.git
+[submodule "maddox-python"]
+	path = maddox-python
+	url = git@github.com:AmandaNilsson/Advent-of-code-17.git
