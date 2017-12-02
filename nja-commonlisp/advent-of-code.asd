@@ -10,5 +10,6 @@
                (:module "2017"
                 :components
                 ((:file "day01")
+                 (:file "day02")
                  (:file "tests"))))
-  :depends-on (#:alexandria #:fiasco))
+  :depends-on (#:alexandria #:fiasco #:cl-ppcre))
