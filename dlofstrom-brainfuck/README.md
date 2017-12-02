@@ -1,5 +1,5 @@
 # Advent of Code 2017
-Solution to day 1 part 1 in Brainfuck.
+Solutions in Brainfuck.
 
 Using python to keep track of variables and registers, python pseudo functions with algorithms from [esolang](https://esolangs.org/wiki/Brainfuck_algorithms).
 
