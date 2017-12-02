@@ -31,3 +31,6 @@
 [submodule "masssssy-python"]
 	path = masssssy-python
 	url = https://github.com/Masssssy/adventofcode2017.git
+[submodule "maddox-python"]
+	path = maddox-python
+	url = git@github.com:AmandaNilsson/Advent-of-code-17.git
