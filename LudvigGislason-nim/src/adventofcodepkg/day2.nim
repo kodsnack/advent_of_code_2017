@@ -17,14 +17,8 @@ proc updateMinMax[T](a: MinMax, b: T): MinMax =
   else:
     a
 
-proc distance(x: MinMax): int =
+template `distance`(x: MinMax): int =
   x.max - x.min
-
-proc minMax[T](a: T, b: T): MinMax =
-  if b < a.min:
-    (min: b, max: a)
-  else:
-    (min: a, max: b)
 
 template `modMaxByMin`[T](a: T, b: T): T =
   if a > b:
@@ -32,7 +26,7 @@ template `modMaxByMin`[T](a: T, b: T): T =
   else:
     b mod a
 
-proc divideMaxByMin(a: int, b: int): int =
+template `divideMaxByMin`(a: int, b: int): int =
   if a > b:
     int(a / b)
   else:
