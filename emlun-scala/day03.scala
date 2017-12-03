@@ -3,14 +3,12 @@ object Main extends App {
 
   def btmRight(level: Int): Int = 1 + 4 * (level * (level + 1))
 
-  def dist(i: Int) = {
-    val level = ((Stream from 0)
-      .find { (l: Int) =>
-        i <= btmRight(l)
-      }
-      .get
-    )
+  /** Solve `i <= btmRight(l)` for `l` using the quadratic roots formula */
+  def findLevel(i: Int): Int =
+    Math.ceil(-0.5 + Math.sqrt(0.25 + 0.25 * (i - 1))).toInt
 
+  def dist(i: Int) = {
+    val level = findLevel(i)
     val indexInCircle = i - btmRight(Math.max(0, level - 1)) - level
     val modulus = Math.max(1, 2 * level)
 
