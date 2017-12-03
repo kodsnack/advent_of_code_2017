@@ -1,0 +1,41 @@
+name:                aoc
+version:             0.1.0.0
+synopsis:            Short description of your package
+homepage:            https://github.com/aelg/aoc#readme
+license:             BSD3
+license-file:        LICENSE
+author:              Linus Mellberg
+maintainer:          linus.mellberg@gmail.com
+copyright:           2017 Linus Mellberg
+category:            Web
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+-- To avoid duplicated efforts in documentation and dealing with the
+-- complications of embedding Haddock markup inside cabal files, it is
+-- common to point users to the README.md file.
+description:         Please see the README on Github at <https://github.com/aelg/aoc#readme>
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     One  
+                     , Two
+                     , Three
+  build-depends:       base >= 4.7 && < 5
+                     , containers
+  default-language:    Haskell2010
+
+executable aoc
+  hs-source-dirs:      app
+  main-is:             Main.hs
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  build-depends:       base
+                     , aoc
+                     , http-client
+                     , cookie
+                     , bytestring
+                     , case-insensitive
+                     , containers
+  default-language:    Haskell2010
+
