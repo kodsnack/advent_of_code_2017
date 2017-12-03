@@ -3,7 +3,7 @@ input = gets
 sum = 0
 if input
   input.size.times do |i|
-    if input[i] == input[(i+1)%input.size]
+    if input[i] == input[(i + 1) % input.size]
       sum += input[i].to_i
     end
   end
@@ -13,7 +13,7 @@ puts "1b"
 sum = 0
 if input
   input.size.times do |i|
-    if input[i] == input[(i+input.size/2)%input.size]
+    if input[i] == input[(i + input.size/2) % input.size]
       sum += input[i].to_i
     end
   end
