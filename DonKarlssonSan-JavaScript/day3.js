@@ -7,63 +7,137 @@
 42  21  22  23  24  25  26
 43  44  45  46  47  48  49
 */
-let value;
-let values = new Map();
-let x, y;
-function steps(sq) {
 
-    value = 1;
-    x = 0;
-    y = 0;
+module.exports.steps = function(sq) {
+    let value = 1;
+    let values = new Map();
+    let x = 0;
+    let y = 0;
     addCurrent();
     let sideLength = 1;
-    while((sideLength)*(sideLength)<sq) {
+    while(sideLength * sideLength < sq) {
         sideLength += 2;
         addPositionsForRing(sideLength);
     } 
     return Math.abs(values.get(sq)[0]) + Math.abs(values.get(sq)[1]);
-}
 
-function addPositionsForRing(sideLength) {
-    x++;
-    addRightSide(sideLength);
-    addTopSide(sideLength);
-    addLeftSide(sideLength);
-    addBottomSide(sideLength);
-}
-
-function addRightSide(sideLength) {
-    for(let i = 0; i < sideLength - 1; i++) {
-        addCurrent();
-        y++;
-    }
-    y--;
-}
-
-function addTopSide(sideLength) {
-    for(let i = 0; i < sideLength - 1; i++) {
-        x--;
-        addCurrent();
-    }
-}
-
-function addLeftSide(sideLength) {
-    for(let i = 0; i < sideLength - 1; i++) {
-        y--;    
-        addCurrent();
-    }
-}
-
-function addBottomSide(sideLength) {
-    for(let i = 0; i < sideLength - 1; i++) {
+    function addPositionsForRing(sideLength) {
         x++;
-        addCurrent();
+        addRightSide(sideLength);
+        addTopSide(sideLength);
+        addLeftSide(sideLength);
+        addBottomSide(sideLength);
+    }
+
+    function addRightSide(sideLength) {
+        for(let i = 0; i < sideLength - 1; i++) {
+            addCurrent();
+            y++;
+        }
+        y--;
+    }
+
+    function addTopSide(sideLength) {
+        for(let i = 0; i < sideLength - 1; i++) {
+            x--;
+            addCurrent();
+        }
+    }
+
+    function addLeftSide(sideLength) {
+        for(let i = 0; i < sideLength - 1; i++) {
+            y--;    
+            addCurrent();
+        }
+    }
+
+    function addBottomSide(sideLength) {
+        for(let i = 0; i < sideLength - 1; i++) {
+            x++;
+            addCurrent();
+        }
+    }
+
+    function addCurrent() {
+        values.set(value, [x, y]);
+        value++;
     }
 }
 
-function addCurrent() {
-    values.set(value, [x, y]);
-    value++;
-}
+module.exports.firstValueLargerThan = function(maxVal) {
+    let values = new Map();
+    let x = 0;
+    let y = 0;
+    let sideLength = 1;
+    let max = maxVal;
+    values.set(`${x},${y}`, 1);
+    try {
+        while(true) {
+            sideLength += 2;
+            addValuesForRing(sideLength);
+        } 
+    } catch(value) {
+        return value;
+    }
+    return 0;
 
-module.exports.steps = steps;
+    function addValuesForRing(sideLength) {
+        x++;        
+        addRightSide(sideLength);
+        addTopSide(sideLength);
+        addLeftSide(sideLength);
+        addBottomSide(sideLength);
+    }
+
+    function addRightSide(sideLength) {
+        for(let i = 0; i < sideLength - 1; i++) {
+            addCurrent();
+            y++;
+        }
+        y--;
+    }
+
+    function addTopSide(sideLength) {
+        for(let i = 0; i < sideLength - 1; i++) {
+            x--;
+            addCurrent();
+        }
+    }
+
+    function addLeftSide(sideLength) {
+        for(let i = 0; i < sideLength - 1; i++) {
+            y--;    
+            addCurrent();
+        }
+    }
+
+    function addBottomSide(sideLength) {
+        for(let i = 0; i < sideLength - 1; i++) {
+            x++;
+            addCurrent();
+        }
+    }
+    
+    function addCurrent() {
+        let value = getSumOfAdjecent();
+        values.set(`${x},${y}`, value);
+        if(value > max) {
+            // This is so ugly code that I wan to throw up.
+            throw value;
+        }
+    }
+
+    function getSumOfAdjecent() {
+        let sum = 0;
+        for(let col = -1; col < 2; col++) {
+            for(let row = -1; row < 2; row++) {
+                let isCenter = col === 0 && row === 0;
+                if(!isCenter) {
+                    let key = `${x + col},${y + row}`;
+                    sum += values.get(key) || 0;
+                }
+            }
+        }
+        return sum;
+    }
+}
