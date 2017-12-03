@@ -34,3 +34,18 @@
 [submodule "maddox-python"]
 	path = maddox-python
 	url = git@github.com:AmandaNilsson/Advent-of-code-17.git
+[submodule "erikbrannstrom-python3"]
+	path = erikbrannstrom-python3
+	url = git@github.com:erikbrannstrom/advent-of-code-2017.git
+[submodule "mangefox-kotlin"]
+	path = mangefox-kotlin
+	url = https://github.com/mangefox/advent_of_code_2017.git
+[submodule "olssonm-php"]
+	path = olssonm-php
+	url = git@github.com:olssonm/advent-of-code.git
+[submodule "ivanpedersen-go"]
+	path = ivanpedersen-go
+	url = https://github.com/ivanpedersen/aoc17.git
+[submodule "rellem-cfml"]
+	path = rellem-cfml
+	url = https://github.com/rellem/advent_of_code_2017.git
