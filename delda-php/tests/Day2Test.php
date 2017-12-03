@@ -16,42 +16,18 @@ class Day2Test extends TestCase
     public function testFirstPartSolution()
     {
         $aoc = new Day2();
-        $this->assertEquals(0, $aoc->firstPart());
+        $this->assertEquals(32020, $aoc->firstPart());
     }
 
-//    public function testSecondPartAllDigitsMatch()
-//    {
-//        $aoc = new Day1('1212');
-//        $this->assertEquals(6, $aoc->secondPart());
-//    }
-//
-//    public function testSecondPartNoDigitsMatch()
-//    {
-//        $aoc = new Day1('1221');
-//        $this->assertEquals(0, $aoc->secondPart());
-//    }
-//
-//    public function testSecondPartOnly2dMatches()
-//    {
-//        $aoc = new Day1('123425');
-//        $this->assertEquals(4, $aoc->secondPart());
-//    }
-//
-//    public function testSecondPartAllDigitsMatchExtended()
-//    {
-//        $aoc = new Day1('123123');
-//        $this->assertEquals(12, $aoc->secondPart());
-//    }
-//
-//    public function testSecondPartLastExample()
-//    {
-//        $aoc = new Day1('12131415');
-//        $this->assertEquals(4, $aoc->secondPart());
-//    }
-//
-//    public function testSecondPartSolution()
-//    {
-//        $aoc = new Day1(file_get_contents(__DIR__.'/../src/Resources/Day1Input'));
-//        $this->assertEquals(1188, $aoc->secondPart());
-//    }
+    public function testSecondPartUniqueExample()
+    {
+        $aoc = new Day2("5\t9\t2\t8\n9\t4\t7\t3\n3\t8\t6\t5");
+        $this->assertEquals(9, $aoc->secondPart());
+    }
+
+    public function testSecondPartSolution()
+    {
+        $aoc = new Day2();
+        $this->assertEquals(236, $aoc->secondPart());
+    }
 }
