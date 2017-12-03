@@ -7,3 +7,10 @@ day1.m
 // Excel and MATLAB
 day2.m
 
+// Day 3
+// Head and calculator
+// MATLAB
+day3.m
+
+
+

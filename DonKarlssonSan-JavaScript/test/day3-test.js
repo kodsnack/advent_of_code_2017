@@ -26,9 +26,29 @@ describe("Day 3, Part 1", function () {
         expect(result).to.equal(31);
     });
     
-    it("Day 3, Part 1", function () {
-        let sq = 312051; 
-        let result = day3.steps(sq);
-        console.log(result);
+    // it("Day 3, Part 1", function () {
+    //     let sq = 312051; 
+    //     let result = day3.steps(sq);
+    //     console.log(result);
+    // });
+});
+
+describe("Day 3, Part 2, first value larger than", function () {
+    it("15 should return 23", function () {
+        let value = 15; 
+        let result = day3.firstValueLargerThan(value);
+        expect(result).to.equal(23);
     });
+
+    it("355 should return 362", function () {
+        let value = 355; 
+        let result = day3.firstValueLargerThan(value);
+        expect(result).to.equal(362);
+    });
+    
+    // it("Day 3, Part 2", function () {
+    //     let val = 312051; 
+    //     let result = day3.firstValueLargerThan(val);
+    //     console.log(result);
+    // });
 });
