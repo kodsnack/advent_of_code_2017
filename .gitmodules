@@ -46,3 +46,6 @@
 [submodule "ivanpedersen-go"]
 	path = ivanpedersen-go
 	url = https://github.com/ivanpedersen/aoc17.git
+[submodule "rellem-cfml"]
+	path = rellem-cfml
+	url = https://github.com/rellem/advent_of_code_2017.git
