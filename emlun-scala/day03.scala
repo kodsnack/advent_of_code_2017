@@ -37,17 +37,17 @@ object Main extends App {
         case i if i < m-1            => prev(i - 2)  + prev(i - 1) + prev(i)     + value(i - 1)
         case i if i == m-1           => prev(i - 2)  + prev(i - 1)               + value(i - 1)
         case i if i == m             => prev(i - 2)                              + value(i - 1)
-        case i if i == m+1           => value(i - 2) + prev(i - 2) + prev(i - 3) + value(i - 1)
+        case i if i == m+1           => value(i - 2) + prev(i - 3) + prev(i - 2) + value(i - 1)
 
         case i if i < m+m            => prev(i - 4)  + prev(i - 3) + prev(i - 2) + value(i - 1)
         case i if i == m+m           => prev(i - 4)  + prev(i - 3)               + value(i - 1)
         case i if i == m+m+1         => prev(i - 4)                              + value(i - 1)
-        case i if i == m+m+1+1       => value(i - 2) + prev(i - 4) + prev(i - 5) + value(i - 1)
+        case i if i == m+m+1+1       => value(i - 2) + prev(i - 5) + prev(i - 4) + value(i - 1)
 
         case i if i < m+m+1+m        => prev(i - 6)  + prev(i - 5) + prev(i - 4) + value(i - 1)
         case i if i == m+m+1+m       => prev(i - 6)  + prev(i - 5)               + value(i - 1)
         case i if i == m+m+1+m+1     => prev(i - 6)                              + value(i - 1)
-        case i if i == m+m+1+m+1+1   => value(i - 2) + prev(i - 6) + prev(i - 7) + value(i - 1)
+        case i if i == m+m+1+m+1+1   => value(i - 2) + prev(i - 7) + prev(i - 6) + value(i - 1)
 
         case i if i < m+m+1+m+1+m    => prev(i - 8) + prev(i - 7)  + prev(i - 6) + value(i - 1)
         case i if i == m+m+1+m+1+m   => prev(i - 8) + prev(i - 7)  + value(0)    + value(i - 1)
