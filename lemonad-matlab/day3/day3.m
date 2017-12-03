@@ -64,11 +64,11 @@ function result = solve_part_two(n)
 %SOLVE_PART_TWO Find larger number than `n` in fractal memory sum.
     min_dist = fractal_min_dist(n);
 
-    % Note addition of 4 extra rings around matrix to avoid
-    % out of bounds (for small n's) when getting the neighborhood
-    % of a cell. For larger n, we should really decrease
-    % side lengths to avoid ridiculously large matrices.
-    side_len = min_dist * 2 + 1 + 4;
+    % Note addition of one extra ring (side length + 2) around
+    % matrix to avoid out of bounds (for small n's) when getting
+    % the neighborhood of a cell. For larger n, we should really
+    % decrease side lengths to avoid ridiculously large matrices.
+    side_len = min_dist * 2 + 1 + 2;
 
     M = zeros(side_len);
     center = floor(side_len / 2) + 1;
@@ -80,7 +80,8 @@ function result = solve_part_two(n)
         cx = center + offset(1);
         cy = center + offset(2);
         % Sum neighborhood of cell.
-        V = M(cy - 1:cy+ 1, cx - 1:cx + 1);
+        V = M(max(cy - 1, 1):min(cy + 1, side_len), ...
+              max(cx - 1, 1):min(cx + 1, side_len));
         s = sum(sum(V));
         M(cy, cx) = s;
         if (s > n)
