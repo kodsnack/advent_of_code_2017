@@ -43,3 +43,6 @@
 [submodule "olssonm-php"]
 	path = olssonm-php
 	url = git@github.com:olssonm/advent-of-code.git
+[submodule "ivanpedersen-go"]
+	path = ivanpedersen-go
+	url = https://github.com/ivanpedersen/aoc17.git
