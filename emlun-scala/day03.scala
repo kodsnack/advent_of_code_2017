@@ -1,10 +1,7 @@
 object Main extends App {
   val input = io.Source.stdin.getLines.toSeq.head.trim.toInt
 
-  def btmRight(level: Int): Int = level match {
-    case 0 => 1
-    case l => btmRight(l - 1) + 8 * l
-  }
+  def btmRight(level: Int): Int = 1 + 4 * (level * (level + 1))
 
   def dist(i: Int) = {
     val level = ((Stream from 0)
