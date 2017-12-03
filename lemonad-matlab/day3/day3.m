@@ -92,7 +92,7 @@ function result = solve_part_two(n)
 end
 
 function delta = get_offset(n)
-%SOLVE Calculate manhattan distance to cell n in fractal memory.
+%SOLVE Get offset [x, y] for cell n in fractal memory.
 
     % Which "ring" is `n` in? (ring 0 is the innermost, the "1").
     min_dist = fractal_min_dist(n);
