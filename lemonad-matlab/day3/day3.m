@@ -23,6 +23,10 @@ assert(solve_part_one(1) == 0)
 assert(solve_part_one(12) == 3)
 assert(solve_part_one(23) == 2)
 assert(solve_part_one(1024) == 31)
+assert(solve_part_one_alt(1) == 0)
+assert(solve_part_one_alt(12) == 3)
+assert(solve_part_one_alt(23) == 2)
+assert(solve_part_one_alt(1024) == 31)
 
 fprintf('The taxicab distance is %d\n', solve_part_one(277678));
 
@@ -39,7 +43,7 @@ assert(solve_part_two(5) == 10)
 assert(solve_part_two(10) == 11)
 assert(solve_part_two(147) == 304)
 
-fprintf('Next written number is %d\n', solve_part_two(x));
+fprintf('Next written number is %d\n', solve_part_two(277678));
 
 
 %
@@ -48,12 +52,24 @@ fprintf('Next written number is %d\n', solve_part_two(x));
 
 assert(taxicab_dist(get_offset(277678)) == 475)
 assert(solve_part_one(277678) == 475)
+assert(solve_part_one_alt(277678) == 475)
 assert(solve_part_two(277678) == 279138)
 
 
 %
 % Helpers
 %
+
+function result = solve_part_one_alt(n)
+%SOLVE_PART_ONE Alternative solution to part one.
+    % Note that this is `O(ceil(sqrt(n) + 1)^2)` whereas
+    % the original solution is `O(1)`.
+    N = 2 * ceil(sqrt(n) / 2) + 1;
+    center = ceil(N / 2);
+    spiral_matrix = flip(spiral(N));
+    [I, J] = find(spiral_matrix == n);
+    result = abs(I - center) + abs(J - center);
+end
 
 function result = solve_part_one(n)
 %SOLVE_PART_ONE Calculate manhattan distance to cell n in fractal memory.
