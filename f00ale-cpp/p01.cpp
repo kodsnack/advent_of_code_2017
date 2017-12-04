@@ -11,7 +11,6 @@ int get() {
 
 int main() {
   int first = 0, last = 0, input = 0;
-  int ans = 0;
   std::vector<int> nums;
 
   while(1) {
@@ -22,11 +21,18 @@ int main() {
   }
 
   auto size = nums.size();
+  int ans1 = 0;
   for(decltype(size) i = 0; i < size; i++) {
-    if(nums[i] == nums[(i+size/2)%size]) ans += nums[i];
+    if(nums[i] == nums[(i+1)%size]) ans1 += nums[i];
+  }
+  std::cout << ans1 << std::endl;
+
+  int ans2 = 0;
+  for(decltype(size) i = 0; i < size; i++) {
+    if(nums[i] == nums[(i+size/2)%size]) ans2 += nums[i];
   }
 
-  std::cout << ans << std::endl;
+  std::cout << ans2 << std::endl;
 
   return 0;
 }

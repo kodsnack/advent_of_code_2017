@@ -3,6 +3,7 @@ module Three
   ) where
 
 import           Control.Arrow
+import           Data.List
 import qualified Data.Map.Strict as M
 import           Data.Maybe
 
@@ -24,9 +25,7 @@ shellOffset = shellOffset' 0
         shellSize = max (s * 8) 1
 
 fromShellAndOffset :: ShellAndOffset -> Pos
-fromShellAndOffset (s, offset) =
-  let (endpos, 0) = foldl move (shellStartPos s, offset) dirs
-  in endpos
+fromShellAndOffset (s, offset) = fst $ foldl move (shellStartPos s, offset) dirs
   where
     shellStartPos s = ((-s) + 1, s)
     dirs =
@@ -48,20 +47,17 @@ solve1 [s] = abs x + abs y
   where
     (x, y) = pos $ read s - 1
 
-updateGrid :: Grid -> Order -> Grid
-updateGrid g n = M.insert (pos n) (sumAdjacent n) g
+updateGrid :: Grid -> Order -> (Grid, Int)
+updateGrid g n = (M.insert (pos n) sumAdjacent g, sumAdjacent)
   where
-    sumAdjacent n = sum $ map (flip (M.findWithDefault 0) g) (adjacentPos (pos n))
-    adjacentPos (x, y) =
-      map
-        ((+ x) *** (+ y))
-        [(0, 1), (0, -1), (1, 0), (1, 1), (1, -1), (-1, 0), (-1, 1), (-1, -1)]
+    sumAdjacent = sum $ map (flip (M.findWithDefault 0) g) (adjacent (pos n))
+    adjacent (x, y) = map ((+ x) *** (+ y)) ((,) <$> [-1, 0, 1] <*> [-1, 0, 1])
 
 solve2 :: [String] -> Int
-solve2 [s] = head $ dropWhile (<= n) (map ((grid M.!) . pos) [1 ..])
+solve2 [s] = head $ dropWhile notDone (snd $ mapAccumL updateGrid init [1 ..])
   where
-    n = read s
-    grid = foldl updateGrid (M.singleton (0, 0) 1) [1 .. 1000]
+    notDone = (<= read s)
+    init = M.singleton (0, 0) 1
 
 solve :: [String] -> (String, String)
 solve s = (show $ solve1 s, show $ solve2 s)

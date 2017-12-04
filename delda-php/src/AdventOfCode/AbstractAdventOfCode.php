@@ -9,8 +9,11 @@ abstract class AbstractAdventOfCode
     abstract function firstPart(): string;
     abstract function secondPart(): string;
 
-    public function __construct($input)
+    public function __construct($input = null)
     {
+        if (!$input) {
+            $input = file_get_contents(__DIR__.'/../Resources/Day'.$this->class.'Input');
+        }
         $this->input = $input;
     }
 
@@ -21,6 +24,7 @@ abstract class AbstractAdventOfCode
             case 0:
                 $result[] = $this->firstPart();
                 $result[] = $this->secondPart();
+                break;
             case 1:
                 $result[] = $this->firstPart();
                 break;
@@ -28,5 +32,7 @@ abstract class AbstractAdventOfCode
                 $result[] = $this->secondPart();
                 break;
         }
+
+        return $result;
     }
 }
