@@ -22,9 +22,12 @@ if ($argc < 2) {
 
 use src\AdventOfCode;
 
-$aoc = new {"Day$adventDay"}();
-$part = (isset($argv[2]) && ($argv[2] == 1 || $argv[2] == 2)) ? $argv[2] : null;
-echo $aoc->result($part), PHP_EOL;
+$className = '\src\\AdventOfCode\\Day'.$adventDay;
+$aoc = new $className();
+$part = (isset($argv[2]) && ($argv[2] == 1 || $argv[2] == 2)) ? $argv[2] : 0;
+foreach ($aoc->result($part) as $result) {
+    echo $result, PHP_EOL;
+}
 
 function man()
 {

@@ -33,7 +33,7 @@ class Day1Test extends TestCase
 
     public function testFirstPartSolution()
     {
-        $aoc = new Day1(file_get_contents(__DIR__.'/../src/Resources/Day1Input'));
+        $aoc = new Day1();
         $this->assertEquals(1097, $aoc->firstPart());
     }
 
@@ -69,7 +69,7 @@ class Day1Test extends TestCase
 
     public function testSecondPartSolution()
     {
-        $aoc = new Day1(file_get_contents(__DIR__.'/../src/Resources/Day1Input'));
+        $aoc = new Day1();
         $this->assertEquals(1188, $aoc->secondPart());
     }
 }

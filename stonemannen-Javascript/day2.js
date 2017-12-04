@@ -38,7 +38,24 @@ for (var i = 0; i < rows.length; i++) {
 var sum = dif.reduce(function(previousValue, currentValue){
     return currentValue + previousValue;
 });
-console.log(sum);
+console.log("part 1 = " + sum);
+var divs = [];
+for (var i = 0; i < rows.length; i++) {
+  var nums = rows[i]
+  for (var p = 0; p < nums.length; p++) {
+    for (var o = 0; o < nums.length; o++) {
+      var x = nums[p]/nums[o];
+      if (!(x % 1) && nums[p] != nums[o]) {
+        divs.push(x);
+        break;
+      }
+    }
+  }
+}
+var sum = divs.reduce(function(previousValue, currentValue){
+    return currentValue + previousValue;
+});
+console.log("part 2 = " + sum);
 
 
 
