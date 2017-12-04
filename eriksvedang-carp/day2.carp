@@ -1,0 +1,20 @@
+(use String)
+(use Int)
+(use Array)
+
+(defn line-to-ints [line]
+  (let [words (String.words @line)]
+    (copy-map Int.from-string &words)))
+
+(defn value [lines]
+  (let [a (max lines)
+        b (min lines)]
+    (- a b)))
+
+(defn main []
+  (let [input (IO.read-file "day2.txt")
+        lines (String.lines input)
+        numbers (copy-map line-to-ints &lines)
+        values (copy-map value &numbers)
+        sum (Array.sum &values)]
+    (IO.println (refstr sum))))
