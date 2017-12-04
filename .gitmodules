@@ -39,10 +39,13 @@
 	url = git@github.com:erikbrannstrom/advent-of-code-2017.git
 [submodule "mangefox-kotlin"]
 	path = mangefox-kotlin
-	url = https://github.com/mangefox/advent_of_code_2017.git
+	url = https://github.com/mangefox/advent_of_code_2017
 [submodule "olssonm-php"]
 	path = olssonm-php
 	url = git@github.com:olssonm/advent-of-code.git
 [submodule "ivanpedersen-go"]
 	path = ivanpedersen-go
 	url = https://github.com/ivanpedersen/aoc17.git
+[submodule "rellem-cfml"]
+	path = rellem-cfml
+	url = https://github.com/rellem/advent_of_code_2017.git

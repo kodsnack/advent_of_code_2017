@@ -1,5 +1,4 @@
 import strutils
-from os import getAppDir
 from utils import getInputForProblem, charToInt, addMod
 
 proc problem1*: int =

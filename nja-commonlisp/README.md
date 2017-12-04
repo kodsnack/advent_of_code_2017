@@ -17,8 +17,9 @@ ALL-TESTS (Suite)
   AOC2017.TESTS (Suite)
     DAY01                                                                 [ OK ]
     DAY02                                                                 [ OK ]
+    DAY03                                                                 [ OK ]
 
 T
-(#<test-run of ALL-TESTS: 4 tests, 4 assertions, 0 failures in 0.0 sec>)
+(#<test-run of ALL-TESTS: 5 tests, 6 assertions, 0 failures in 0.0 sec>)
 CL-USER>
 ```
