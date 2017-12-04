@@ -8,7 +8,7 @@ object Main extends App {
     passphrases.count({ p => p.toSet.size == p.size })
 
   def solveB(passphrases: List[List[String]]): Int =
-    passphrases.count({ p => p.map(_.toSet).toSet.size == p.size })
+    passphrases.count({ p => p.map(_.sorted).toSet.size == p.size })
 
   println(s"A: ${solveA(passphrases)}")
   println(s"B: ${solveB(passphrases)}")
