@@ -13,3 +13,7 @@
 (deftest day03 ()
   (is (= 419 (aoc2017.day03::part1 289326)))
   (is (= 295229 (aoc2017.day03::part2 289326))))
+
+(deftest day04 ()
+  (is (= 477 (aoc2017.day04::part1 (input-for 2017 4))))
+  (is (= 167 (aoc2017.day04::part2 (input-for 2017 4)))))
