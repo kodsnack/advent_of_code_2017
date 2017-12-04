@@ -518,3 +518,16 @@ const validPassphrases = parsedInput.filter(
 );
 
 console.log(validPassphrases.length);
+
+const validPassphrases2 = parsedInput
+  .map(row =>
+    row.map(word =>
+      word
+        .split("")
+        .sort()
+        .join("")
+    )
+  )
+  .filter(row => row.length === new Set(row).size);
+
+console.log(validPassphrases2.length);
