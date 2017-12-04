@@ -1,0 +1,15 @@
+* Run Instructions
+
+=day4.go= takes 2 arguments. First specifies which part (=1= or =2=).
+Second argument is the filename to the file that contains the passwords.
+
+Examples:
+#+BEGIN_SRC bash
+go run day4.go 1 passwords.org
+#+END_SRC
+
+
+#+BEGIN_SRC bash
+go run day4.go 2 passwords.org
+#+END_SRC
+
