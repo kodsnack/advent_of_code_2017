@@ -12,7 +12,6 @@ fun main(args: Array<String>)
 	val result2 = checksum(input, ::evenDivisible)
 	println(result1)
 	println(result2)
-	println(ops)
 }
 
 fun checksum(input: File, sumFunc: (List<Int>) -> Int): Int
@@ -30,17 +29,14 @@ fun lowestHighest(numbers: List<Int>): Int
 	return sorted.last() - sorted.first()
 }
 
-var ops: Int = 0
-
 fun evenDivisible(numbers: List<Int>): Int
 {
 	val (x, y) = numbers.sorted()
 			.toList()
-			.toMatrix { x, y -> x <= y / 2}
-			.onEach(::println)
-			.first { (x, y) -> x % y == 0 }
+			.toMatrix { x, y -> x <= y / 2 }
+			.first { (x, y) -> y % x == 0 }
 
-	return x / y
+	return y / x
 }
 
 inline fun <T> List<T>.toMatrix(preFilterPredicate: (x: T, y: T) -> Boolean = {_, _ -> true }): Sequence<Pair<T, T>>
