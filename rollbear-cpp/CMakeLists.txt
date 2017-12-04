@@ -29,3 +29,5 @@ include_directories(${CMAKE_BINARY_DIR}/${CATCH_DIR})
 
 add_subdirectory(Day1)
 add_subdirectory(Day2)
+add_subdirectory(Day3)
+add_subdirectory(Day4)

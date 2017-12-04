@@ -1,0 +1,16 @@
+* Run Instructions
+
+=day3.go= takes 2 arguments. First is =1= or =2= that decides between part 1 or
+part 2.
+Second argument is the puzzle input.
+
+Examples:
+#+BEGIN_SRC bash
+go run day3.go 1 361527
+#+END_SRC
+
+
+#+BEGIN_SRC bash
+go run day3.go 2 361527
+#+END_SRC
+(This is /quite/ verbose.)

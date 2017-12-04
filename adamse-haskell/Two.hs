@@ -25,7 +25,6 @@ divs a b =
   where
     (q, r) = quotRem a b
 
-
 main = do
   inp <- readFile "input2.txt"
   let sheet = fmap (fmap (read @Int) . words) . lines $ inp

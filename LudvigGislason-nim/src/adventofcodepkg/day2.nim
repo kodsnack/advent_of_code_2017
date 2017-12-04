@@ -1,7 +1,6 @@
 import strutils
 import options
-from os import getAppDir
-from utils import getInputForProblem, charToInt, addMod
+from utils import getInputForProblem
 from sequtils import foldl, mapIt
 
 type
