@@ -4,10 +4,7 @@ namespace src\AdventOfCode;
 
 class Day1 extends AbstractAdventOfCode
 {
-    public function __construct($input)
-    {
-        $this->input = $input;
-    }
+    protected $class = 1;
 
     public function firstPart(): string
     {
