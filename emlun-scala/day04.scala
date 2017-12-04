@@ -6,7 +6,7 @@ object Main extends App {
   } yield trimmed.split(raw"\s+").toList).toList
 
   def isValid(passphrase: List[String]): Boolean =
-    passphrase.toSet.size == passphrase.size
+    passphrase.map(_.toSet).toSet.size == passphrase.size
 
   val numValid = words.filter(isValid).size
 
