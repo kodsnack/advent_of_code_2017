@@ -2,34 +2,37 @@ extern crate day4;
 
 #[test]
 fn test_parta_valid() {
-    assert_eq!(true, day4::Day4::is_valid_passphrase_a("aa bb cc dd ee"));
+    assert_eq!(true, day4::Day4::is_simple_passphrase("aa bb cc dd ee"));
 }
 
 #[test]
 fn test_parta_invalid() {
-    assert_eq!(false, day4::Day4::is_valid_passphrase_a("aa bb cc dd aa"));
+    assert_eq!(false, day4::Day4::is_simple_passphrase("aa bb cc dd aa"));
 }
 
 #[test]
 fn test_parta_valid_different_substr() {
-    assert_eq!(true, day4::Day4::is_valid_passphrase_a("aa bb cc dd aaa"));
+    assert_eq!(true, day4::Day4::is_simple_passphrase("aa bb cc dd aaa"));
 }
 
 #[test]
 fn test_partb_valid_simple() {
-    assert_eq!(true, day4::Day4::is_valid_passphrase_a("abcde fghij"));
+    assert_eq!(true, day4::Day4::is_simple_passphrase("abcde fghij"));
 }
 
 #[test]
 fn test_partb_invalid_simple() {
-    assert_eq!(false, day4::Day4::is_valid_passphrase_b("abcde xyz ecdab"));
+    assert_eq!(
+        false,
+        day4::Day4::is_no_duplicate_passphrase("abcde xyz ecdab")
+    );
 }
 
 #[test]
 fn test_partb_valid_another_word() {
     assert_eq!(
         true,
-        day4::Day4::is_valid_passphrase_b("a ab abc abd abf abj")
+        day4::Day4::is_no_duplicate_passphrase("a ab abc abd abf abj")
     );
 }
 
@@ -37,7 +40,7 @@ fn test_partb_valid_another_word() {
 fn test_partb_valid_oo() {
     assert_eq!(
         true,
-        day4::Day4::is_valid_passphrase_b("iiii oiii ooii oooi oooo")
+        day4::Day4::is_no_duplicate_passphrase("iiii oiii ooii oooi oooo")
     );
 }
 
@@ -46,7 +49,7 @@ fn test_partb_valid_oo() {
 fn test_partb_valid_repeating() {
     assert_eq!(
         false,
-        day4::Day4::is_valid_passphrase_b("oiii ioii iioi iiio")
+        day4::Day4::is_no_duplicate_passphrase("oiii ioii iioi iiio")
     );
 }
 
