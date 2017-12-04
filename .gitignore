@@ -1,0 +1,13 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/tor_selden-csharp/tor_selden-csharp/bin/Debug
+/.vs
+/tor_selden-csharp/tor_selden-csharp/obj
+/tor_selden-csharp/.vs
+**/*.pyc
+erikdyrelius-nim/*.exe
+**/nimsuggest.log
+**/nimcache/**
+erikdyrelius-python3/.vscode/settings.json

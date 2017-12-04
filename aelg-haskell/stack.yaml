@@ -1,0 +1,7 @@
+resolver: lts-9.14
+
+packages:
+- .
+
+ghc-build: standard
+system-ghc: false
