@@ -1,17 +1,15 @@
 object Main extends App {
-
-  val words: List[List[String]] = (for {
+  val passphrases: List[List[String]] = (for {
     line <- io.Source.stdin.getLines
     trimmed = line.trim
   } yield trimmed.split(raw"\s+").toList).toList
 
-  def isValid(passphrase: List[String]): Boolean =
-    passphrase.map(_.toSet).toSet.size == passphrase.size
+  def solveA(passphrases: List[List[String]]): Int =
+    passphrases.filter({ p => p.toSet.size == p.size }).size
 
-  val numValid = words.filter(isValid).size
+  def solveB(passphrases: List[List[String]]): Int =
+    passphrases.filter({ p => p.map(_.toSet).toSet.size == p.size }).size
 
-  println(numValid)
-
-  // println(s"A: ${dist(input)}")
-  // println(s"B: ${solveB(input)}")
+  println(s"A: ${solveA(passphrases)}")
+  println(s"B: ${solveB(passphrases)}")
 }
