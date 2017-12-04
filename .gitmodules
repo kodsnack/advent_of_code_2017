@@ -52,3 +52,6 @@
 [submodule "orangeblock-clojure"]
 	path = orangeblock-clojure
 	url = https://github.com/orangeblock/advent-of-code
+[submodule "pirfalt-undecided"]
+	path = pirfalt-undecided
+	url = git@github.com:pirfalt/advent-of-code-2017.git
