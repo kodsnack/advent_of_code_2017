@@ -8,7 +8,7 @@ def indices_for(input)
     w = w * 2
     dir = Complex.new(-1, 0)
     turn = Complex.new(0, 1)
-    [Complex.new(1, -1), Complex.new(1, 1), Complex.new(-1, 1), Complex.new(0,0)].each do |offset|
+    [Complex.new(1, -1), Complex.new(1, 1), Complex.new(-1, 1), Complex.new(0, 0)].each do |offset|
       w.times do
         yield({pos.real.to_i, pos.imag.to_i})
         pos += dir
