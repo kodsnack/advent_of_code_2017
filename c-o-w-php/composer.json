@@ -1,0 +1,22 @@
+{
+    "name": "AOC",
+    "description": "My work on Advent of code 2017",
+    "homepage": "https://github.com/c-o-w",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Carl-Oskar Westman (COW)",
+            "email": "carloskar.westman@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Puzzles\\": "Puzzles/"
+
+        }
+    }
+}

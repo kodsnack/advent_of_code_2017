@@ -1,0 +1,16 @@
+* Run Instructions
+
+=day2.go= takes 2 arguments. First is =1= or =2= that decides between part 1 or
+part 2.
+Second argument is the filename that contains the spreedsheet.
+
+Examples:
+#+BEGIN_SRC bash
+go run day2.go 1 spreedsheet.org
+#+END_SRC
+
+
+#+BEGIN_SRC bash
+go run day2.go 2 spreedsheet.org
+#+END_SRC
+

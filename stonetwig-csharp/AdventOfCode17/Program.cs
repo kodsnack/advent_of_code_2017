@@ -17,6 +17,7 @@ namespace AdventOfCode17
             Console.WriteLine(hello);
 
             dayToClass.Add("1", new Day1());
+            dayToClass.Add("2", new Day2());
 
             do
             {
