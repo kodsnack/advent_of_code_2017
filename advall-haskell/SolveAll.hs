@@ -24,9 +24,8 @@ import D23 (solve1, solve2)
 import D24 (solve1, solve2)
 import D25 (solve1, solve2)
 
-solveDayX :: (Show a) => Int -> (String -> a) -> (String -> a) -> IO ()
+solveDayX :: (Show a, Show b) => Int -> (String -> a) -> (String -> b) -> IO ()
 solveDayX x s1 s2 = do
-    putStrLn $ "-----------------"
     let inputFileName = "D" ++ show x ++"_input.txt"
     input <- readFile inputFileName
     let answer1 = s1 input
@@ -60,4 +59,3 @@ main = do
     solveDayX 23 D23.solve1 D23.solve2
     solveDayX 24 D24.solve1 D24.solve2
     solveDayX 25 D25.solve1 D25.solve2
-    putStrLn $ "-----------------"
