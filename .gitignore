@@ -10,3 +10,4 @@
 erikdyrelius-nim/*.exe
 **/nimsuggest.log
 **/nimcache/**
+erikdyrelius-python3/.vscode/settings.json
