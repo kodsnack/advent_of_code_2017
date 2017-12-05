@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	var good, bad int = 0, 0
+	var aGood, aBad, bGood, bBad int = 0, 0, 0, 0
 
 	file, err := os.Open("input.txt")
 	if err != nil {
@@ -22,9 +22,15 @@ func main() {
 	for scanner.Scan() {
 		res := check(scanner.Text())
 		if res == true {
-			good++
+			aGood++
 		} else {
-			bad++
+			aBad++
+		}
+		res = checkAnagramLine(scanner.Text())
+		if res == true {
+			bGood++
+		} else {
+			bBad++
 		}
 	}
 
@@ -32,5 +38,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println("In total there were", good, "good passwords and", bad, "bad ones")
+	fmt.Println("A:In total there were", aGood, "good passwords and", aBad, "bad ones")
+	fmt.Println("B:In total there were", bGood, "good passwords and", bBad, "bad ones")
 }
