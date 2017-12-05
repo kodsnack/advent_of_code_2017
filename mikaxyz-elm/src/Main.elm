@@ -8,6 +8,7 @@ import Day1
 import Day2
 import Day3
 import Day4
+import Day5
 
 
 main =
@@ -29,6 +30,7 @@ type Problem
     | Day2
     | Day3
     | Day4
+    | Day5
 
 
 type alias Model =
@@ -53,6 +55,7 @@ problems =
     , ( toString Day2, Day2 )
     , ( toString Day3, Day3 )
     , ( toString Day4, Day4 )
+    , ( toString Day5, Day5 )
     ]
 
 
@@ -135,6 +138,22 @@ view model =
                     , dt [] [ text "Day 4, part 2" ]
                     , dd []
                         [ Day4.part2 model.input
+                            |> toString
+                            |> text
+                        ]
+                    ]
+
+            Day5 ->
+                dl []
+                    [ dt [] [ text "Day 5, part 1" ]
+                    , dd []
+                        [ Day5.part1 model.input
+                            |> toString
+                            |> text
+                        ]
+                    , dt [] [ text "Day 5, part 2" ]
+                    , dd []
+                        [ Day5.part2 model.input
                             |> toString
                             |> text
                         ]
