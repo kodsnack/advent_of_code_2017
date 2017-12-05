@@ -3,9 +3,6 @@ module D3 where
 import Data.Map (Map)
 import qualified Data.Map as Map
 
---parseInput :: String -> Integer
---parseInput input = read input
-
 parseInput :: String -> Integer
 parseInput input = read input
 
@@ -20,9 +17,6 @@ distanceTo x = (disToXFrame +) $ minimum $ map (abs . subtract x)  midsOfXFrameS
           disToXFrame = xFrameSide `div` 2
           (xFrameSide, botRightCornerOfXFrame) = head $ dropWhile (\(a,b) -> b < x) 
                                                       $ map (\i -> (i, i*i)) [1,3..]
-
---bottomRightCornerOfTargetFrame :: Integer -> (Integer,Integer)
---bottomRightCornerOfTargetFrame x = head $ dropWhile (\(a,b) -> b < x) $ map (\i -> (i, i*i)) [1,3..]
 
 
 solve2 :: String -> Integer
