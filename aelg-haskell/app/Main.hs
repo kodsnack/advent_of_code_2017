@@ -13,8 +13,9 @@ import qualified One
 import qualified Two
 import qualified Three
 import qualified Four
+import qualified Five
 
-solved = M.fromList [(1, One.solve), (2, Two.solve), (3, Three.solve), (4, Four.solve)]
+solved = M.fromList [(1, One.solve), (2, Two.solve), (3, Three.solve), (4, Four.solve), (5, Five.solve)]
 
 getSolution x = M.findWithDefault notImplemented x solved
 
