@@ -1,0 +1,24 @@
+(use Int)
+(use Array)
+(use IO)
+
+(defn answer [ints]
+  (let [pos 0
+        outside false
+        len (count &ints)
+        steps 0]
+    (do
+      (while (not outside)
+        (if (or (< pos 0) (< (- len 1) pos))
+          (set! &outside true)
+          (let [val @(nth &ints pos)]
+            (do
+              (aset! &ints pos (+ val 1))
+              (set! &pos (+ pos val))
+              (set! &steps (+ steps 1))))))
+      steps)))
+
+(defn main []
+  (let [input (read-file "day5.txt")
+        ints (copy-map from-string &(lines input))]
+    (println (refstr (answer @&ints)))))
