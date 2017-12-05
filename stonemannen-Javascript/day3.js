@@ -85,8 +85,8 @@ const input = 289326;
 
 for (const point of normalSpiral()) {
   if (point.value === input) {
-    const distanceToAccessPort = point.distanceTo(new Point(0, 0));
-    console.log("part 1: " + distanceToAccessPort);
+    const dist = point.distanceTo(new Point(0, 0));
+    console.log("part 1: " + dist);
     break;
   }
 }
