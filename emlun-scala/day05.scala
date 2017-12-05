@@ -9,19 +9,20 @@ object Main extends App {
     else
       offset + 1
 
-  def solve(input: Seq[Int], edit: Int => Int): Int = {
-    var eip = 0
-    var jumps = input.toArray
-    var numJumps = 0
+  case class State(eip: Int, jumps: Map[Int, Int]) {
+    def isHalted: Boolean = eip >= jumps.size || eip < 0
+  }
 
-    while (eip < jumps.size && eip >= 0) {
-      val (e, j) = (eip + jumps(eip), edit(jumps(eip)))
-      jumps.update(eip, j)
-      eip = e
-      numJumps += 1
-    }
+  def step(edit: Int => Int)(state: State): State = state match {
+    case State(eip, jumps) => state.copy(
+      eip = eip + jumps(eip),
+      jumps = jumps.updated(eip, edit(jumps(eip))),
+    )
+  }
 
-    numJumps
+  def solve(input: List[Int], edit: Int => Int): Int = {
+    val jumps: Map[Int, Int] = input.zipWithIndex.map({ case (a, b) => (b, a) }).toMap
+    Iterator.iterate(State(0, jumps))(step(edit)) indexWhere { _.isHalted }
   }
 
   println(s"A: ${solve(jumps, editA)}")
