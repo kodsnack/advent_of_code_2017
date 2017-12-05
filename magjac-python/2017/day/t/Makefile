@@ -25,6 +25,10 @@ test:
 	[ "`p.py --digit-cnt < words.txt`" = 25 ]
 	[ "`p.py --digit-cnt < numbers.txt`" = 15 ]
 	[ "`p.py --digit-cnt < digits.txt`" = 20 ]
+	[ "`p.py --nws-cnt < test.txt`" = 45 ]
+	[ "`p.py --nws-cnt < words.txt`" = 43 ]
+	[ "`p.py --nws-cnt < numbers.txt`" = 18 ]
+	[ "`p.py --nws-cnt < digits.txt`" = 20 ]
 
 run:
 	p.py < input.txt

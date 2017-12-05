@@ -17,6 +17,9 @@ def main():
     parser.add_option('--num-cnt', action='store_true',
                       dest='num_cnt', default=False,
                       help='Print number of numbers found')
+    parser.add_option('--nws-cnt', action='store_true',
+                      dest='nws_cnt', default=False,
+                      help='Print number of non-whitespace characters found')
     parser.add_option('-v', '--verbose', action='store_true',
                       dest='verbose', default=False,
                       help='Log info about what is going on')
@@ -37,10 +40,12 @@ def main():
     rows_nums = []
     rows_chars = []
     rows_digits = []
+    rows_nws = []
     all_words = []
     all_nums = []
     all_chars = []
     all_digits = []
+    all_nws = []
     for i, line in enumerate(lines):
         if opts.verbose:
             print 'i=%d line=%s' %(i, line)
@@ -67,6 +72,12 @@ def main():
         chars = list(line)
         rows_chars.append(chars)
         all_chars.extend(chars)
+
+        nws = []
+        for word in words:
+            nws.extend(list(word))
+        rows_nws.append(nws)
+        all_nws.extend(nws)
 
         digits = []
         for char in chars:
@@ -100,6 +111,10 @@ def main():
     for digits in rows_digits:
         digit_cnt += len(digits)
 
+    nws_cnt = 0
+    for nws in rows_nws:
+        nws_cnt += len(nws)
+
     if opts.word_cnt or opts.verbose:
         print word_cnt
     assert word_cnt == len(all_words)
@@ -115,6 +130,10 @@ def main():
     if opts.digit_cnt or opts.verbose:
         print digit_cnt
     assert digit_cnt == len(all_digits)
+
+    if opts.nws_cnt or opts.verbose:
+        print nws_cnt
+    assert nws_cnt == len(all_nws)
 
 
 # Python trick to get a main routine
