@@ -45,7 +45,6 @@
 (defun row (pos) (first pos))
 (defun col (pos) (second pos))
 (defun add (a b) (pos (+ (row a) (row b)) (+ (col a) (col b))))
-(defun mul (a b) (pos (* (row a) (row b)) (* (col a) (col b))))
 
 (defun center (grid)
   (let ((center (truncate (grid-base grid) 2)))
@@ -55,7 +54,7 @@
   (or (loop for d in '((-1 0) (0 -1) (1 0) (0 1))
             with pos = (add (center grid) (pos i i))
             nconc (loop repeat (1- (ith-base i))
-                        collect (setf pos (add pos (mul d (pos 1 1))))))
+                        collect (setf pos (add pos d))))
       (list (center grid))))
 
 (defun laps (grid)

@@ -5,10 +5,10 @@ object Main extends App {
   } yield trimmed.split(raw"\s+").toList).toList
 
   def solveA(passphrases: List[List[String]]): Int =
-    passphrases.filter({ p => p.toSet.size == p.size }).size
+    passphrases.count({ p => p.toSet.size == p.size })
 
   def solveB(passphrases: List[List[String]]): Int =
-    passphrases.filter({ p => p.map(_.toSet).toSet.size == p.size }).size
+    passphrases.count({ p => p.map(_.sorted).toSet.size == p.size })
 
   println(s"A: ${solveA(passphrases)}")
   println(s"B: ${solveB(passphrases)}")

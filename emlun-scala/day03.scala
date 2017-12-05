@@ -4,8 +4,7 @@ object Main extends App {
   def btmRight(level: Int): Int = 1 + 4 * (level * (level + 1))
 
   /** Solve `i <= btmRight(l)` for `l` using the quadratic roots formula */
-  def findLevel(i: Int): Int =
-    Math.ceil(-0.5 + Math.sqrt(0.25 + 0.25 * (i - 1))).toInt
+  def findLevel(i: Int): Int = Math.ceil(0.5 * (Math.sqrt(i) - 1)).toInt
 
   def dist(i: Int) = {
     val level = findLevel(i)
