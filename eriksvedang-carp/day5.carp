@@ -2,23 +2,31 @@
 (use Array)
 (use IO)
 
-(defn answer [ints]
+(defn answer [ints f]
   (let [pos 0
-        outside false
         len (count &ints)
         steps 0]
     (do
-      (while (not outside)
-        (if (or (< pos 0) (< (- len 1) pos))
-          (set! &outside true)
-          (let [val @(nth &ints pos)]
-            (do
-              (aset! &ints pos (+ val 1))
-              (set! &pos (+ pos val))
-              (set! &steps (+ steps 1))))))
+      (while (and (< -1 pos) (< pos len))
+        (let [jump @(nth &ints pos)]
+          (do
+            (aset! &ints pos (f jump)) ;; modify
+            (set! &pos (+ pos jump)) ;; jump!
+            (set! &steps (inc steps)))))
       steps)))
+
+(defn part-1 [x]
+  (+ x 1))
+
+(defn part-2 [x]
+  (if (< x 3)
+    (+ x 1)
+    (- x 1)))
 
 (defn main []
   (let [input (read-file "day5.txt")
         ints (copy-map from-string &(lines input))]
-    (println (refstr (answer @&ints)))))
+    (do
+      (println (refstr (answer @&ints part-1)))
+      (println (refstr (answer @&ints part-2)))
+      )))
