@@ -8,8 +8,6 @@ var program = [...]int{1, 0, 2, -1, 1, -4, -4, -5, -2, -1, -4, -8, -8, -1, -6, -
 
 const programLength = len(program)
 
-const debugOn = true
-
 func main() {
 
 	steps := 0

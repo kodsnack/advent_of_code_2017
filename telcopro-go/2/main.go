@@ -20,12 +20,16 @@ var input = [16][16]int{
 	{149, 4140, 112, 3748, 148, 815, 4261, 138, 1422, 2670, 32, 334, 2029, 4750, 4472, 2010},
 	{114, 605, 94, 136, 96, 167, 553, 395, 164, 159, 284, 104, 530, 551, 544, 18},
 }
-var checksum2 = 0
+var checksum2a, checksum2b = 0, 0
 
 func main() {
 	for _, r := range input {
-		checksum2 += rowdiff(r)
+		checksum2a += rowdiff(r)
 	}
-	fmt.Printf("Checksum is %d\n", checksum2)
+	for _, r := range input {
+		checksum2b += rowDivisor(r)
+	}
+	fmt.Printf("A: Checksum is %d\n", checksum2a)
+	fmt.Printf("B: Checksum is %d\n", checksum2b)
 
 }
