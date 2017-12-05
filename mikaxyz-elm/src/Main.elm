@@ -7,6 +7,7 @@ import Html.Events exposing (onInput)
 import Day1
 import Day2
 import Day3
+import Day4
 
 
 main =
@@ -27,6 +28,7 @@ type Problem
     = Day1
     | Day2
     | Day3
+    | Day4
 
 
 type alias Model =
@@ -50,6 +52,7 @@ problems =
     [ ( toString Day1, Day1 )
     , ( toString Day2, Day2 )
     , ( toString Day3, Day3 )
+    , ( toString Day4, Day4 )
     ]
 
 
@@ -116,6 +119,22 @@ view model =
                     , dt [] [ text "Day 3, part 2" ]
                     , dd []
                         [ Day3.part2 model.input
+                            |> toString
+                            |> text
+                        ]
+                    ]
+
+            Day4 ->
+                dl []
+                    [ dt [] [ text "Day 4, part 1" ]
+                    , dd []
+                        [ Day4.part1 model.input
+                            |> toString
+                            |> text
+                        ]
+                    , dt [] [ text "Day 4, part 2" ]
+                    , dd []
+                        [ Day4.part2 model.input
                             |> toString
                             |> text
                         ]
