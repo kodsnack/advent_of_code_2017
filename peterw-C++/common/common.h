@@ -1,6 +1,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 namespace westerstrom
 {
@@ -12,8 +13,10 @@ namespace westerstrom
 		while(!f.eof())
 		{
 			std::string line;
-			if(getline(f, line))
+			if(std::getline(f, line))
 			{
+				line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
+				line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
 				lines.push_back(line);
 			}
 		}
