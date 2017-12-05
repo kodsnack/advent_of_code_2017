@@ -1,7 +1,5 @@
 module D11 where
 
-import Data.Char
-
 parseInput :: String -> String
 parseInput input = undefined
 
