@@ -55,3 +55,6 @@
 [submodule "pirfalt-undecided"]
 	path = pirfalt-undecided
 	url = git@github.com:pirfalt/advent-of-code-2017.git
+[submodule "hakfah-erlang"]
+	path = hakfah-erlang
+	url = https://github.com/HFahlstedt/AdventOfCode2017.git
