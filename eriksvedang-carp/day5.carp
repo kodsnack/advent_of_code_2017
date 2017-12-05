@@ -10,13 +10,10 @@
       (while (and (< -1 pos) (< pos len))
         (let [jump @(nth &ints pos)]
           (do
-            (aset! &ints pos (f jump)) ;; modify
+            (aset! &ints pos (f jump)) ;; modify instruction
             (set! &pos (+ pos jump)) ;; jump!
             (set! &steps (inc steps)))))
       steps)))
-
-(defn part-1 [x]
-  (+ x 1))
 
 (defn part-2 [x]
   (if (< x 3)
@@ -27,6 +24,5 @@
   (let [input (read-file "day5.txt")
         ints (copy-map from-string &(lines input))]
     (do
-      (println (refstr (answer @&ints part-1)))
-      (println (refstr (answer @&ints part-2)))
-      )))
+      (println (refstr (answer @&ints inc)))
+      (println (refstr (answer @&ints part-2))))))
