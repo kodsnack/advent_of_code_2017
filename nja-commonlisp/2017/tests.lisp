@@ -21,3 +21,7 @@
 (deftest day05 ()
   (is (= 359348 (aoc2017.day05::part1 (input-for 2017 5))))
   (is (= 27688760 (aoc2017.day05::part2 (input-for 2017 5)))))
+
+(deftest day06 ()
+  (is (= 4074 (aoc2017.day06::part1 (input-for 2017 6))))
+  (is (= 2793 (aoc2017.day06::part2 (input-for 2017 6)))))
