@@ -65,6 +65,25 @@ private tailrec fun layer(n: Int, l: Int, r: IntRange = 1 .. ceil): Int
 	}
 }
 
+tailrec fun binarySearch(goal: Long, input: Long = 2, func: (Long) -> Long, r: LongRange = 1L .. Byte.MAX_VALUE.toLong()): Long
+{
+	val result: Long = func(input)
+
+	println(result)
+	return when
+	{
+		result < goal -> {
+			val range: LongRange = maxOf(r.first, input) .. r.last + 1
+			binarySearch(goal, range.middle(), func, range)
+		}
+		result > goal -> {
+			val range: LongRange = maxOf(r.first - 1, 1) .. minOf(r.last, input)
+			binarySearch(goal, range.middle(), func, range)
+		}
+		else -> input
+	}
+}
+
 fun lastValueInLayer(layer: Int): Int
 {
 	if(layer < 1) throw IllegalArgumentException("We cannot have negative layers")
@@ -73,10 +92,11 @@ fun lastValueInLayer(layer: Int): Int
 }
 
 fun IntRange.middle(): Int = (this.start + this.last) / 2
+fun LongRange.middle(): Long = (this.start + this.last) / 2
 
 private val squareRootOfFive: Double = Math.sqrt(5.0)
 
-fun fibonacci(n: Int): Long
+fun fibonacci(n: Long): Long
 {
 	val dividend: Double = Math.pow((1 + squareRootOfFive), n.toDouble()) - Math.pow((1 - squareRootOfFive), n.toDouble())
 	val divider: Double = Math.pow(2.0, n.toDouble()) * squareRootOfFive
