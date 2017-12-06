@@ -6,29 +6,36 @@ object Main extends App {
 
   def findMax(banks: List[Int]): (Int, Int) = {
     val value = banks.max
-    val index = banks.indexOf(value)
-    (index, value)
+    (banks.indexOf(value), value)
   }
 
   def redistribute(banks: List[Int], index: Int, blocks: Int): List[Int] =
     if (blocks == 0)
       banks
     else
-      redistribute(banks.updated(index, banks(index) + 1), (index + 1) % banks.length, blocks - 1)
+      redistribute(
+        banks.updated(index, banks(index) + 1),
+        (index + 1) % banks.length,
+        blocks - 1
+      )
 
   def step(banks: List[Int]): List[Int] = {
     val (i, m) = findMax(banks)
-    redistribute(banks.updated(i, 0), (i + 1) % banks.length, m)
+    redistribute(
+      banks.updated(i, 0),
+      (i + 1) % banks.length,
+      m
+    )
   }
 
-  def indexOfFirstRecurrence(history: List[List[Int]], present: List[Int]): Int =
+  def solve(history: List[List[Int]], present: List[Int]): (Int, Int) =
     if (history contains present)
-      history.indexOf(present) + 1
+      (history.size, history.indexOf(present) + 1)
     else
-      indexOfFirstRecurrence(present +: history, step(present))
+      solve(present +: history, step(present))
 
-  println(s"A: ${banks}")
-  println(s"A: ${step(banks)}")
-  println(s"A: ${indexOfFirstRecurrence(Nil, banks)}")
+  val (a, b): (Int, Int) = solve(Nil, banks)
+
+  println(s"A: ${a}")
+  println(s"B: ${b}")
 }
-
