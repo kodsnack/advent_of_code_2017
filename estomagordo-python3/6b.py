@@ -1,6 +1,3 @@
-def evaluate(blocks):
-    return sum(blocks[x] * 16**x for x in range(len(blocks)))
-
 def largest_index(blocks):
     i = 0
     n = len(blocks)
@@ -24,16 +21,16 @@ def redistribute(blocks):
 
 def solve(blocks):
     cycles = 0
-    seen = { evaluate(blocks): 0 }
+    seen = { str(blocks): 0 }
 
     while True:
         cycles += 1
         redistribute(blocks)
-        val = evaluate(blocks)
+        val = str(blocks)
         if val in seen:
             return cycles - seen[val]
         seen[val] = cycles
 
-with open('input.txt', 'r') as f:
+with open('input_6.txt', 'r') as f:
     blocks = list(map(int, f.readline().split()))
     print(solve(blocks))

@@ -58,3 +58,6 @@
 [submodule "masssssy-python"]
 	path = masssssy-python
 	url = https://github.com/Masssssy/adventofcode2017.git
+[submodule "prositen-python"]
+	path = prositen-python
+	url = git@github.com:prositen/advent-of-code.git
