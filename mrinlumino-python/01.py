@@ -39,7 +39,7 @@ for char in rawinput:
         sum += value
     pos += 1
 
-print('Solution 1 to the captcha: %d') % (sum)
+print('The solution to the first problem day 1: %d')  % (sum)
 
 print ''
 print '***************************************************************************************'
@@ -70,4 +70,4 @@ for char in rawinput:
         sum += value
     pos += 1
 
-print('Solution 2 to the captcha: %d') % (sum)
+print('The solution to the second problem day 1: %d')  % (sum)

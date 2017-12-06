@@ -1,0 +1,18 @@
+🏁 🍇
+    🍦 solve 🍇 input 🔡 dist 🚂 ➡️ 🚂
+        🍰 sum 🚂
+        🍮️ sum 0
+        🔂 i ⏭ 0 🐔 input 1 🍇
+            🍦 curr 🔡 🍺 🐽 input i
+            🍦 cmp 🔡 🍺 🐽 input 🚮 ➕ i dist 🐔 input
+
+            🍊 😛 cmp curr 🍇
+                🍮️ ➕ sum 🍺 🚂 curr 10
+            🍉
+        🍉
+        🍎 sum
+    🍉
+    🍦 input 🔷 🔡 😯 🔤Input?🔤
+    😀 🍪 🔤1st answer: 🔤 🔡 🍭 solve input 1 10 🍪
+    😀 🍪 🔤2nd answer: 🔤 🔡 🍭 solve input ➗ 🐔 input 2 10 🍪
+🍉

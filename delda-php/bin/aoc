@@ -1,0 +1,38 @@
+#!/usr/bin/env php
+<?php
+
+set_time_limit(0);
+
+if (is_file(__DIR__.'/../vendor/autoload.php')) {
+    require __DIR__.'/../vendor/autoload.php';
+} else {
+    echo PHP_EOL, 'Are you sure you build the projects?', PHP_EOL, 'Vendor autoload not found!', PHP_EOL;
+}
+
+if ($argc < 2) {
+    man();
+    exit;
+} else {
+    $adventDay = (intval($argv[1]) > 0 && intval($argv[1]) <= 25) ? intval($argv[1]) : null;
+    if (!$adventDay) {
+        man();
+        exit;
+    }
+}
+
+use src\AdventOfCode;
+
+$className = '\src\\AdventOfCode\\Day'.$adventDay;
+$aoc = new $className();
+$part = (isset($argv[2]) && ($argv[2] == 1 || $argv[2] == 2)) ? $argv[2] : 0;
+foreach ($aoc->result($part) as $result) {
+    echo $result, PHP_EOL;
+}
+
+function man()
+{
+    echo PHP_EOL;
+    echo 'NAME', PHP_EOL, '    ' . basename(__FILE__) . ' -- PHP 7 library for Advent od Code (a series of small programming puzzles for a variety of skill levels one each advent day; see adventofcode.com).', PHP_EOL, PHP_EOL;
+    echo 'SYNOPSIS', PHP_EOL, '    ' . basename(__FILE__) . ' advent_day [1|2]', PHP_EOL, PHP_EOL;
+    echo 'DESCRIPTION', PHP_EOL, '    This script get the results of Advent of Code puzzles. You must specify the advent day you want get results. If you want only half puzzle result, use the third argument.', PHP_EOL, PHP_EOL;
+}
