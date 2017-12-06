@@ -3,7 +3,6 @@ state = "-".join(str(i) for i in memory_banks)
 visited = dict()
 
 
-inp = 0
 steps = 0
 while state not in visited:
     visited[state] = steps

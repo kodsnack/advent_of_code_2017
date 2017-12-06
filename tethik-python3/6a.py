@@ -2,7 +2,6 @@ memory_banks = [int(s) for s in input().strip().split()]
 state = "-".join(str(i) for i in memory_banks)
 visited = set()
 
-inp = 0
 steps = 0
 while state not in visited:
     visited.add(state)
