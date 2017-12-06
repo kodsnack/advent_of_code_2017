@@ -30,7 +30,13 @@ int Steps_Day5(vector<int> input){
     while(true){
         int current_value = input[current_index];
         next_index = current_index + current_value;     // calculate the next index
-        input[current_index]++;
+        int offset = current_value;
+        if(current_value >= 3){
+            input[current_index]--;
+        }else{
+            input[current_index]++;
+        }
+
         steps++;                                        // count it as a step
 
         if(next_index <0 || next_index > num_of_numbers-1){
