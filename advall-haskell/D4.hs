@@ -1,14 +1,20 @@
-module D4 where
+ module D4 where
 
-import Data.Char
+import Data.List (sort, nub)
 
-parseInput :: String -> String
-parseInput input = undefined
-
-
-solve1 :: String -> String
-solve1 input = "not yet implemented"
+parseInput :: String -> [[String]]
+parseInput input = map words $ lines input
 
 
-solve2 :: String -> String
-solve2 input = "not yet implemented"
+solve1 :: String -> Int
+solve1 input = length $ filter isValid1 $ parseInput input
+
+isValid1 :: [String] -> Bool
+isValid1 s = s == nub s
+
+
+solve2 :: String -> Int
+solve2 input = length $ filter isValid2 $ parseInput input
+
+isValid2 :: [String] -> Bool
+isValid2 s = isValid1 $ map sort s

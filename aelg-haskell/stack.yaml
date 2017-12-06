@@ -5,3 +5,6 @@ packages:
 
 ghc-build: standard
 system-ghc: false
+
+extra-deps:
+- containers-0.5.10.2

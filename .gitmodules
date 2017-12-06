@@ -28,9 +28,6 @@
 [submodule "timofurrer-python3"]
 	path = timofurrer-python3
 	url = https://github.com/timofurrer/advent-of-code
-[submodule "masssssy-python"]
-	path = masssssy-python
-	url = https://github.com/Masssssy/adventofcode2017.git
 [submodule "maddox-python"]
 	path = maddox-python
 	url = git@github.com:AmandaNilsson/Advent-of-code-17.git
@@ -49,3 +46,15 @@
 [submodule "rellem-cfml"]
 	path = rellem-cfml
 	url = https://github.com/rellem/advent_of_code_2017.git
+[submodule "orangeblock-clojure"]
+	path = orangeblock-clojure
+	url = https://github.com/orangeblock/advent-of-code
+[submodule "pirfalt-undecided"]
+	path = pirfalt-undecided
+	url = git@github.com:pirfalt/advent-of-code-2017.git
+[submodule "hakfah-erlang"]
+	path = hakfah-erlang
+	url = https://github.com/HFahlstedt/AdventOfCode2017.git
+[submodule "masssssy-python"]
+	path = masssssy-python
+	url = https://github.com/Masssssy/adventofcode2017.git
