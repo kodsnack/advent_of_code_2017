@@ -4,6 +4,7 @@ const input = [4, 1, 15, 12, 0, 9, 9, 5, 5, 8, 7, 3, 14, 5, 12, 3];
 const states = [[...input]];
 
 let stateHasDuplicate = false;
+let duplicateIndex;
 while (!stateHasDuplicate) {
   const largestValue = Math.max(...input);
   const indexOfLargestValue = input.indexOf(Math.max(...input));
@@ -18,15 +19,15 @@ while (!stateHasDuplicate) {
       currentIndex += 1;
     }
   }
-  // console.log(input);
   // Check for equal array inside states
   if (
-    states.filter(state => {
+    states.filter((state, i) => {
       for (let j = 0; j < state.length; j += 1) {
         if (state[j] !== input[j]) {
           return false;
         }
       }
+      duplicateIndex = i;
       return true;
     }).length > 0
   ) {
@@ -34,5 +35,5 @@ while (!stateHasDuplicate) {
   }
   states.push([...input]);
 }
-
 console.log(states.length - 1);
+console.log(states.length - 1 - duplicateIndex);
