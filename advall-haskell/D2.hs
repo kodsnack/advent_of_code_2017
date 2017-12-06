@@ -1,7 +1,5 @@
 module D2 where
 
-import Data.List
-
 parseInput :: String -> [[Integer]]
 parseInput input = map (map read) $ map words $ lines input
 
