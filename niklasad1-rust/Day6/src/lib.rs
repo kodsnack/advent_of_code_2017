@@ -26,16 +26,19 @@ impl Day6 {
 
         while !seen.contains(&memory_bank) {
             seen.insert(memory_bank.clone());
-            let mut max = *memory_bank.iter().max().unwrap();
-            let pos = memory_bank.iter().position(|&x| x == max).unwrap();
 
-            memory_bank[pos] = 0;
-            let mut next = (pos + 1) % len;
+            // important that enumerate() is performed before rev()
+            // inorder to get the correct index
+            if let Some((i, &max)) = memory_bank.iter().enumerate().rev().max_by_key(
+                |&(_, max)| max)
+            {
+                memory_bank[i] = 0;
 
-            while max > 0 {
-                memory_bank[next] += 1;
-                next = (next + 1) % len;
-                max -= 1;
+                // get a cyclic iterator over the vector 
+                // start at position i + 1 and iterate over max values
+                for i in (0..len).cycle().skip(i + 1).take(max) {
+                    memory_bank[i] += 1;
+                }
             }
 
             no_reallocations += 1;
