@@ -21,14 +21,14 @@ object Main extends App {
     redistribute(banks.updated(i, 0), (i + 1) % banks.length, m)
   }
 
-  def indexOfFirstRecurrence(history: Set[List[Int]], present: List[Int]): Int =
+  def indexOfFirstRecurrence(history: List[List[Int]], present: List[Int]): Int =
     if (history contains present)
-      history.size
+      history.indexOf(present) + 1
     else
-      indexOfFirstRecurrence(history + present, step(present))
+      indexOfFirstRecurrence(present +: history, step(present))
 
   println(s"A: ${banks}")
   println(s"A: ${step(banks)}")
-  println(s"A: ${indexOfFirstRecurrence(Set.empty, banks)}")
+  println(s"A: ${indexOfFirstRecurrence(Nil, banks)}")
 }
 
