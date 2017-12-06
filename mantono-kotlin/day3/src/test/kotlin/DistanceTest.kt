@@ -8,7 +8,7 @@ class DistanceTest
 	@Test
 	fun test1()
 	{
-		assertEquals(0, distance(0))
+		assertEquals(0, distance(1))
 	}
 
 	@Test

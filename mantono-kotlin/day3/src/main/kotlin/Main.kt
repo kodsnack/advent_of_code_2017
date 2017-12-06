@@ -2,13 +2,41 @@ package com.mantono.aoc
 
 fun main(args: Array<String>)
 {
-
+	println(distance(312051))
 }
 
 fun distance(n: Int): Int
 {
-	return -1
+	val layer: Int = layerOf(n)
+	val options: List<Int> = options(layer)
+	val closest: Int = findClosestValue(n, options)
+	val stepsToClosest: Int = Math.abs(n - closest)
+	// This does not give the closes way since it only counts steps in one direction
+	return (layer - 1) + stepsToClosest
 }
+
+fun findClosestValue(n: Int, values: List<Int>): Int
+{
+	val index: Int = values.asSequence()
+			.mapIndexed { index, i -> index to Math.abs(n - i) }
+			.onEach { println(it) }
+			.minBy { it.second }!!
+			.first
+
+	return values[index]
+}
+
+fun options(layer: Int): List<Int>
+{
+	val sideLength: Int = sideLength(layer)
+	val maxSteps: Int = (sideLength / 2)
+	//val values: Array<Int> = Array(4, {0})
+	val lastValue: Int = lastValueInLayer(layer)
+
+	return listOf(1, 3, 5, 7).map { lastValue - (it * maxSteps) }
+}
+
+fun sideLength(layer: Int): Int = (layer * 2) - 1
 
 fun layerOf(n: Int): Int = when(n)
 {
