@@ -6,6 +6,9 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
 import Day1
 import Day2
+import Day3
+import Day4
+import Day5
 
 
 main =
@@ -25,6 +28,9 @@ type Msg
 type Problem
     = Day1
     | Day2
+    | Day3
+    | Day4
+    | Day5
 
 
 type alias Model =
@@ -47,6 +53,9 @@ problems : List ( String, Problem )
 problems =
     [ ( toString Day1, Day1 )
     , ( toString Day2, Day2 )
+    , ( toString Day3, Day3 )
+    , ( toString Day4, Day4 )
+    , ( toString Day5, Day5 )
     ]
 
 
@@ -97,6 +106,54 @@ view model =
                     , dt [] [ text "Day 2, part 2" ]
                     , dd []
                         [ Day2.part2 model.input
+                            |> toString
+                            |> text
+                        ]
+                    ]
+
+            Day3 ->
+                dl []
+                    [ dt [] [ text "Day 3, part 1" ]
+                    , dd []
+                        [ Day3.part1 model.input
+                            |> toString
+                            |> text
+                        ]
+                    , dt [] [ text "Day 3, part 2" ]
+                    , dd []
+                        [ Day3.part2 model.input
+                            |> toString
+                            |> text
+                        ]
+                    ]
+
+            Day4 ->
+                dl []
+                    [ dt [] [ text "Day 4, part 1" ]
+                    , dd []
+                        [ Day4.part1 model.input
+                            |> toString
+                            |> text
+                        ]
+                    , dt [] [ text "Day 4, part 2" ]
+                    , dd []
+                        [ Day4.part2 model.input
+                            |> toString
+                            |> text
+                        ]
+                    ]
+
+            Day5 ->
+                dl []
+                    [ dt [] [ text "Day 5, part 1" ]
+                    , dd []
+                        [ Day5.part1 model.input
+                            |> toString
+                            |> text
+                        ]
+                    , dt [] [ text "Day 5, part 2" ]
+                    , dd []
+                        [ Day5.part2 model.input
                             |> toString
                             |> text
                         ]

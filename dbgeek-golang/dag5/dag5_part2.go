@@ -17,7 +17,7 @@ func castStringSliceToInt(s []string) []int {
 	return i
 }
 
-func day6Part2(i []int) int {
+func day5Part2(i []int) int {
 	pointer := 0
 	steps := 0
 
@@ -46,5 +46,5 @@ func main() {
 		i, _ := strconv.Atoi(fileScanner.Text())
 		input = append(input, i)
 	}
-	fmt.Println(day6Part2(input))
+	fmt.Println(day5Part2(input))
 }
