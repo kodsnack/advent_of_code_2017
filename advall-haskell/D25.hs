@@ -1,7 +1,5 @@
 module D25 where
 
-import Data.Char
-
 parseInput :: String -> String
 parseInput input = undefined
 

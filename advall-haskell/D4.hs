@@ -1,6 +1,6 @@
  module D4 where
 
-import Data.List
+import Data.List (sort, nub)
 
 parseInput :: String -> [[String]]
 parseInput input = map words $ lines input

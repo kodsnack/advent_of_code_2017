@@ -12,5 +12,8 @@ day2.m
 // MATLAB
 day3.m
 
-
+// Day 4
+// MATLAB
+// Use a variable "problem" to control if its 1 or 2
+day4.m
 
