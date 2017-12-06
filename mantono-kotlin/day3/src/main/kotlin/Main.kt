@@ -73,3 +73,12 @@ fun lastValueInLayer(layer: Int): Int
 }
 
 fun IntRange.middle(): Int = (this.start + this.last) / 2
+
+private val squareRootOfFive: Double = Math.sqrt(5.0)
+
+fun fibonacci(n: Int): Long
+{
+	val dividend: Double = Math.pow((1 + squareRootOfFive), n.toDouble()) - Math.pow((1 - squareRootOfFive), n.toDouble())
+	val divider: Double = Math.pow(2.0, n.toDouble()) * squareRootOfFive
+	return (dividend / divider).toLong()
+}
