@@ -1,0 +1,15 @@
+* Run Instructions
+
+=day6.go= takes 2 arguments. First specifies which part (=1= or =2=).
+Second argument is the filename to the file that contains the memory banks.
+
+Examples:
+#+BEGIN_SRC bash
+go run day6.go 1 memory.org
+#+END_SRC
+
+
+#+BEGIN_SRC bash
+go run day6.go 2 memory.org
+#+END_SRC
+
