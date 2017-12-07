@@ -6,16 +6,8 @@ input = sys.stdin.read()
 input = [re.split(r'\W+', l) for l in input.split('\n') if l]
 
 #Create lookup for programs and their weights and children
-weights = {}
-children = {}
-for l in input:
-    #Save node weight
-    weights[l[0]] = int(l[1])
-    #Node children
-    if l[2]:
-        children[l[0]] = l[2:]
-    else:
-        children[l[0]] = []
+weights = {l[0]:int(l[1]) for l in input}
+children = {l[0]:l[2:] if l[2] else [] for l in input}
 
 #Get the total node weight including all children weights
 def get_sum(n):
