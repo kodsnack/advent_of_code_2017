@@ -15,16 +15,25 @@ struct item {
 
 enum class State { name, num, chld };
 
-int find_error(std::map<std::string, item> & m, std::string r) {
+std::string find_diff_node(std::map<std::string, item> & m, std::string r) {
+    if(m[r].children.empty()) return r;
+
     std::map<int, int> weights;
     for(auto c : m[r].children) {
         weights[m[c].totw]++;
     }
+    if(weights.size() < 2) return r;
+
+    int cnt = 0;
+
     for(auto w : weights) {
-        //std::cout << w.first << " " << w.second << std::endl;
+        if(w.second == 1) cnt = w.first;
     }
 
-    return 0;
+    for(auto c : m[r].children) {
+        if(m[c].totw == cnt) return find_diff_node(m, c);
+    }
+    return "";
 }
 
 int main() {
@@ -107,8 +116,17 @@ int main() {
 
     }
 
-    ans2 = find_error(m, ans1);
+    auto n  = find_diff_node(m, ans1);
 
+    auto w = m[n];
+    auto p = m[w.parent];
+    for(auto pc : p.children) {
+        auto diff = w.totw - m[pc].totw;
+        if(diff) {
+            ans2 = w.weight - diff;
+            break;
+        }
+    }
 
     std::cout << ans1 << std::endl;
     std::cout << ans2 << std::endl;
