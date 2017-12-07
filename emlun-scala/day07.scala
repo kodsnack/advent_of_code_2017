@@ -1,36 +1,22 @@
 object Main extends App {
   val basePattern = raw"(\S+) \((\d+)\)(.*)".r
 
-  case class Program(name: String, weight: Int, supports: Set[String]) {
-    def supportedWeights(allPrograms: Map[String, Program]): List[Int] =
-      supports.toList.map { name => allPrograms(name).totalWeight(allPrograms) }
-
-    def totalWeight(allPrograms: Map[String, Program]): Int =
-      weight + supportedWeights(allPrograms).sum
-
-    def isBalanced(allPrograms: Map[String, Program]): Boolean = {
-      val sw = supportedWeights(allPrograms)
-      println(s"isBalanced ${this} ${sw}")
-      sw.toSet.size == 1
-    }
-
-    def allChildrenBalanced(allPrograms: Map[String, Program]): Boolean =
-      supports
-        .map(allPrograms)
-        .forall(_.isBalanced(allPrograms))
+  case class RawProgram(name: String, weight: Int, children: Set[String])
+  case class Program(name: String, weight: Int, children: Set[Program]) {
+    lazy val childWeights: List[Int] = children.toList.map { _.totalWeight }
+    lazy val totalWeight: Int = weight + childWeights.sum
+    def isBalanced: Boolean = childWeights.toSet.size == 1
+    def allChildrenBalanced: Boolean = children.forall { _.isBalanced }
   }
 
-  val allPrograms: Map[String, Program] = (for {
-    line <- io.Source.stdin.getLines
-    if !line.trim.isEmpty
-    program = {
-      println(line.trim)
-      line.trim match {
-      case basePattern(name, weight, rest) => Program(name, weight.toInt, supported(rest))
-    }}
-  } yield (program.name, program)).toMap
+  def buildTree(root: RawProgram, allPrograms: Map[String, RawProgram]): Program =
+    Program(
+      name = root.name,
+      weight = root.weight,
+      children = root.children.map { child => buildTree(allPrograms(child), allPrograms) }
+    )
 
-  def supported(rest: String): Set[String] =
+  def parseChildren(rest: String): Set[String] =
     rest
       .stripPrefix(" -> ")
       .split(',')
@@ -38,48 +24,44 @@ object Main extends App {
       .filter(!_.isEmpty)
       .toSet
 
-  val allSupported: Set[String] = allPrograms.values.flatMap(_.supports).toSet
-  val root = allPrograms.values.find({ p => !(allSupported contains p.name) }).get
+  def solveA(allPrograms: Set[RawProgram]): RawProgram = {
+    val allDescendants: Set[String] = allPrograms.flatMap(_.children).toSet
+    allPrograms.find({ p => !(allDescendants contains p.name) }).get
+  }
 
-  def solveB(root: Program, allPrograms: Map[String, Program]): Option[Int] = {
-    println(s"solveB ${root}")
-    println(s"weights ${root.supportedWeights(allPrograms)}")
-    println(s"allChildrenBalanced ${root.allChildrenBalanced(allPrograms)}")
-    println(s"children Balanced: ${root.supports.toList.map(allPrograms).map(_.isBalanced(allPrograms))}")
-
-    if (root.isBalanced(allPrograms))
+  def solveB(root: Program): Option[Int] = {
+    if (root.isBalanced)
       None
-    else if (root.allChildrenBalanced(allPrograms)) {
-      println(s"Unbalanced: ${root}")
-      println(s"Unbalanced weights: ${root.supportedWeights(allPrograms)}")
+    else if (root.allChildrenBalanced) {
+      val children = root.children
+      val childWeights = root.childWeights
 
-      val supports = root.supports.map(allPrograms)
-      val supportedWeights = root.supportedWeights(allPrograms)
-
-      val (goodWeights, badWeights) = supportedWeights.partition({ w => supportedWeights.count(_ == w) > 1 })
-      println(s"good weights: ${goodWeights}")
-      println(s"bad weights: ${badWeights}")
+      val (goodWeights, badWeights) = childWeights.partition({ w => childWeights.count(_ == w) > 1 })
       val goodWeight = goodWeights.head
       val badWeight = badWeights.head
 
-      val badProgram = supports.find({ _.totalWeight(allPrograms) == badWeight }).get
+      val badProgram = children.find({ _.totalWeight == badWeight }).get
 
-      println(supportedWeights)
-
-      println(goodWeight - badProgram.supportedWeights(allPrograms).sum)
-      Some(goodWeight - badProgram.supportedWeights(allPrograms).sum)
+      Some(goodWeight - badProgram.childWeights.sum)
     }
     else
       root
-        .supports
-        .map(allPrograms)
-        .flatMap(solveB(_, allPrograms))
+        .children
+        .flatMap(solveB)
         .headOption
   }
 
+  val rawPrograms: Map[String, RawProgram] = (for {
+    line <- io.Source.stdin.getLines
+    if !line.trim.isEmpty
+    program = {
+      line.trim match {
+      case basePattern(name, weight, rest) => RawProgram(name, weight.toInt, parseChildren(rest))
+    }}
+  } yield (program.name, program)).toMap
+
+  val root = solveA(rawPrograms.values.toSet)
+
   println(s"A: ${root.name}")
-
-  println(allPrograms)
-
-  println(s"B: ${solveB(root, allPrograms)}")
+  println(s"B: ${solveB(buildTree(root, rawPrograms)).get}")
 }
