@@ -2,71 +2,68 @@
 module Main where
 
 import Prelude hiding (repeat)
+import Control.Monad ((>=>))
 
-data IP = IP
+data Mem = Mem
   { left :: ![Int]
-  , current :: !Int
+  , ip :: !Int
   , right :: ![Int]
   } deriving (Show)
 
-initial :: [Int] -> IP
+initial :: [Int] -> Mem
 initial [] = error "Empty instruction list"
-initial (i:is) = IP [] i is
+initial (i:is) = Mem [] i is
 
-modify :: (Int -> Int) -> IP -> IP
-modify f ip = ip { current = f (current ip) }
+modify :: (Int -> Int) -> Mem -> Mem
+modify f mem = mem { ip = f (ip mem) }
 
-next :: IP -> Maybe IP
+next :: Mem -> Maybe Mem
 next s = case right s of
   [] -> Nothing
-  (x:xs) -> Just IP
-    { left = current s : left s
-    , current = x
+  (x:xs) -> Just Mem
+    { left = ip s : left s
+    , ip = x
     , right = xs
     }
 
-prev :: IP -> Maybe IP
+prev :: Mem -> Maybe Mem
 prev s = case left s of
   [] -> Nothing
-  (x:xs) -> Just IP
+  (x:xs) -> Just Mem
     { left = xs
-    , current = x
-    , right = current s : right s
+    , ip = x
+    , right = ip s : right s
     }
 
-repeat :: Int -> (IP -> Maybe IP) -> IP -> Maybe IP
-repeat 0 _ = Just
-repeat n f = \s -> do
-  s' <- f s
-  repeat (pred n) f s'
+repeat :: Int -> (Mem -> Maybe Mem) -> Mem -> Maybe Mem
+repeat 0 _ = pure
+repeat n f = f >=> repeat (pred n) f
 
-jump :: Int -> IP -> Maybe IP
+jump :: Int -> Mem -> Maybe Mem
 jump n =
   if n >= 0
   then repeat n next
   else repeat (abs n) prev
 
-execute1 :: Int -> IP -> Int
-execute1 steps s =
-  maybe steps' (execute1 steps') $
-  jump curr s1
+execute :: (Int -> Int) -> Int -> Mem -> Int
+execute f = go
   where
-    curr = current s
-    s1 = modify succ s
-    steps' = succ steps
+    go steps s =
+      maybe steps' (go steps') $
+      jump curr s1
+      where
+        curr = ip s
+        s1 = modify f s
+        steps' = succ steps
 
-execute2 :: Int -> IP -> Int
-execute2 steps s =
-  maybe steps' (execute2 steps') $
-  jump curr s1
+execute1 = execute succ
+
+execute2 = execute f
   where
-    curr = current s
-    f =
+    f curr =
       if curr >= 3
-      then pred
-      else succ
-    s1 = modify f s
-    steps' = succ steps
+      then pred curr
+      else succ curr
 
 main :: IO ()
 main = do
