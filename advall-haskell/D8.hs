@@ -32,12 +32,11 @@ lookupVar r vars = case Map.lookup r vars of
     Nothing -> 0 -- if r hasn't been initialized, we assume its value is 0.
 
 conditionHolds :: Map String Int -> String -> String -> String -> Bool
-conditionHolds vars e1 ">"  e2 = (lookupVar e1 vars) >  (read e2)
-conditionHolds vars e1 "<"  e2 = (lookupVar e1 vars) <  (read e2)
-conditionHolds vars e1 ">=" e2 = (lookupVar e1 vars) >= (read e2)
-conditionHolds vars e1 "<=" e2 = (lookupVar e1 vars) <= (read e2)
-conditionHolds vars e1 "==" e2 = (lookupVar e1 vars) == (read e2)
-conditionHolds vars e1 "!=" e2 = (lookupVar e1 vars) /= (read e2)
+conditionHolds vars e1 fStr e2 = (lookupVar e1 vars) `f` (read e2)
+    where   f = head $ [ff | (sf,ff) <- strFMap, sf == fStr]
+            strFMap :: [(String, (Int -> Int -> Bool))]            
+            strFMap = [  (">" ,(>) ), ("<" ,(<) ), (">=",(>=))
+                       , ("<=",(<=)), ("==",(==)), ("!=",(/=)) ]
 
 solve1 :: String -> Int
 solve1 input = maximum $ map snd $ Map.toList $ snd $ execInstrs (0, Map.empty)
