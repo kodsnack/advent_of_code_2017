@@ -38,7 +38,7 @@ while(my $r = <STDIN>) {
 }
 
 foreach my $reg (keys %{$registers}) {
-    $max = $registers->{$reg} if($registers->{$reg} > $max || !defined($max));
+    $max = $registers->{$reg} if(!defined($max) ||$registers->{$reg} > $max);
 }
 print $max;
 

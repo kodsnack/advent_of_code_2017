@@ -34,7 +34,7 @@ while(my $r = <STDIN>) {
 	    $registers->{$parts[0]} -= $parts[2];
 	}
 	
-	$max = $registers->{$parts[0]} if($registers->{$parts[0]} > $max || !defined($max));
+	$max = $registers->{$parts[0]} if(!defined($max) || $registers->{$parts[0]} > $max);
     }
 }
 
