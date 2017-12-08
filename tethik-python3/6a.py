@@ -9,9 +9,9 @@ while state not in visited:
     # O(n) find max
     _max = memory_banks[0]
     start_index = 0
-    for i, bank in enumerate(memory_banks):
-        if bank > _max:
-            _max = bank
+    for i, val in enumerate(memory_banks[1:]):
+        if val > _max:
+            _max = val
             start_index = i
 
     memory_banks[start_index] = 0
