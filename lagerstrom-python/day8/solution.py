@@ -77,15 +77,20 @@ def parse_line(parse_string):
 
 
 def main():
+    highest_num = 0
     with open('data.txt', 'r') as f:
         test_strings = f.read().strip().split('\n')
 
     for test_string in test_strings:
         parse_line(test_string)
+        int_list = list(map(int, state_dict.values()))
+        if highest_num < max(int_list):
+            highest_num = max(int_list)
+
 
     int_list = map(int, state_dict.values())
-    return sorted(int_list)[-1]
+    return highest_num, sorted(int_list)[-1]
 
 
 if __name__ == '__main__':
-    print(main())
+    print('Answer1: %d\nAnswer2: %d' % (main()))
