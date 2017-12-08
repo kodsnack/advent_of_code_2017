@@ -8,7 +8,7 @@ queue = banks.sort
 (1..Int32::MAX).each do |n|
   val = queue.pop
   value, val[0] = val[0], 0
-  value.times { |i| banks[(-val[1] + i + 1) % banks.size][0] += 1}
+  value.times { |i| banks[(-val[1] + i + 1) % banks.size][0] += 1 }
   queue.unshift val
   # eww, it would be nice with a pqueue in stdlib. But bother doing a
   # more efficient solution when the program takes 0.007 seconds to
