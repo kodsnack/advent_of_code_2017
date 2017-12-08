@@ -1,31 +1,25 @@
 from collections import defaultdict
 
+registers = defaultdict(int)
+
+def parse(instruction):
+    a = instruction[0]
+    sign = 1 if instruction[1] == 'inc' else -1
+    achange = int(instruction[2])
+    b = instruction[4]
+    op = instruction[5]
+    bcomp = int(instruction[6])
+    
+    return a, sign, achange, b, op, bcomp
+
+def evaluate(bval, op, bcomp):
+    s = str(bval) + op + str(bcomp)
+    return eval(s)
+
 def solve(instructions):
-    registers = defaultdict(int)
-
     for instruction in instructions:
-        a = instruction[0]
-        b = instruction[4]
-        bval = registers[b]
-        achange = int(instruction[2])
-        bcomp = int(instruction[-1])
-        operator = instruction[-2]
-        sign = 1 if instruction[1] == 'inc' else -1
-
-        succeeds = True
-
-        if operator == '==':
-            succeeds = bval == bcomp
-        elif operator == '>':
-            succeeds = bval > bcomp
-        elif operator == '>=':
-            succeeds = bval >= bcomp
-        elif operator == '<':
-            succeeds = bval < bcomp
-        elif operator == '<=':
-            succeeds = bval <= bcomp
-        elif operator == '!=':
-            succeeds = bval != bcomp
+        a, sign, achange, b, op, bcomp = parse(instruction)
+        succeeds = evaluate(registers[b], op, bcomp)
 
         if succeeds:
             registers[a] += sign * achange
