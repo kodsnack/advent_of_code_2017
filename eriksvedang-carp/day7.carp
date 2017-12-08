@@ -22,8 +22,8 @@
         new-disc (Disc.set-used disc true)]
     (aset! discs i new-disc)))
 
-;; Core library version dosn't handle string comparison, right?
-(defn get-index-of-disc [discs name]
+;; This function is so ugly without lambdas...
+(defn index-of-disc-with-name [discs name]
   (let [result -1]
     (do
       (for [i 0 (count discs)]
@@ -36,7 +36,7 @@
   (for [i 0 (count discs)]
     (let [links (Disc.links (nth discs i))]
       (for [j 0 (count links)]
-        (mark discs (get-index-of-disc discs (nth links j)))))))
+        (mark discs (index-of-disc-with-name discs (nth links j)))))))
 
 (defn unused? [disc]
   (not (Disc.used disc)))
