@@ -5,18 +5,45 @@
 
 (deftype Disc
     [name String
-     links (Array String)])
+     links (Array String)
+     used Bool])
 
-(defn remove-trailing-comma [s]
+(defn cleanup [s]
   (first &(String.split-by s [\,])))
 
-(defn parse-disk [line]
+(defn parse-disc [line]
   (let [words (String.words @line)]
     (if (= 2 (count &words))
-      (Disc.init (first &words) [])
-      (Disc.init (first &words) (endo-map remove-trailing-comma (subarray &words 3))))))
+      (Disc.init (first &words) [] false)
+      (Disc.init (first &words) (endo-map cleanup (subarray &words 3)) false))))
+
+(defn mark [discs i]
+  (let [disc @(nth discs i)
+        new-disc (Disc.set-used disc true)]
+    (aset! discs i new-disc)))
+
+;; Core library version dosn't handle string comparison, right?
+(defn get-index-of-disc [discs name]
+  (let [result -1]
+    (do
+      (for [i 0 (count discs)]
+       (if (= name (Disc.name (nth discs i)))
+         (set! &result i)
+         ()))
+      result)))
+
+(defn solve! [discs]
+  (for [i 0 (count discs)]
+    (let [links (Disc.links (nth discs i))]
+      (for [j 0 (count links)]
+        (mark discs (get-index-of-disc discs (nth links j)))))))
+
+(defn unused? [disc]
+  (not (Disc.used disc)))
 
 (defn main []
   (let [input (read-file "day7.txt")
-        disks (copy-map parse-disk &(String.lines input))]
-    (println &(str &disks))))
+        discs (copy-map parse-disc &(String.lines input))]
+    (do
+      (solve! &discs)
+      (println (refstr &(filter unused? discs))))))
