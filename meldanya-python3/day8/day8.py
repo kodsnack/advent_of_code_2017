@@ -31,10 +31,10 @@ def run(program):
     for dst, op, src, cond in program:
         if cond(regs[src]):
             regs[dst] = op(regs[dst])
-        m = max([r for r in regs.values()])
+        m = max(r for r in regs.values())
         if m > all_max:
             all_max = m
-    return max([r for r in regs.values()]), all_max
+    return max(r for r in regs.values()), all_max
 
 
 def main():
