@@ -1,0 +1,22 @@
+(use Int)
+(use Array)
+(use String)
+(use IO)
+
+(deftype Disc
+    [name String
+     links (Array String)])
+
+(defn remove-trailing-comma [s]
+  (first &(String.split-by s [\,])))
+
+(defn parse-disk [line]
+  (let [words (String.words @line)]
+    (if (= 2 (count &words))
+      (Disc.init (first &words) [])
+      (Disc.init (first &words) (endo-map remove-trailing-comma (subarray &words 3))))))
+
+(defn main []
+  (let [input (read-file "day7.txt")
+        disks (copy-map parse-disk &(String.lines input))]
+    (println &(str &disks))))
