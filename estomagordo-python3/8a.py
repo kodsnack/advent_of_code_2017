@@ -32,10 +32,6 @@ def solve(instructions):
 
     return max(registers.values())
 
-t = ['b inc 5 if a > 1', 'a inc 1 if b < 5', 'c dec -10 if a >= 1', 'c inc -20 if c == 10']
- 
-print(solve([line.split() for line in t]))   
-
 with open('input_8.txt', 'r') as f:
     instructions = [line.split() for line in f.readlines()]
     print(solve(instructions))
