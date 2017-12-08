@@ -8,18 +8,14 @@ def parse(instruction):
     achange = int(instruction[2])
     b = instruction[4]
     op = instruction[5]
-    bcomp = int(instruction[6])
+    bcomp = instruction[6]
     
     return a, sign, achange, b, op, bcomp
-
-def evaluate(bval, op, bcomp):
-    s = str(bval) + op + str(bcomp)
-    return eval(s)
 
 def solve(instructions):
     for instruction in instructions:
         a, sign, achange, b, op, bcomp = parse(instruction)
-        succeeds = evaluate(registers[b], op, bcomp)
+        succeeds = eval(str(registers[b]) + op + bcomp)
 
         if succeeds:
             registers[a] += sign * achange
