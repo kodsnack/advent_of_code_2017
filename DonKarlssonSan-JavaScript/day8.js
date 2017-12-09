@@ -12,7 +12,7 @@ module.exports = class Registers {
                 this.executeInstruction(row);
             }
         });
-        console.log(this.max);
+        //console.log('Part 2: ' + this.max);
         return Math.max(...Array.from(this.registers.values()));
     }
 
