@@ -10,6 +10,7 @@ fprintf("Number of non-canceled characters within garbage in input?: %d\n", g);
 assert(s == 9251)
 assert(g == 4322)
 
+
 %
 % Helpers
 %
