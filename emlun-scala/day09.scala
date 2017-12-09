@@ -1,3 +1,5 @@
+import scala.language.implicitConversions
+
 object Main extends App {
 
   val stream = for {
@@ -5,8 +7,11 @@ object Main extends App {
     char <- line
   } yield char
 
-  def pairplus(a: (Int, Int), b: (Int, Int)): (Int, Int) = (a, b) match {
-    case ((aa, ab), (ba, bb)) => (aa + ba, ab + bb)
+  implicit def pairToPairOps(a: (Int, Int)) = new PairOps(a)
+  class PairOps(a: (Int, Int)) {
+    def +(b: (Int, Int)) = (a, b) match {
+      case ((aa, ab), (ba, bb)) => (aa + ba, ab + bb)
+    }
   }
 
   def process(stream: Iterator[Char], result: (Int, Int), level: Int, inGarbage: Boolean, ignoreNext: Boolean): (Int, Int) =
@@ -20,12 +25,12 @@ object Main extends App {
           next match {
             case '!' => process(rest, result, level, true, true)
             case '>' => process(rest, result, level, false, false)
-            case _   => process(rest, pairplus((0, 1), result), level, true, false)
+            case _   => process(rest, result + (0, 1), level, true, false)
           }
       else
         next match {
           case '{' => process(rest, result, level + 1, false, false)
-          case '}' => process(rest, pairplus((level, 0), result), level - 1, false, false)
+          case '}' => process(rest, result + (level, 0), level - 1, false, false)
           case '<' => process(rest, result, level, true, false)
           case ',' => process(rest, result, level, false, false)
         }
