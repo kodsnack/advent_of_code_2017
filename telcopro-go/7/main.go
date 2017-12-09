@@ -31,23 +31,91 @@ func parseRow(s string) (string, int, []string) {
 		}
 	}
 	return r, w, m
-
 }
 
-func weight(n *node) int {
-
-	w := 0
-	for _, name := range (*n).children {
-		w += nodeMap[name].weight
+func stringInArray(s string, a []string) bool {
+	for _, s2 := range a {
+		if s == s2 {
+			return true
+		}
 	}
-	return (*n).weight + w
+	return false
+}
+
+func findParent(name string) string {
+	for k, v := range nodeMap {
+		if stringInArray(name, v.children) {
+			return k
+		}
+	}
+	return ""
+}
+
+func findRoot() string {
+
+	for k := range nodeMap {
+		if findParent(k) == "" {
+			return k
+		}
+	}
+	return "error!"
+}
+
+func setWeights(startName string) int {
+	if len(nodeMap[startName].children) == 0 {
+		nodeMap[startName].weightOfBranch = nodeMap[startName].weight
+		return nodeMap[startName].weight
+	} else {
+		w := nodeMap[startName].weight
+		for _, n := range nodeMap[startName].children {
+			w += setWeights(n)
+		}
+		nodeMap[startName].weightOfBranch = w
+		return w
+	}
+}
+
+func printTree(name string) {
+	printNode(name)
+	if len(nodeMap[name].children) > 0 {
+		for i := 0; i < len(nodeMap[name].children); i++ {
+			printTree(nodeMap[name].children[i])
+		}
+	}
+}
+
+func printNode(name string) {
+
+	fmt.Printf("Node '%s' weight %d, total weight %d and has ", name, nodeMap[name].weight, nodeMap[name].weightOfBranch)
+	if len(nodeMap[name].children) == 0 {
+		fmt.Printf("no children.\n")
+	} else {
+		fmt.Printf("%d children:\n", len(nodeMap[name].children))
+		for i := 0; i < len(nodeMap[name].children); i++ {
+			fmt.Printf("  '%s', weight %d, total weight %d\n", nodeMap[name].children[i], nodeMap[nodeMap[name].children[i]].weight, nodeMap[nodeMap[name].children[i]].weightOfBranch)
+		}
+		fmt.Println()
+	}
+}
+
+func printUnbalanced() {
+	for s := range nodeMap {
+		if len(nodeMap[s].children) > 1 {
+			for i := 1; i < len(nodeMap[s].children); i++ {
+				if nodeMap[nodeMap[s].children[i-1]].weightOfBranch != nodeMap[nodeMap[s].children[i]].weightOfBranch {
+					fmt.Printf("Unbalanced node:\n")
+					printNode(s)
+				}
+			}
+		}
+	}
 }
 
 func main() {
 
 	nodeMap = make(map[string]*node)
 
-	file, err := os.Open("input1.txt")
+	file, err := os.Open("input.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -61,34 +129,10 @@ func main() {
 		nodeMap[n] = &node{w, 0, c}
 	}
 
-	// Add up total weight for each node's subnodes (includes node's weight)
-	for _, n := range nodeMap {
-		n.weightOfBranch = weight(n)
-	}
-
-	// Print all unbalanced nodes
-	for name, n := range nodeMap {
-
-		if len(n.children) > 1 { // More than 1 child - could be unbalanced
-			unbalanced := false
-			first := nodeMap[n.children[0]].weightOfBranch
-			for i := 1; i < len(n.children); i++ {
-				if nodeMap[n.children[i]].weightOfBranch != first {
-					unbalanced = true
-				}
-			}
-			if unbalanced {
-				fmt.Printf("Unbalanced branch. Node %s had children ", name)
-				for i := 0; i < len(n.children); i++ {
-					fmt.Printf("(%s: %d) ", n.children[i], nodeMap[n.children[i]].weightOfBranch)
-				}
-				fmt.Println()
-			}
-		}
-		//fmt.Println(name, " has total weight ", n.weightOfBranch)
-	}
-
-	fmt.Println(nodeMap["ahnofa"])
 	//rootEntry := nodeMap["ahnofa"]
 
+	root := findRoot()
+	fmt.Printf("The root node is %s\n", root)
+	setWeights(root)
+	printUnbalanced()
 }
