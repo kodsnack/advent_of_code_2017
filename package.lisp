@@ -10,6 +10,7 @@
 (defpackage #:aoc2017.day04 (:use #:cl))
 (defpackage #:aoc2017.day05 (:use #:cl))
 (defpackage #:aoc2017.day06 (:use #:cl))
+(defpackage #:aoc2017.day07 (:use #:cl))
 (defpackage #:aoc2017.day09 (:use #:cl))
 
 (fiasco:define-test-package #:aoc2017.tests

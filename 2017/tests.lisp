@@ -26,6 +26,10 @@
   (is (= 4074 (aoc2017.day06::part1 (input-for 2017 6))))
   (is (= 2793 (aoc2017.day06::part2 (input-for 2017 6)))))
 
+(deftest day07 ()
+  (is (string= "veboyvy" (aoc2017.day07::part1 (input-for 2017 7))))
+  (is (= 749 (aoc2017.day07::part2 (input-for 2017 7)))))
+
 (deftest day09 ()
   (is (= 14204 (aoc2017.day09::part1 (input-for 2017 9))))
   (is (= 6622 (aoc2017.day09::part2 (input-for 2017 9)))))
