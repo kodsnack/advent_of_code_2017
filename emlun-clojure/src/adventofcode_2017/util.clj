@@ -197,6 +197,13 @@
     (map f coll (iterate inc 0))
   )
 
+(defn pairs [ [a & bs] ]
+  (if (seq bs)
+    (concat
+      (mapcat (fn [b] [[a b] [b a]]) bs)
+      (pairs bs)
+    )))
+
 (defn splits
   { :test #(do
              (is (= (splits ()) [ [() ()] ]))

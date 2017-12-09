@@ -1,6 +1,6 @@
 module D1 where
 
-import Data.Char
+import Data.Char (digitToInt)
 
 parseInput :: String -> [Int]
 parseInput input = map digitToInt $ filter (/= '\n') input

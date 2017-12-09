@@ -1,0 +1,49 @@
+(use Int)
+(use Array)
+(use String)
+(use IO)
+
+(deftype Disc
+    [name String
+     links (Array String)
+     used Bool])
+
+(defn cleanup [s]
+  (first &(String.split-by s [\,])))
+
+(defn parse-disc [line]
+  (let [words (String.words @line)]
+    (if (= 2 (count &words))
+      (Disc.init (first &words) [] false)
+      (Disc.init (first &words) (endo-map cleanup (subarray &words 3)) false))))
+
+(defn mark [discs i]
+  (let [disc @(nth discs i)
+        new-disc (Disc.set-used disc true)]
+    (aset! discs i new-disc)))
+
+;; This function is so ugly without lambdas...
+(defn index-of-disc-with-name [discs name]
+  (let [result -1]
+    (do
+      (for [i 0 (count discs)]
+       (if (= name (Disc.name (nth discs i)))
+         (set! &result i)
+         ()))
+      result)))
+
+(defn solve! [discs]
+  (for [i 0 (count discs)]
+    (let [links (Disc.links (nth discs i))]
+      (for [j 0 (count links)]
+        (mark discs (index-of-disc-with-name discs (nth links j)))))))
+
+(defn unused? [disc]
+  (not (Disc.used disc)))
+
+(defn main []
+  (let [input (read-file "day7.txt")
+        discs (copy-map parse-disc &(String.lines input))]
+    (do
+      (solve! &discs)
+      (println (refstr &(filter unused? discs))))))

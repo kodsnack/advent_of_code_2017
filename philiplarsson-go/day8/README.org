@@ -1,0 +1,10 @@
+* Run Instructions
+
+=day8.go= takes the filename as its only argument.
+
+Solution for both part 1 and part 2 will be shown.
+
+Example:
+#+BEGIN_SRC bash
+go run day8.go instructions.in
+#+END_SRC

@@ -1,0 +1,38 @@
+(use String)
+(use Int)
+(use Array)
+
+(defn line-to-ints [line]
+  (let [words (String.words @line)]
+    (copy-map from-string &words)))
+
+(defn diff-value [ints]
+  (let [a (max ints)
+        b (min ints)]
+    (- a b)))
+
+(defn evenly-divide-value [ints]
+  (let [answer 0
+        n (count ints)]
+    (do
+      (for [i 0 n]
+        (for [j 0 n]
+          (let [a @(nth ints i)
+                b @(nth ints j)
+                division (/ a b)]
+            (if (and (/= a b) (= 0 (mod a b)))
+              (set! &answer division)
+              ()))))
+      answer)))
+
+(defn main []
+  (let [input (IO.read-file "day2.txt")
+        lines (String.lines input)
+        numbers (copy-map line-to-ints &lines)
+        values-1 (copy-map diff-value &numbers)
+        answer-1 (sum &values-1)
+        values-2 (copy-map evenly-divide-value &numbers)
+        answer-2 (sum &values-2)]
+    (do
+      (IO.println (refstr answer-1))
+      (IO.println (refstr answer-2)))))

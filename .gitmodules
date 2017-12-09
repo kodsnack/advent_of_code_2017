@@ -28,3 +28,39 @@
 [submodule "timofurrer-python3"]
 	path = timofurrer-python3
 	url = https://github.com/timofurrer/advent-of-code
+[submodule "maddox-python"]
+	path = maddox-python
+	url = git@github.com:AmandaNilsson/Advent-of-code-17.git
+[submodule "erikbrannstrom-python3"]
+	path = erikbrannstrom-python3
+	url = git@github.com:erikbrannstrom/advent-of-code-2017.git
+[submodule "mangefox-kotlin"]
+	path = mangefox-kotlin
+	url = https://github.com/mangefox/advent_of_code_2017
+[submodule "olssonm-php"]
+	path = olssonm-php
+	url = git@github.com:olssonm/advent-of-code.git
+[submodule "ivanpedersen-go"]
+	path = ivanpedersen-go
+	url = https://github.com/ivanpedersen/aoc17.git
+[submodule "rellem-cfml"]
+	path = rellem-cfml
+	url = https://github.com/rellem/advent_of_code_2017.git
+[submodule "orangeblock-clojure"]
+	path = orangeblock-clojure
+	url = https://github.com/orangeblock/advent-of-code
+[submodule "pirfalt-undecided"]
+	path = pirfalt-undecided
+	url = git@github.com:pirfalt/advent-of-code-2017.git
+[submodule "hakfah-erlang"]
+	path = hakfah-erlang
+	url = https://github.com/HFahlstedt/AdventOfCode2017.git
+[submodule "masssssy-python"]
+	path = masssssy-python
+	url = https://github.com/Masssssy/adventofcode2017.git
+[submodule "prositen-python"]
+	path = prositen-python
+	url = git@github.com:prositen/advent-of-code.git
+[submodule "LinAGKar-rust"]
+	path = LinAGKar-rust
+	url = git@github.com:LinAGKar/advent-of-code-2017-rust.git
