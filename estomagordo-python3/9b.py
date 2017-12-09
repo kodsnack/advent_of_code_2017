@@ -19,6 +19,6 @@ def solve(s):
 
     return count
 
-with open('input.txt', 'r') as f:
+with open('input_9.txt', 'r') as f:
     s = f.read().strip()
     print(solve(s))
