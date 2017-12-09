@@ -5,6 +5,7 @@ debug:
 
 test:
 	[ "`p4a.py test.txt`" = 2 ]
+	[ "`p4a.py input.txt`" = 477 ]
 
 run:
 	p4a.py input.txt
