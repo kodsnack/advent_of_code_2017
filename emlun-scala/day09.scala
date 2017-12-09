@@ -5,25 +5,6 @@ object Main extends App {
     char <- line
   } yield char).toSeq
 
-  case class State(level: Int, ignoreNext: Boolean, inGarbage: Boolean)
-
-  def foldNext(state: State, next: Char): State =
-    if (state.inGarbage)
-      if (state.ignoreNext)
-        state.copy(ignoreNext = false)
-      else
-        next match {
-          case '!' => state.copy(ignoreNext = true)
-          case '>' => state.copy(inGarbage = false)
-          case _   => state
-        }
-    else
-      next match {
-        case '{' => state.copy(level = state.level + 1)
-        case '}' => state.copy(level = state.level - 1)
-        case '<' => state.copy(inGarbage = true)
-      }
-
   def pairplus(a: (Int, Int), b: (Int, Int)): (Int, Int) = (a, b) match {
     case ((aa, ab), (ba, bb)) => (aa + ba, ab + bb)
   }
@@ -49,9 +30,8 @@ object Main extends App {
         }
   }
 
-  def solveA(stream: Seq[Char]): Int = process(stream, (0, 0), 0, false, false)._1
-  def solveB(stream: Seq[Char]): Int = process(stream, (0, 0), 0, false, false)._2
+  val (a, b): (Int, Int) = process(stream.toList, (0, 0), 0, false, false)
 
-  println(s"A: ${solveA(stream.toList)}")
-  println(s"B: ${solveB(stream.toList)}")
+  println(s"A: ${a}")
+  println(s"B: ${b}")
 }
