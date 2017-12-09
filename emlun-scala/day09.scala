@@ -24,28 +24,34 @@ object Main extends App {
         case '<' => state.copy(inGarbage = true)
       }
 
-  def process(stream: Seq[Char], level: Int, inGarbage: Boolean, ignoreNext: Boolean): Int = stream match {
-    case Nil => 0
+  def pairplus(a: (Int, Int), b: (Int, Int)): (Int, Int) = (a, b) match {
+    case ((aa, ab), (ba, bb)) => (aa + ba, ab + bb)
+  }
+
+  def process(stream: Seq[Char], result: (Int, Int), level: Int, inGarbage: Boolean, ignoreNext: Boolean): (Int, Int) = stream match {
+    case Nil => result
     case next :: rest =>
       if (inGarbage)
         if (ignoreNext)
-          process(rest, level, true, false)
+          process(rest, result, level, true, false)
         else
           next match {
-            case '!' => process(rest, level, true, true)
-            case '>' => process(rest, level, false, false)
-            case _   => process(rest, level, true, false)
+            case '!' => process(rest, result, level, true, true)
+            case '>' => process(rest, result, level, false, false)
+            case _   => process(rest, pairplus((0, 1), result), level, true, false)
           }
       else
         next match {
-          case '{' => process(rest, level + 1, false, false)
-          case '}' => level + process(rest, level - 1, false, false)
-          case '<' => process(rest, level, true, false)
-          case ',' => process(rest, level, false, false)
+          case '{' => process(rest, result, level + 1, false, false)
+          case '}' => process(rest, pairplus((level, 0), result), level - 1, false, false)
+          case '<' => process(rest, result, level, true, false)
+          case ',' => process(rest, result, level, false, false)
         }
   }
 
-  def solveA(stream: Seq[Char]): Int = process(stream, 0, false, false)
+  def solveA(stream: Seq[Char]): Int = process(stream, (0, 0), 0, false, false)._1
+  def solveB(stream: Seq[Char]): Int = process(stream, (0, 0), 0, false, false)._2
 
   println(s"A: ${solveA(stream.toList)}")
+  println(s"B: ${solveB(stream.toList)}")
 }
