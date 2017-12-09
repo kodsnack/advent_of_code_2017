@@ -3,28 +3,19 @@ import re
 
 inp = readInput()
 def calc(s):
-    nest = 0
-    garbage=False
-    esc=False
-    su=0
-    g = 0
+    nest, su, g = 0, 0, 0
+    garbage, esc = False, False
     for c in s:
         if esc:
             esc=False
-            continue
-        if c=='!':
+        elif c=='!':
             esc=True
-            continue
-        elif c=='<':
-            if garbage:
-                g += 1
-            garbage=True
         elif c=='>' and garbage:
             garbage=False
         elif garbage:
             g += 1
-        elif c==',':
-            pass
+        elif c=='<':
+            garbage=True
         elif c=='{':
             nest += 1
         elif c=='}':
