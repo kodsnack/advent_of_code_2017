@@ -129,8 +129,6 @@ func main() {
 		nodeMap[n] = &node{w, 0, c}
 	}
 
-	//rootEntry := nodeMap["ahnofa"]
-
 	root := findRoot()
 	fmt.Printf("The root node is %s\n", root)
 	setWeights(root)
