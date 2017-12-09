@@ -15,8 +15,20 @@ import qualified Three
 import qualified Four
 import qualified Five
 import qualified Six
+import qualified Seven
+import qualified Eight
 
-solved = M.fromList [(1, One.solve), (2, Two.solve), (3, Three.solve), (4, Four.solve), (5, Five.solve), (6, Six.solve)]
+solved =
+  M.fromList
+    [ (1, One.solve)
+    , (2, Two.solve)
+    , (3, Three.solve)
+    , (4, Four.solve)
+    , (5, Five.solve)
+    , (6, Six.solve)
+    , (7, Seven.solve)
+    , (8, Eight.solve)
+    ]
 
 getSolution x = M.findWithDefault notImplemented x solved
 
