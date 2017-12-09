@@ -2,7 +2,7 @@ from aocbase import readInput
 import re
 
 inp = readInput()
-inp2 = """pbga (66)
+ex = """pbga (66)
 xhth (57)
 ebii (61)
 havc (66)
@@ -17,37 +17,44 @@ gyxo (61)
 cntj (57)"""
 
 pat = re.compile(r"^(\w+) \((\d+)\)\s*-?>? ?([a-z, ]*)")
-d = dict()
-carried = set()
-all = set()
-for row in inp.splitlines():
-    m = pat.match(row)
-    if m:
-        robot = m.group(1)
-        weight = int(m.group(2))
-        carry = list(map(lambda s:s.strip(), m.group(3).split(",")))
-        if carry[0] == '':
-            carry = []
-        d[robot] = (weight, set(carry))
-        carried = carried.union(d[robot][1])
-        all.add(robot)
-bottom = list(all-carried)[0]
-print(bottom)
+
+def buildTree(inp):
+    tree = dict()
+    carriedNodes = set()
+    allNodes = set()
+    for row in inp.splitlines():
+        m = pat.match(row)
+        if m:
+            nodeName = m.group(1)
+            if m.group(3) != "":
+                carried = list(map(lambda s:s.strip(), m.group(3).split(",")))
+            else:
+                carried = list()
+            tree[nodeName] = {"weight":int(m.group(2)), "carried":carried}
+            carriedNodes = carriedNodes.union(set(carried))
+            allNodes.add(nodeName)
+    bottom = list(allNodes-carriedNodes)[0]
+    return (bottom, tree)
 
 def search(bottom, tower):
-    if len(tower[bottom][1])==0:
-        return tower[bottom][0]
-    l = list(map(lambda b,t=tower:search(b, t), tower[bottom][1]))
+    if len(tower[bottom]["carried"])==0:
+        return tower[bottom]["weight"]
+    l = list(map(lambda b,t=tower:search(b, t), tower[bottom]["carried"]))
     s = set(l)
     if len(s) == 2:
         for i in range(len(l)):
             if l.count(l[i])==1:
-                theWeight = tower[list(tower[bottom][1])[i]][0]
+                theWeight = tower[list(tower[bottom]["carried"])[i]]["weight"]
             else:
-                otherWeight = tower[list(tower[bottom][1])[i]][0]
+                otherWeight = tower[list(tower[bottom]["carried"])[i]]["weight"]
         raise RuntimeError("Found answer {}".format(theWeight - otherWeight))
-    return tower[bottom][0]+sum(l)
+    return tower[bottom]["weight"]+sum(l)
+
+bottomNode, nodeTree = buildTree(ex)
+
+print("Puzzle 1, example: {}".format(bottomNode))
+print(nodeTree)
 try:
-    search(bottom, d)
+    search(bottomNode, nodeTree)
 except RuntimeError as e:
     print(e)
