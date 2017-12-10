@@ -10,9 +10,14 @@ class ListNode(object):
     def move(self, num):
         if num == 0:
             return self
-        if num < 0:
-            return self.prev.move(num + 1)
-        return self.next.move(num - 1)
+        curr = self
+        while num < 0:
+            curr = curr.prev
+            num += 1
+        while num > 0:
+            curr = curr.next
+            num -= 1
+        return curr
 
     def find_start(self):
         curr = self
@@ -119,11 +124,10 @@ raw_input = input()
 byte_lengths = [ord(i) for i in raw_input.strip()]
 suffix = [17, 31, 73, 47, 23]
 byte_lengths.extend(suffix)
-print(byte_lengths)
+# print(byte_lengths)
 skip_size = 0
 curr = start
 for _ in range(64):
-    # print_chain(start)
     curr, skip_size = knot_round(curr, byte_lengths, skip_size)
 
 # Compute dense hash
@@ -134,16 +138,14 @@ for _ in range(total_length):
     values.append(curr.val)
     curr = curr.next
 
-print(values)
+# print(values)
 # Perform xor
 hx = ""
 for i in range(0, 256, 16):
-    print(values[i:i+16])
     xored_byte = reduce(lambda p,c: p ^ c, values[i:i+16], 0)
     h = hex(xored_byte)[2:]
     if len(h) == 1:
         h = '0' + h
-    print(i, xored_byte, h)
     hx += h
 
 print(hx)
