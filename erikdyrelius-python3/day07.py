@@ -44,17 +44,23 @@ def search(bottom, tower):
     if len(s) == 2:
         for i in range(len(l)):
             if l.count(l[i])==1:
-                theWeight = tower[list(tower[bottom]["carried"])[i]]["weight"]
+                theIdx = i
+                theWeight = l[i]
             else:
-                otherWeight = tower[list(tower[bottom]["carried"])[i]]["weight"]
-        raise RuntimeError("Found answer {}".format(theWeight - otherWeight))
+                otherWeight = l[i]
+        raise RuntimeError(tower[tower[bottom]["carried"][theIdx]]["weight"] - theWeight + otherWeight)
     return tower[bottom]["weight"]+sum(l)
 
-bottomNode, nodeTree = buildTree(ex)
+def puzzle2(bottomNode, nodeTree):
+    try:
+        search(bottomNode, nodeTree)
+    except RuntimeError as e:
+        return int(str(e))
 
+bottomNode, nodeTree = buildTree(ex)
 print("Puzzle 1, example: {}".format(bottomNode))
-print(nodeTree)
-try:
-    search(bottomNode, nodeTree)
-except RuntimeError as e:
-    print(e)
+print("Puzzle 2, example: {}".format(puzzle2(bottomNode, nodeTree)))
+
+bottomNode, nodeTree = buildTree(inp)
+print("Puzzle 1, solution: {}".format(bottomNode))
+print("Puzzle 2, solution: {}".format(puzzle2(bottomNode, nodeTree)))
