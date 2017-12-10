@@ -30,6 +30,10 @@
   (is (string= "veboyvy" (aoc2017.day07::part1 (input-for 2017 7))))
   (is (= 749 (aoc2017.day07::part2 (input-for 2017 7)))))
 
+(deftest day08 ()
+  (is (= 7296 (aoc2017.day08::part1 (input-for 2017 8))))
+  (is (= 8186 (aoc2017.day08::part2 (input-for 2017 8)))))
+
 (deftest day09 ()
   (is (= 14204 (aoc2017.day09::part1 (input-for 2017 9))))
   (is (= 6622 (aoc2017.day09::part2 (input-for 2017 9)))))

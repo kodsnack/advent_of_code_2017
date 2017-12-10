@@ -11,6 +11,7 @@
 (defpackage #:aoc2017.day05 (:use #:cl))
 (defpackage #:aoc2017.day06 (:use #:cl))
 (defpackage #:aoc2017.day07 (:use #:cl))
+(defpackage #:aoc2017.day08 (:use #:cl))
 (defpackage #:aoc2017.day09 (:use #:cl))
 (defpackage #:aoc2017.day10 (:use #:cl))
 
