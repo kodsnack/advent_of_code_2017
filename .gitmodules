@@ -64,3 +64,6 @@
 [submodule "LinAGKar-rust"]
 	path = LinAGKar-rust
 	url = git@github.com:LinAGKar/advent-of-code-2017-rust.git
+[submodule "aoc2017_idstam"]
+	path = aoc2017_idstam
+	url = https://github.com/idstam/aoc2017_idstam
