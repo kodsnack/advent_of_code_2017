@@ -80,4 +80,3 @@ suite "Puzzle 2":
     test "Example 4":
         check(puzzle2(800)==806)
     echo "Result: ", puzzle2(312051)
-    
