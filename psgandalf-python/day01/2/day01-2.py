@@ -11,14 +11,3 @@ for counter in range (0, len(input)):
     sum+=int(input[counter])
 
 print sum
-
-"""
-for ix, pos in enumerate(input):
-  
-    if pos == input[ix+1]:
-      sum += int(pos)
-  else:
-      if pos == input[0]:
-        sum += int(pos)
-
-print sum"""
