@@ -40,18 +40,18 @@ object Main extends App {
         )
     }
 
-  val commands: List[Command] = (for {
+  val commands: Seq[Command] = (for {
     line <- io.Source.stdin.getLines()
     command = parseCommand(line.trim)
-  } yield command).toList
+  } yield command).toSeq
 
-  def solveA(commands: List[Command]): Int =
+  def solveA(commands: Seq[Command]): Int =
     commands
       .foldLeft(Map.empty[String, Int]) { (state, command) => command.execute(state) }
       .values
       .max
 
-  def solveB(commands: List[Command]): Int =
+  def solveB(commands: Seq[Command]): Int =
     commands
       .scanLeft(Map.empty[String, Int]) { (state, command) => command.execute(state) }
       .flatMap { _.values }
