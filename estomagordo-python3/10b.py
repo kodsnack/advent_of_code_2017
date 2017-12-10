@@ -9,29 +9,17 @@ def solve(lengths, n):
 
     for _ in range(64):
         for l in lengths:
-            sublist = nums[pos:pos+l]
-            sublist += nums[:l-len(sublist)]
-            sublist = sublist[::-1]
+            sublist = (nums[pos:pos+l] + nums[:l - min(l, n - pos)])[::-1]
+            
             for x in range(l):
                 nums[(pos + x) % n] = sublist[x]
+                
             pos = (pos + l + skip) % n
-            skip += 1
+            skip += 1    
     
-    dense = []
-
-    for x in range(16):
-        val = nums[x*16]
-        for y in range(1,16):
-            val ^= nums[x*16+y]
-        dense.append(val)
+    dense = [reduce(lambda a,b: a^b, nums[x * 16:(x + 1) * 16]) for x in range(16)]
+    hash = ''.join(map(lambda num: hex(num)[2:].zfill(2), dense))
     
-    hash = ''
-    for num in dense:
-        h = hex(num)[2:]
-        if len(h) == 1:
-            h = '0' + h
-        hash += h
-
     return hash
 
 with open('input.txt', 'r') as f:
