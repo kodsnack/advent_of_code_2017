@@ -1,0 +1,1 @@
+print(sum(len(p)==len(set(p))for p in[l.split()for l in open('input_4.txt')]))
