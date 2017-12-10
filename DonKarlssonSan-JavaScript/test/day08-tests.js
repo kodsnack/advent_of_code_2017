@@ -1,4 +1,4 @@
-let Registers = require('../day8');
+let Registers = require('../day08');
 let expect = require('chai').expect;
 
 describe('Day 8, Part 1 - evaluate', function () {
@@ -43,7 +43,7 @@ c inc -20 if c == 10`;
     });
 
     // it("Result", function () {
-    //     const inputFile = "../day9-input.txt"; 
+    //     const inputFile = "../day08-input.txt"; 
     //     const path = require("path");
     //     const filepath = path.join(__dirname, inputFile);
     //     const fs = require('fs');

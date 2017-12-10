@@ -1,4 +1,4 @@
-let checksum = require("../day2-checksum");
+let checksum = require("../day02-checksum");
 let expect = require("chai").expect;
 
 describe("Checksum calculator", function () {
@@ -10,7 +10,7 @@ describe("Checksum calculator", function () {
 
     it("Checksum should be 18 (from file)", function () {
         const path = require('path');
-        let filepath = path.join(__dirname, 'day2-testdata.txt');
+        let filepath = path.join(__dirname, 'day02-testdata.txt');
         let result = checksum.calculateFromFile(filepath);
         expect(result).to.equal(18);
     });
@@ -23,7 +23,7 @@ describe("Checksum calculator", function () {
     
     // it("Day 2, Task 1)", function () {
     //     const path = require('path');
-    //     let filepath = path.join(__dirname, 'day2-sheet.txt');
+    //     let filepath = path.join(__dirname, 'day02-sheet.txt');
     //     let result = checksum.calculateFromFile(filepath);
     //     console.log(result);
     // });
@@ -52,7 +52,7 @@ describe("Checksum calculator 2", function () {
 
     // it("Day 2, Task 2)", function () {
     //     const path = require('path');
-    //     let filepath = path.join(__dirname, 'day2-sheet.txt');
+    //     let filepath = path.join(__dirname, 'day02-sheet.txt');
     //     let result = checksum.calculate2FromFile(filepath);
     //     console.log(result);
     // });

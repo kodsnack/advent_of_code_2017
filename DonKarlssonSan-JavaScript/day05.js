@@ -43,7 +43,7 @@ console.log(interrupt(`0
 1
 -3`));
 
-let path = './day5-input.txt'; 
+let path = './day05-input.txt'; 
 let result = interruptFromFile(path, interrupt);
 console.log(result);
 

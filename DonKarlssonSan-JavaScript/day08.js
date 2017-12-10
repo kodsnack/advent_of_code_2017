@@ -13,7 +13,7 @@ module.exports = class Registers {
             }
         });
         //console.log('Part 2: ' + this.max);
-        return Math.max(...Array.from(this.registers.values()));
+        return Math.max(...this.registers.values());
     }
 
     getValue(name) {
