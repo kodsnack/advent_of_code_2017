@@ -32,7 +32,7 @@ proc checkSum2(s: string): int =
     for line in s.splitLines:
         result.inc(lineCheck2(line))
 
-var inpData = getInpData()
+let inpData = getInpData()
 let ex1 = """
 5 1 9 5
 7 5 3
