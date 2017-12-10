@@ -1,3 +1,5 @@
+from functools import reduce
+
 class ListNode(object):
     def __init__(self, val, pos):
         self.pos = pos
@@ -34,7 +36,7 @@ def reverse(start, length, total_length):
     while length > 0:
         _next = curr.next
         _prev = curr.prev
-        print(curr, _next, _prev)
+        # print(curr, _next, _prev)
         # save it so we can connect the end
         curr.prev = _next
         after_end = _next
@@ -42,10 +44,6 @@ def reverse(start, length, total_length):
         last = curr
         curr = _next
         length -= 1
-
-    # print()
-    # print(start, last)
-    # print(before_start, after_end)
 
     if last != before_start:
         # last should be at the start
@@ -81,6 +79,21 @@ def print_chain(node):
     print(",".join(_list))
 
 
+
+def knot_round(start, lengths, skip_size):
+    current_pos = start
+
+    for length in lengths:
+        # 1. Reverse order of selected elements
+        current_pos = reverse(current_pos, length, total_length)
+
+        # 2. Move current position forward
+        current_pos = current_pos.move(skip_size + length)
+
+        # 3. Increase skip size.
+        skip_size = (skip_size + 1) % total_length
+    return current_pos, skip_size
+
 total_length = 256
 # Make a doubly linked list
 start = ListNode(0, 0)
@@ -96,28 +109,43 @@ for val in range(1,total_length):
 curr.next = start
 start.prev = curr
 
-print_chain(start)
+raw_input = input()
 
-lengths = [int(i) for i in input().split(",")]
+# # Solve 10a
+# lengths = [int(i) for i in raw_input.split(",")]
+# curr, _ = knot_round(start, lengths)
+# print(start.val * start.next.val)
 
-current_pos = start
+byte_lengths = [ord(i) for i in raw_input.strip()]
+suffix = [17, 31, 73, 47, 23]
+byte_lengths.extend(suffix)
+print(byte_lengths)
 skip_size = 0
-print()
+curr = start
+for _ in range(64):
+    # print_chain(start)
+    curr, skip_size = knot_round(curr, byte_lengths, skip_size)
 
-for length in lengths:
-    # 1. Reverse order of selected elements
-    current_pos = reverse(current_pos, length, total_length)
-    print()
-    print_chain(current_pos)
-    print()
+# Compute dense hash
+start = curr.find_start()
+values = []
+curr = start
+for _ in range(total_length):
+    values.append(curr.val)
+    curr = curr.next
 
-    # 2. Move current position forward
-    current_pos = current_pos.move(skip_size + length)
-    print("now at:", current_pos)
+print(values)
+# Perform xor
+hx = ""
+for i in range(0, 256, 16):
+    print(values[i:i+16])
+    xored_byte = reduce(lambda p,c: p ^ c, values[i:i+16], 0)
+    h = hex(xored_byte)[2:]
+    if len(h) == 1:
+        h = '0' + h
+    print(i, xored_byte, h)
+    hx += h
 
-    # 3. Increase skip size.
-    skip_size += 1
+print(hx)
 
-start = current_pos.find_start()
-print(start.val * start.next.val)
 # print_chain(start)
