@@ -1,0 +1,4 @@
+@test "{{name}}" {
+  result="$(echo {{input}} | python 4b.py)"
+  [[ "$result" == "{{output}}" ]]
+}

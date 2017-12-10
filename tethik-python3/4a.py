@@ -11,7 +11,7 @@ def is_valid(passphrase):
 counter = 0
 for line in sys.stdin:
     if is_valid(line.strip()):
-        print(line)
+        # print(line)
         counter += 1
 
 print(counter)
