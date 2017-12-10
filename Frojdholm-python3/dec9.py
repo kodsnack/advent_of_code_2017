@@ -1,6 +1,5 @@
 #!/bin/python
 
-from sys import argv
 import re
 
 
@@ -11,7 +10,7 @@ garbage = 0
 def count(match):
     global garbage
     start, end = match.span()
-    garbage += end - start - 2 # -2 since we need to account for <>
+    garbage += end - start - 2  # -2 since we need to account for <>
     return ''
 
 
@@ -33,8 +32,6 @@ def score(filename):
     return score
 
 
-
 if __name__ == '__main__':
     print(score('dec9input.txt'))
     print(garbage)
-
