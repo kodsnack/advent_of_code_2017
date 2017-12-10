@@ -8,15 +8,14 @@ namespace tor_selden_csharp
 {
     class Day6
     {
-        static List<int> input = new List<int> { 14, 0, 15, 12, 11, 11, 3, 5, 1, 6, 8, 4, 9, 1, 8, 4 };
-        static List<string> result;
 
         internal static void AB()
         {
-            result = new List<string>();
+            var input = new List<int> { 14, 0, 15, 12, 11, 11, 3, 5, 1, 6, 8, 4, 9, 1, 8, 4 };
+            var result = new List<string>();
             int iterations = 0;
 
-            while (result.GroupBy(n => n).All(c => c.Count() < 2))
+            while (!result.HasDuplicates())
             {
                 int maxIndex = input.IndexOf(input.Max());
                 int blocks = input[maxIndex];
@@ -27,8 +26,7 @@ namespace tor_selden_csharp
                     input[++maxIndex % input.Count]++;
                     blocks--;
                 }
-                var newResult = string.Join(".", input);
-                result.Add(newResult);
+                result.Add(string.Join(".", input));
                 iterations++;
             }
 
@@ -38,8 +36,8 @@ namespace tor_selden_csharp
                             .Where(g => g.Count() > 1)
                             .SelectMany(g => g, (g, x) => x.Index);
 
-            Console.WriteLine(iterations);
-            Console.WriteLine(duplicates.Max()-duplicates.Min());
+            Console.WriteLine($"A: {iterations}");
+            Console.WriteLine($"B: {duplicates.Max() - duplicates.Min()}");
         }
     }
 }
