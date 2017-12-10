@@ -1,4 +1,4 @@
-let day3 = require("../day3");
+let day3 = require("../day03");
 let expect = require("chai").expect;
 
 describe("Day 3, Part 1", function () {

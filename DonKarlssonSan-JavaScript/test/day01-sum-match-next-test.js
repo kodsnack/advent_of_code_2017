@@ -1,4 +1,4 @@
-let sumarizer = require("../day1-sum-match-next");
+let sumarizer = require("../day01-sum-match-next");
 let expect = require("chai").expect;
 
 describe("Sum match next", function () {
