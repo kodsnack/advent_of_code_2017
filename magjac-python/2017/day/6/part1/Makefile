@@ -7,6 +7,7 @@ debug:
 
 test:
 	[ "`p6a.py < test.txt`" = "5" ]
+	[ "`p6a.py < input.txt`" = "3156" ]
 
 run:
 	p6a.py < input.txt
