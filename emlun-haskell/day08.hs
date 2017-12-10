@@ -71,8 +71,14 @@ solveA contents = foldl1 max . Data.Map.elems . foldl execute (initialState comm
     commands :: [Command]
     commands = parseCommands contents
 
+solveB :: String -> Int
+solveB contents = foldl1 max . concatMap Data.Map.elems . scanl execute (initialState commands) $ commands
+  where
+    commands :: [Command]
+    commands = parseCommands contents
 
 main = do
   contents <- getContents
 
   putStrLn . ("A: " ++) . show . solveA $ contents
+  putStrLn . ("B: " ++) . show . solveB $ contents
