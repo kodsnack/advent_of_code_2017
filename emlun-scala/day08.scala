@@ -51,5 +51,12 @@ object Main extends App {
       .values
       .max
 
+  def solveB(commands: List[Command]): Int =
+    commands
+      .scanLeft(Map.empty[String, Int]) { (state, command) => command.execute(state) }
+      .flatMap { _.values }
+      .max
+
    println(s"A: ${solveA(commands)}")
+   println(s"B: ${solveB(commands)}")
 }
