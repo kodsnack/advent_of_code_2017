@@ -1,4 +1,4 @@
-let stream = require('../day9');
+let stream = require('../day09');
 let expect = require('chai').expect;
 
 describe('Day 9, part 1 - score', function () {
@@ -51,7 +51,7 @@ describe('Day 9, part 1 - score', function () {
     });
 
     // it("Result part 1", function () {
-    //     const inputFile = "../day9-input.txt"; 
+    //     const inputFile = "../day09-input.txt"; 
     //     const path = require("path");
     //     const filepath = path.join(__dirname, inputFile);
     //     const fs = require('fs');
@@ -82,7 +82,7 @@ describe('Day 9, part 2 - garbage counter', function () {
     });
 
     // it("Result part 2", function () {
-    //     const inputFile = "../day9-input.txt"; 
+    //     const inputFile = "../day09-input.txt"; 
     //     const path = require("path");
     //     const filepath = path.join(__dirname, inputFile);
     //     const fs = require('fs');
