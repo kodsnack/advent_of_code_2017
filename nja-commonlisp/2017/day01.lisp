@@ -10,17 +10,14 @@
       (integer-value a)
       0))
 
-(defun trim-lf (string)
-  (string-right-trim '(#\Linefeed) string))
-
 (defun paired-sum (sequence distance)
   (loop for ai below (length sequence)
         for bi = (mod (+ ai distance) (length sequence))
         summing (paired-value (elt sequence ai) (elt sequence bi))))
 
 (defun part1 (input)
-  (paired-sum (trim-lf input) 1))
+  (paired-sum (aoc:trim-lf input) 1))
 
 (defun part2 (input)
-  (let ((input (trim-lf input)))
+  (let ((input (aoc:trim-lf input)))
     (paired-sum input (/ (length input) 2))))

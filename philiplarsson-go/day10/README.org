@@ -1,0 +1,14 @@
+* Run Instructions
+
+=day10.go= takes the two arguments. Part and puzzle input.
+
+
+Example:
+#+BEGIN_SRC bash
+go run day10.go 1 18,1,0,161,255,137,254,252,14,95,165,33,181,168,2,188
+#+END_SRC
+
+
+#+BEGIN_SRC bash
+go run day10.go 2 18,1,0,161,255,137,254,252,14,95,165,33,181,168,2,188
+#+END_SRC

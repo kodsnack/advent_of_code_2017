@@ -21,3 +21,23 @@
 (deftest day05 ()
   (is (= 359348 (aoc2017.day05::part1 (input-for 2017 5))))
   (is (= 27688760 (aoc2017.day05::part2 (input-for 2017 5)))))
+
+(deftest day06 ()
+  (is (= 4074 (aoc2017.day06::part1 (input-for 2017 6))))
+  (is (= 2793 (aoc2017.day06::part2 (input-for 2017 6)))))
+
+(deftest day07 ()
+  (is (string= "veboyvy" (aoc2017.day07::part1 (input-for 2017 7))))
+  (is (= 749 (aoc2017.day07::part2 (input-for 2017 7)))))
+
+(deftest day08 ()
+  (is (= 7296 (aoc2017.day08::part1 (input-for 2017 8))))
+  (is (= 8186 (aoc2017.day08::part2 (input-for 2017 8)))))
+
+(deftest day09 ()
+  (is (= 14204 (aoc2017.day09::part1 (input-for 2017 9))))
+  (is (= 6622 (aoc2017.day09::part2 (input-for 2017 9)))))
+
+(deftest day10 ()
+  (is (= 19591 (aoc2017.day10::part1 (input-for 2017 10))))
+  (is (string= "62e2204d2ca4f4924f6e7a80f1288786" (aoc2017.day10::part2 (input-for 2017 10)))))
