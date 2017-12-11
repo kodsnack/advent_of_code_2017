@@ -13,3 +13,6 @@
     (loop for line = (read-line in nil nil)
           while line
           collect line)))
+
+(defun trim-lf (string)
+  (string-right-trim '(#\Linefeed) string))
