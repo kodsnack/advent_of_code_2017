@@ -1,7 +1,7 @@
 object Main extends App {
 
   val moves: List[String] = (for {
-    line <- io.Source.stdin.getLines
+    line <- io.Source.stdin.getLines()
     move <- line.trim.split(raw",")
   } yield move).toList
 
@@ -26,8 +26,8 @@ object Main extends App {
     }
   }
 
-  def solveA(moves: List[String]) = dist(moves.foldLeft((0, 0))(execute))
-  def solveB(moves: List[String]) =
+  def solveA(moves: List[String]): Int = dist(moves.foldLeft((0, 0))(execute))
+  def solveB(moves: List[String]): Int =
     moves
       .scanLeft((0, 0))(execute)
       .map(dist)
