@@ -27,6 +27,6 @@ def solve(steps):
     
     return(distance(x, y))
 
-with open('input.txt', 'r') as f:
+with open('input_11.txt', 'r') as f:
     steps = f.read().rstrip().split(',')
     print(solve(steps))
