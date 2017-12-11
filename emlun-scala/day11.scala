@@ -27,7 +27,12 @@ object Main extends App {
   }
 
   def solveA(moves: List[String]) = dist(moves.foldLeft((0, 0))(execute))
+  def solveB(moves: List[String]) =
+    moves
+      .scanLeft((0, 0))(execute)
+      .map(dist)
+      .foldLeft(0)(Math.max)
 
-  println(s"A1: ${moves.foldLeft((0, 0))(execute)}")
   println(s"A: ${solveA(moves)}")
+  println(s"B: ${solveB(moves)}")
 }
