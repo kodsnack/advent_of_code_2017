@@ -14,8 +14,15 @@
             //Day3.B();
             //Day4.A();
             //Day4.B();
-            Day5.A();
-            Day5.B();
+            //Day5.A();
+            //Day5.B();
+            //Day6.AB();
+            //Day7.B();
+            //Day8.A();
+            //Day9.A();
+            //Day10.A();
+            //Day10.B();
+            Day11.AB();
         }
 
 

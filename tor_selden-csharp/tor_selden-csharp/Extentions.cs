@@ -20,13 +20,20 @@ namespace tor_selden_csharp
             return weight;
         }
 
-        //public static bool IsBalanced(this string program)
-        //{
-        //    if (!String.IsNullOrEmpty(program))
-        //    {
+        public static List<long> Checksum(this string[] line)
+        {
+            List<long> valid = new List<long>();
 
-        //    }
-        //    return true;
-        //}
+            foreach (string word in line)
+            {
+                long chk = 1;
+                foreach (char letter in word)
+                {
+                    chk *= letter;
+                }
+                valid.Add(chk);
+            }
+            return valid;
+        }
     }
 }
