@@ -3,6 +3,9 @@ package com.mantono.aoc
 fun main(args: Array<String>)
 {
 	println(distance(312051))
+	val m = Matrix(12)
+	initialize(m)
+	binarySearch(312051, func = { m[] })
 }
 
 fun distance(n: Int): Int
@@ -93,12 +96,3 @@ fun lastValueInLayer(layer: Int): Int
 
 fun IntRange.middle(): Int = (this.start + this.last) / 2
 fun LongRange.middle(): Long = (this.start + this.last) / 2
-
-private val squareRootOfFive: Double = Math.sqrt(5.0)
-
-fun fibonacci(n: Long): Long
-{
-	val dividend: Double = Math.pow((1 + squareRootOfFive), n.toDouble()) - Math.pow((1 - squareRootOfFive), n.toDouble())
-	val divider: Double = Math.pow(2.0, n.toDouble()) * squareRootOfFive
-	return (dividend / divider).toLong()
-}
