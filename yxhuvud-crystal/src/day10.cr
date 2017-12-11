@@ -14,8 +14,8 @@ class Scramble
       slice = (@pos..@pos + num - 1)
       sub = slice.map { |i| input[i % SIZE] }.reverse
       slice.each_with_index { |i, i2| input[i % SIZE] = sub[i2] }
-      @pos = (@pos + @skip_size + num)
-      @skip_size = (@skip_size + 1)
+      @pos += @skip_size + num
+      @skip_size += 1
     end
     input
   end
