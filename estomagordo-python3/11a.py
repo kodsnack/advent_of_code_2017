@@ -1,12 +1,9 @@
-from collections import defaultdict
-
 def distance(x, y):
     xsteps = abs(x)
     ysteps = (abs(y) - xsteps) // 2
     return xsteps + ysteps
 
 def solve(steps):
-    taken = defaultdict(int)
     x = 0
     y = 0
 
