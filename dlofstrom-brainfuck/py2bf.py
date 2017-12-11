@@ -43,7 +43,7 @@ def isnotequal(x,y): # x = x != y
     return 'q[-]z[-]'+x+'[z+'+x+'-]'+y+'[z-q+'+y+'-]q['+y+'+q-]z['+x+'+z[-]]'
 
 def islessthan(x,y): # x = x < y
-    return 'q[-]z[-]>[-]+>[-]<<'+y+'[q+z+'+y+'-]z['+y+'+z-]'+x+'[z+'+x+'-]z[>-]>[<'+x+'+q[-]z>->]<+<q[z-[>-]>[<'+x+'+q[-]+z>->]<+<q-]'
+    return x+'+q[-]z[-]>[-]+>[-]<<'+y+'[q+z+'+y+'-]z['+y+'+z-]'+x+'[z+'+x+'-]z[>-]>[<'+x+'+q[-]z>->]<+<q[z-[>-]>[<'+x+'+q[-]+z>->]<+<q-]'
 
 def ifxelse(x, code1, code2): # if(x){code1}else{code2}
     return 'u[-]+v[-]'+x+'['+code1+'u-'+x+'[v+'+x+'-]]v['+x+'+v-]u['+code2+'u-]'
