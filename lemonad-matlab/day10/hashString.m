@@ -12,15 +12,15 @@ function hash_str = denseHash(sparse_hash)
     for i = 0:15
         H(i + 1) = hash16(sparse_hash(i * 16 + 1:i * 16 + 16));
     end
-    hash_str = lower(strjoin(cellstr(dec2hex(H)),''));
+    hash_str = lower(strjoin(cellstr(dec2hex(H)), ''));
 end
 
-function s = hash16(T)
+function s = hash16(sparse_hash16)
 %HASH16 Creates one-byte dense hash value out of a 16 byte sparse hash.
-    assert(length(T) == 16)
+    assert(length(sparse_hash16) == 16)
     val = 0;
     for j = 1:16
-        val = bitxor(val, T(j));
+        val = bitxor(val, sparse_hash16(j));
     end
     s = val;
 end

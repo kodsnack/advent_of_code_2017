@@ -1,0 +1,7 @@
+[package]
+name = "day7"
+version = "0.1.0"
+authors = ["niklasad1 <niklasadolfsson1@gmail.com>"]
+debug = true
+
+[dependencies]

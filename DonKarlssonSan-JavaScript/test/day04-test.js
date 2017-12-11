@@ -1,4 +1,4 @@
-let validator = require("../day4-passphrase-validator");
+let validator = require("../day04-passphrase-validator");
 let expect = require("chai").expect;
 
 describe("Day 4, Part 1 - isValid(passphrase)", function () {
@@ -23,7 +23,7 @@ describe("Day 4, Part 1 - isValid(passphrase)", function () {
 
 describe("Day 4, Part 1 - nrOfValidPassphrasesInFile(path)", function () {
     it("should return 2 valid", function () {
-        const passphraseFile = "day4-testdata-passphrases.txt"; 
+        const passphraseFile = "day04-testdata-passphrases.txt"; 
         const path = require("path");
         const filepath = path.join(__dirname, passphraseFile);        
         const nrOfValid = validator.nrOfValidPassphrasesInFile(filepath);
@@ -31,7 +31,7 @@ describe("Day 4, Part 1 - nrOfValidPassphrasesInFile(path)", function () {
     });
     
     // it("Result", function () {
-    //     const passphraseFile = "day4-passphrases.txt"; 
+    //     const passphraseFile = "day04-passphrases.txt"; 
     //     const path = require("path");
     //     const filepath = path.join(__dirname, passphraseFile);        
     //     const nrOfValid = validator.nrOfValidPassphrasesInFile(filepath);
@@ -53,7 +53,7 @@ describe("Day 4, Part 2", function () {
     });
 
     // it("Result", function () {
-    //     const passphraseFile = "day4-passphrases.txt"; 
+    //     const passphraseFile = "day04-passphrases.txt"; 
     //     const path = require("path");
     //     const filepath = path.join(__dirname, passphraseFile);        
     //     const nrOfValid = validator.nrOfValidPassphrasesInFile2(filepath);

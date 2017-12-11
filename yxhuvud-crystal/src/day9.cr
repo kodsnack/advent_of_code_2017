@@ -16,7 +16,7 @@ def group_list(input, pos, n)
     sum += depth
     garbage += garbage2
   when '<'
-    pos, garbage2 = garbage(input, pos+1)
+    pos, garbage2 = garbage(input, pos + 1)
     garbage += garbage2
   else
     raise "unreachable"
