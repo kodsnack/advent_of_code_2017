@@ -18,7 +18,6 @@ for p in parts:
     v = conversions[p]
     pos = (pos[0] + v[0], pos[1] + v[1])
 
-print(pos)
 x,y = pos
 assert x % 2 == 0
 
@@ -53,6 +52,5 @@ while y < 0:
     new_steps.append("n")
     y += 2
 
-print(new_steps)
 print(len(new_steps))
 # print(abs(pos[0]) + abs(round(pos[1])))
