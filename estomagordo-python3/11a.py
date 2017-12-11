@@ -1,7 +1,5 @@
 def distance(x, y):
-    xsteps = abs(x)
-    ysteps = (abs(y) - xsteps) // 2
-    return xsteps + ysteps
+    return (abs(x) + abs(y)) // 2
 
 def solve(steps):
     x = 0
