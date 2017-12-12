@@ -2,8 +2,9 @@
 {
     class Program
     {
-        public static string BasePath { get; } = @"C:\AoC17\advent_of_code_2017\tor_selden-csharp\tor_selden-csharp\input\";
-        
+        //public static string BasePath { get; } = @"C:\AoC17\advent_of_code_2017\tor_selden-csharp\tor_selden-csharp\input\";
+        public static string BasePath { get; } = @"C:\Users\Administrator\Source\Repos\advent_of_code_2017\tor_selden-csharp\tor_selden-csharp\input\";
+
         static void Main(string[] args)
         {
             //Day1.A();
@@ -22,7 +23,8 @@
             //Day9.A();
             //Day10.A();
             //Day10.B();
-            Day11.AB();
+            //Day11.AB();
+            Day12.A();
         }
 
 
