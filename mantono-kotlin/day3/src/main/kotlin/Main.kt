@@ -1,11 +1,22 @@
 package com.mantono.aoc
 
+import java.util.*
+
 fun main(args: Array<String>)
 {
 	println(distance(312051))
 	val m = Matrix(12)
 	initialize(m)
-	binarySearch(312051, func = { m[] })
+	val result: Result = binarySearch(312051, func = { input -> m[input.toInt()].toLong() })
+	val output = when(result)
+	{
+		is Result.Indeterminable -> m[result.high.toInt()]
+		is Result.Exact -> m[result.value.toInt()]
+	}
+
+	println(output)
+
+	println(m)
 }
 
 fun distance(n: Int): Int
@@ -68,22 +79,43 @@ private tailrec fun layer(n: Int, l: Int, r: IntRange = 1 .. ceil): Int
 	}
 }
 
-tailrec fun binarySearch(goal: Long, input: Long = 2, func: (Long) -> Long, r: LongRange = 1L .. Byte.MAX_VALUE.toLong()): Long
+/*sealed class Goal(override val start:Long, override val endInclusive: Long): ClosedRange<Long>
 {
+	class Exact(value: Long): Goal(value, value)
+	class AtLeast(value: Long): Goal(value)
+	class AtMost(value: Long): Goal(value)
+	class Between(value: LongRange)
+}*/
+
+sealed class Result
+{
+	class Exact(val value: Long): Result()
+	class Indeterminable(val low: Long, val high: Long): Result()
+}
+
+tailrec fun binarySearch(goal: Long,
+						 input: Long = 2,
+						 func: (Long) -> Long,
+						 r: LongRange = 1L .. Byte.MAX_VALUE.toLong()): Result
+{
+	if((r.endInclusive - r.start) == 1L)
+		return Result.Indeterminable(r.start, r.endInclusive)
+
 	val result: Long = func(input)
 
 	println(result)
+
 	return when
 	{
 		result < goal -> {
-			val range: LongRange = maxOf(r.first, input) .. r.last + 1
+			val range: LongRange = maxOf(r.first, input) .. r.last
 			binarySearch(goal, range.middle(), func, range)
 		}
 		result > goal -> {
-			val range: LongRange = maxOf(r.first - 1, 1) .. minOf(r.last, input)
+			val range: LongRange = maxOf(r.first, 1) .. minOf(r.last, input)
 			binarySearch(goal, range.middle(), func, range)
 		}
-		else -> input
+		else -> Result.Exact(input)
 	}
 }
 

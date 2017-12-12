@@ -12,9 +12,27 @@ class Matrix(x: Int)
 	operator fun set(x: Int, y: Int, e: Int) { arr[x + width * y] = e }
 	operator fun set(p: Point, e: Int) { arr[p.x + width * p.y] = e }
 
-	operator fun get(n: Long): Long
+	operator fun get(n: Int): Int
 	{
-		
+		if(n < 0) throw IndexOutOfBoundsException("$n")
+		if(n == 0) return 1
+		val center = center(this)
+		return getRec(n, 1, center, HashSet<Point>())
+	}
+
+	private tailrec fun getRec(wantedIndex: Int, currentIndex: Int, pos: Point, seen: MutableSet<Point>): Int
+	{
+		if(wantedIndex == currentIndex) return this[pos]
+		seen.add(pos)
+		val nextPos: Point = adjacentEightOf(pos)
+				.minus(seen)
+				.filterNot { isOutOfBounds(it) }
+				.map { this[it] to it }
+				.sortedBy { it.first }
+				.map { it.second }
+				.first()
+
+		return getRec(wantedIndex, currentIndex + 1, nextPos, seen)
 	}
 
 	fun getSafe(p: Point, replacement: Int = 0): Int
@@ -84,6 +102,16 @@ fun adjacentFourOf(p: Point): Sequence<Pair<Point, Direction>>
 {
 	return Direction.values().asSequence()
 			.map { dir ->  p go dir to dir }
+}
+
+fun adjacentEightOf(p: Point): Sequence<Point>
+{
+	return adjacentFourOf(p)
+			.map { it.first }
+			.plus(p go Direction.NORTH go Direction.WEST)
+			.plus(p go Direction.NORTH go Direction.EAST)
+			.plus(p go Direction.SOUTH go Direction.WEST)
+			.plus(p go Direction.SOUTH go Direction.EAST)
 }
 
 fun nextDirection(m: Matrix, p: Point): Direction?
