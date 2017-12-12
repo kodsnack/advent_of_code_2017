@@ -52,8 +52,10 @@ for result in results:
     eqstr = 'EQUALS' if golfsult == regusult else 'DOES NOT EQUAL'
     percentage = round(100.0 * float(golflen) / float(regulen), 2)
 
-    output = '\n{}\nGolfed result {} the regular result. The solution was shortened from {} to {} chars, or {}% of the original.'.format(
-        name, eqstr, str(regulen), str(golflen), percentage)
+    output = 'Golfed result {} the regular result. The solution was shortened from {} to {} chars, or {}% of the original.'.format(
+        eqstr, str(regulen), str(golflen), percentage)
+
+    newconsoutput = '\n' + name + '\n' + output
 
     namenl = name + '\n'
     
@@ -71,9 +73,9 @@ for result in results:
         if golflen < oldlen:
             rm[i] = output
     else:
-        rm.append(output + '\n')
+        rm.append(newconsoutput + '\n')
 
-    print(output)
+    print(newconsoutput)
 
 if rm[-1][-1] == '\n':
     rm[-1] = rm[-1][:-1]
