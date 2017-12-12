@@ -24,10 +24,14 @@ object Main extends App {
 
   def solveA(groups: List[Set[Int]]) =
     mergeAll(groups.toSet)
-      // .mkString("\n")
       .find(_ contains 0)
       .get
       .size
 
+  def solveB(groups: List[Set[Int]]) =
+    mergeAll(groups.toSet)
+      .size
+
   println(s"A: ${solveA(groups)}")
+  println(s"B: ${solveB(groups)}")
 }
