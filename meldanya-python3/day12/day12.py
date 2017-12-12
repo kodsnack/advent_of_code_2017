@@ -11,24 +11,32 @@ def _build_graph(lines):
 
 
 def _walk(root, graph, visited):
+    visited.add(root)
     for dst in graph[root]:
-        # TODO
-        pass
+        if dst not in visited:
+            _walk(dst, graph, visited)
 
 
-def part1(lines):
-    graph = _build_graph(lines)
-    print(graph)
+def part1(graph):
+    visited = set()
+    _walk(0, graph, visited)
+    return len(visited)
 
 
-def part2(lines):
-    pass
+def part2(graph):
+    all_ = set()
+    for n in graph.keys():
+        visited = set()
+        _walk(n, graph, visited)
+        all_.add(frozenset(visited))
+    return len(all_)
 
 
 def main():
     lines = [l for l in sys.stdin]
-    print(part1(lines))
-    print(part2(lines))
+    graph = _build_graph(lines)
+    print(part1(graph))
+    print(part2(graph))
 
 
 if __name__ == '__main__':
