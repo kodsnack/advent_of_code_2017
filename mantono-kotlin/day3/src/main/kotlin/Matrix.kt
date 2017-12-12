@@ -17,7 +17,7 @@ class Matrix(x: Int)
 		if(n < 0) throw IndexOutOfBoundsException("$n")
 		if(n == 0) return 1
 		val center = center(this)
-		return getRec(n, 1, center, HashSet<Point>())
+		return getRec(n, 1, center, HashSet())
 	}
 
 	private tailrec fun getRec(wantedIndex: Int, currentIndex: Int, pos: Point, seen: MutableSet<Point>): Int
@@ -41,11 +41,6 @@ class Matrix(x: Int)
 		return this[p]
 	}
 
-	fun canGoTo(p: Point): Boolean
-	{
-		if(isOutOfBounds(p)) return false
-		return this[p.x, p.y] == 0
-	}
 
 	fun isOutOfBounds(p: Point): Boolean
 	{
@@ -76,14 +71,6 @@ enum class Direction(val deltaX: Int, val deltaY: Int)
 	WEST(-1, 0),
 	SOUTH(0, 1),
 	EAST(1, 0);
-
-	fun turnLeft(): Direction = when(this)
-	{
-		NORTH -> WEST
-		WEST -> SOUTH
-		SOUTH -> EAST
-		EAST -> NORTH
-	}
 }
 
 infix fun Point.go(d: Direction): Point = Point(this.x + d.deltaX, this.y + d.deltaY)
@@ -119,16 +106,9 @@ fun nextDirection(m: Matrix, p: Point): Direction?
 	val bitCombo = adjacentFourOf(p)
 			.map { (adjacentPos, dir) ->
 				val occupied: Int = m.getSafe(adjacentPos, 1).coerceIn(0, 1)
-				//println("Pos: $adjacentPos [$occupied << ${dir.ordinal} = ${occupied shl dir.ordinal}]")
 				occupied shl dir.ordinal
 			}
 			.sum()
-
-/*	val bitCombo: Int = 0
-			.and((m[p go Direction.NORTH] == 0).toInt())			// 1
-			.and((m[p go Direction.WEST] == 0).toInt()  shl 1)	// 2
-			.and((m[p go Direction.SOUTH] == 0).toInt() shl 2) // 4
-			.and((m[p go Direction.EAST] == 0).toInt() shl 3)	// 8*/
 
 	return when(bitCombo)
 	{
