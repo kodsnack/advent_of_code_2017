@@ -1,0 +1,24 @@
+* Run Instructions
+=day12.go= takes one argument; a filename to a file that contains the puzzle
+input.
+
+Example:
+#+BEGIN_SRC bash
+go run day12.go puzzle.in
+#+END_SRC
+
+* Thought Process
+** Part 1
+We add all numbers that are mentioned together in a map, if they contain 0 or
+the map already contain one of the previous numbers. Since we don't need to know
+the paths that the programs need to take, we can simply store all program IDs
+that are related to 0. 
+We do the algorithm above multiple times since we might have a relation further
+down that would create a relation between programs that previously weren't
+related. 
+
+** Part 2
+Using the same algorithm as in part 1, we store all groups in a slice (a dynamic
+array in non-go parlance). We loop through each program ID, and if a ID is
+already in a previous map, we don't add that group again.
+
