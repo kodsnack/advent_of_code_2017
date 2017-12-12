@@ -152,40 +152,6 @@ impl<'a> Tower<'a> {
         0
         // (single.1).1 - diff
     }
-
-
-    fn dfs(&self, node: &Node) -> isize {
-        let mut sum: usize = 0;
-        let mut queue: VecDeque<&Node> = VecDeque::new();
-
-        queue.push_back(node);
-        while !queue.is_empty() {
-            if let Some(n) = queue.pop_front() {
-                if let Some(nodes) = self.children.get(n.name) {
-                    let mut ok = true;
-                    let mut s = n.weight;
-
-                    for next in nodes.iter() {
-
-                        queue.push_back(next);
-                        if next.weight != nodes[0].weight {
-                            ok = false;
-                            break;
-                        }
-                    }
-
-                    if ok == true {
-                        for next in nodes.iter() {
-                            s += next.weight;
-                        }
-                        println!("{:?} \t {:?} \t sum {}", n, nodes, s);
-                        sum += s;
-                    }
-                }
-            }
-        }
-        sum as isize
-    }
 }
 
 

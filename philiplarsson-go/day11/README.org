@@ -1,0 +1,13 @@
+* Run Instructions
+
+=day11.go= takes a filename to a file that contains the directions (the puzzle input) as its only argument.
+
+
+Example:
+#+BEGIN_SRC bash
+go run day11.go directions.in
+#+END_SRC
+
+
+** Useful Resources
+I found [[https://www.redblobgames.com/grids/hexagons/][this]] amazing website to be of help to this puzzle.
