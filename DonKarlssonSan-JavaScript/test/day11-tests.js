@@ -1,7 +1,7 @@
 const hex = require('../day11');
 const expect = require('chai').expect;
 
-describe('Day 10, part 1 - hash', function () {
+describe('Day 11, part 1 - hex', function () {
     it('should return three steps for ne,ne,ne', function () {
         let input = 'ne,ne,ne';
         let result = hex.walk(input)[0];
