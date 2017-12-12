@@ -1,4 +1,4 @@
-SUBDIRS = $(shell echo */day/[0-9]/part[12])
+SUBDIRS = $(shell echo */day/[0-9]*/part[12])
 
 all: $(SUBDIRS)
 
