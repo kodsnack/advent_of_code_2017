@@ -15,8 +15,6 @@ fun main(args: Array<String>)
 	}
 
 	println(output)
-
-	println(m)
 }
 
 fun distance(n: Int): Int
@@ -32,7 +30,6 @@ fun findClosestValue(n: Int, values: List<Int>): Int
 {
 	val index: Int = values.asSequence()
 			.mapIndexed { index, i -> index to Math.abs(n - i) }
-			.onEach { println(it) }
 			.minBy { it.second }!!
 			.first
 
@@ -63,8 +60,6 @@ private tailrec fun layer(n: Int, l: Int, r: IntRange = 1 .. ceil): Int
 	val first: Int = lastValueInLayer(l - 1) + 1
 	val last: Int = lastValueInLayer(l)
 
-	println(r)
-
 	return when
 	{
 		n < first -> {
@@ -78,14 +73,6 @@ private tailrec fun layer(n: Int, l: Int, r: IntRange = 1 .. ceil): Int
 		else -> l
 	}
 }
-
-/*sealed class Goal(override val start:Long, override val endInclusive: Long): ClosedRange<Long>
-{
-	class Exact(value: Long): Goal(value, value)
-	class AtLeast(value: Long): Goal(value)
-	class AtMost(value: Long): Goal(value)
-	class Between(value: LongRange)
-}*/
 
 sealed class Result
 {
@@ -102,9 +89,7 @@ tailrec fun binarySearch(goal: Long,
 		return Result.Indeterminable(r.start, r.endInclusive)
 
 	val result: Long = func(input)
-
-	println(result)
-
+	
 	return when
 	{
 		result < goal -> {
