@@ -1,5 +1,5 @@
 groups = File.read(ARGV[0]).lines.map do |l|
-  Set(String).new(l.split(/<->|, /).map(&.strip))
+  Set(Int32).new(l.split(/<->|, /).map(&.to_i))
 end
 
 groups.each do |g|
@@ -14,4 +14,4 @@ end
 puts "part1"
 p groups[0].size
 puts "part2"
-p groups.map(&.to_a.sort).uniq.size
+p groups.uniq.size
