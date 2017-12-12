@@ -25,6 +25,6 @@ while state not in visited:
 
     steps += 1
     state = "-".join(str(i) for i in memory_banks)
-    print(steps, state)
+    # print(steps, state)
 
 print(steps - visited[state])

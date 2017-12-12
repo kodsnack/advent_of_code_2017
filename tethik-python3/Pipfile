@@ -13,6 +13,8 @@ verify_ssl = true
 
 pylint = "*"
 rope = "*"
+"jinja2" = "*"
+click = "*"
 
 
 [requires]

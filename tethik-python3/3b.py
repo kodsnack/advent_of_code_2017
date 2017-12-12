@@ -67,7 +67,7 @@ def solve(puzzle):
 
         # 1, 9, 25, 36
         if number == expansion_point:
-            print("Expanding the spiral arrays!")
+            # print("Expanding the spiral arrays!")
             even_cycle = length_of_side % 2 == 0
             # Expand the map
             # 4 3
@@ -101,9 +101,9 @@ def solve(puzzle):
 
         number += 1
 
-        print("###########################")
-        print_map(spiral)
-        print()
+        # print("###########################")
+        # print_map(spiral)
+        # print()
         # print_map(spiral, i=1)
         # print()
 
