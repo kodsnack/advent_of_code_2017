@@ -14,6 +14,6 @@ def solve(lengths, n):
 
     return nums[0] * nums[1]
 
-with open('input.txt', 'r') as f:
+with open('input_10.txt', 'r') as f:
     lengths = list(map(int, f.readline().split(',')))
     print(solve(lengths, 256))

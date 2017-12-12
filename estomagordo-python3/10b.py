@@ -22,6 +22,6 @@ def solve(lengths, n):
     
     return hash
 
-with open('input.txt', 'r') as f:
+with open('input_10.txt', 'r') as f:
     lengths = f.readline().rstrip()
     print(solve(lengths, 256))

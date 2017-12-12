@@ -4,4 +4,7 @@ Build
 
 Run
 --
-`stack exec aoc -- <day#> < input.txt`
+Add your session key to sessionKey.txt
+`echo "123456789abcdef..." > sessionKey.txt`
+Run
+`stack exec aoc -- <day#>`

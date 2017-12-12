@@ -35,14 +35,11 @@ def reverse(start, length, total_length):
         return start
 
     # save this reference so we can connect up the start
-    start_pos = start.pos
     before_start = start.prev
     curr = start
     while length > 0:
         _next = curr.next
         _prev = curr.prev
-        # print(curr, _next, _prev)
-        # save it so we can connect the end
         curr.prev = _next
         after_end = _next
         curr.next = _prev
@@ -60,6 +57,7 @@ def reverse(start, length, total_length):
         after_end.prev = start
 
     # fix positions (UUGH)
+    start_pos = start.pos
     end_pos = last.pos
     pos = start_pos
     curr = last
@@ -82,7 +80,6 @@ def print_chain(node):
         curr = curr.next
 
     print(",".join(_list))
-
 
 
 def knot_round(start, lengths, skip_size):
