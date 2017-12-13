@@ -12,10 +12,5 @@ end
 
 puts "part1"
 puts try(scanners, 0)
-(0..Int32::MAX).each do |i|
-  if try(scanners, i) == 0
-    puts "part2"
-    puts i
-    exit
-  end
-end
+puts "part2"
+puts (0..Int32::MAX).find {|i| try(scanners, i) == 0 }
