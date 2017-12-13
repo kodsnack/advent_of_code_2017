@@ -1,4 +1,4 @@
-SUBDIRS = $(shell echo */day/[0-9]*/part[12])
+SUBDIRS = $(shell ls -d */day/[0-9]*/part[12] | sort -n -t/ -k 3)
 
 all: $(SUBDIRS)
 
