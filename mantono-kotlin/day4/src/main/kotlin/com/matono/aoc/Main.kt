@@ -5,22 +5,32 @@ import java.nio.file.Files
 
 fun main(args: Array<String>)
 {
-	val uniqueWords: Int = Files.readAllLines(File("input").toPath()).asSequence()
+	val validPhrases1: Int = Files.readAllLines(File("input").toPath()).asSequence()
 			.map { it.split(Regex("\\s")) }
-			.flatMap { it.asSequence() }
-			.distinct()
+			.filter(::noRepeatedWords)
 			.count()
 
-	println(uniqueWords)
+	println(validPhrases1)
 
-	val fac: Long = factorial(uniqueWords.toLong())
-	println(fac)
+	val validPhrases2: Int = Files.readAllLines(File("input").toPath()).asSequence()
+			.map { it.split(Regex("\\s")) }
+			.map(::sortLetters)
+			.filter(::noRepeatedWords)
+			.count()
+
+	println(validPhrases2)
 }
 
-fun factorial(n: Long) = factorial(n, n)
-
-private tailrec fun factorial(n: Long, sum: Long): Long
+fun noRepeatedWords(words: List<String>): Boolean
 {
-	if(n == 1L) return sum
-	return factorial(n - 1, (n - 1) * sum)
+	val total: Int = words.count()
+	val unique: Int = words.distinct().count()
+	return total == unique
+}
+
+fun sortLetters(words: List<String>): List<String>
+{
+	return words.asSequence()
+			.map { String(it.toList().sorted().toCharArray()) }
+			.toList()
 }
