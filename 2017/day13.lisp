@@ -8,9 +8,12 @@
 (defun scanner-data (input)
   (mapcar #'parse (aoc:lines input)))
 
-(defun caught-by (layer range)
+(defun layer (scanner) (first scanner))
+(defun range (scanner) (second scanner))
+
+(defun caught-by (layer range &optional (delay 0))
   (let ((period (* 2 (1- range))))
-    (= 0 (mod layer period))))
+    (= 0 (mod (+ layer delay) period))))
 
 (defun severity (depth range)
   (* depth range))
@@ -20,6 +23,18 @@
     (apply f args)))
 
 (defun part1 (input)
-  (reduce #'+ (mapcar (applied #'severity) 
+  (reduce #'+ (mapcar (applied #'severity)
                       (remove-if-not (applied #'caught-by)
                                      (scanner-data input)))))
+
+(defun minimum-delay (scanners)
+  (loop for delay from 0
+        until (every (lambda (scanner)
+                       (not (caught-by (layer scanner)
+                                       (range scanner)
+                                       delay)))
+                     scanners)
+        finally (return delay)))
+
+(defun part2 (input)
+  (minimum-delay (scanner-data input)))
