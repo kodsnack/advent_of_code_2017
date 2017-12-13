@@ -1,4 +1,6 @@
-﻿namespace tor_selden_csharp
+﻿using System.Diagnostics;
+
+namespace tor_selden_csharp
 {
     class Program
     {
@@ -7,6 +9,8 @@
 
         static void Main(string[] args)
         {
+            var s = new Stopwatch();
+            s.Start();
             //Day1.A();
             //Day1.B();
             //Day2.A();
@@ -24,7 +28,12 @@
             //Day10.A();
             //Day10.B();
             //Day11.AB();
-            Day12.A();
+            //Day12.A();
+            //Day12.B();
+            Day13.AB();
+
+            s.Stop();
+            System.Console.WriteLine(s.ElapsedMilliseconds);
         }
 
 
