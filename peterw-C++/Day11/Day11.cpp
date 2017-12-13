@@ -134,7 +134,7 @@ void solve_part1()
 	auto steps = parsePathString(input);
 	auto finalPosition = doSteps(Position{}, steps);
 	auto dist = distanceFromCenter(finalPosition);
-	cout << "Day 10 - part 1: " << dist << endl;
+	cout << "Day 11 - part 1: " << dist << endl;
 }
 
 //-------------------
@@ -153,7 +153,7 @@ void solve_part2()
 		maxDistance = max(maxDistance, distanceFromCenter(pos));
 	}
 
-	cout << "Day 10 - part 2: " << maxDistance << endl;
+	cout << "Day 11 - part 2: " << maxDistance << endl;
 }
 
 //------------------

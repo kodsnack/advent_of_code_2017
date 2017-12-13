@@ -212,7 +212,7 @@ void solve_part1()
 	runProgram(state, program);
 
 	auto maxVal = getMaxRegisterValue(state);
-	cout << "Day 7 - part 1: " << maxVal << endl;
+	cout << "Day 8 - part 1: " << maxVal << endl;
 }
 
 void solve_part2()
@@ -230,7 +230,7 @@ void solve_part2()
 		}
 	}
 
-	cout << "Day 7 - part 2: " << maxVal << endl;
+	cout << "Day 8 - part 2: " << maxVal << endl;
 }
 
 int main()

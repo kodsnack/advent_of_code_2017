@@ -67,3 +67,9 @@
 [submodule "aoc2017_idstam"]
 	path = aoc2017_idstam
 	url = https://github.com/idstam/aoc2017_idstam
+[submodule "IAmBullsaw-c++"]
+	path = IAmBullsaw-c++
+	url = git@github.com:IAmBullsaw/adventofcode17.git
+[submodule "albertdahlin-elm"]
+	path = albertdahlin-elm
+	url = git@github.com:albertdahlin/AdventOfCode.git

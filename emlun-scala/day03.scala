@@ -14,13 +14,14 @@ object Main extends App {
     level + Math.abs(indexInCircle % modulus)
   }
 
-  def shell(level: Int): List[Int] = {
-    if (level <= 2)
+  def shell(prev: Seq[Int]): Seq[Int] = {
+    val level: Int = prev.length / 8 + 1
+
+    if (level < 2)
       List(1, 2, 4, 5, 10, 11, 23, 25)
     else {
-      val prev = shell(level - 1)
       val length = prev.length + 8
-      val m = 2 * (level - 1) - 1
+      val m = 2 * level - 1
 
       def value(i: Int): Int = i match {
         case 0                       =>                prev.last   + prev(i)
@@ -45,13 +46,13 @@ object Main extends App {
         case i if i == m+m+1+m+1+m+1 => prev(i - 8)  + value(0)                  + value(i - 1)
       }
 
-      (0 until length).toList map value
+      (0 until length) map value
     }
   }
 
   def solveB(input: Int): Int =
-    (Stream from 0)
-      .flatMap(shell)
+    Iterator.iterate(Seq(1))(shell)
+      .flatten
       .find(_ > input)
       .get
 

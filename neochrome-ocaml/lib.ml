@@ -16,6 +16,7 @@ let ( **. ) = Pervasives.( ** );;
 let ( ** ) = Math.pow;;
 let ( !! ) = Math.fact;;
 let ( >> ) f g x = g (f x);;
+let ( <| ) = ( @@ );;
 
 module Seq = struct
 
