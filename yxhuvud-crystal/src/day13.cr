@@ -1,6 +1,6 @@
-def try(n)
-  scanners = File.read(ARGV[0]).lines.map(&.split(": ").map(&.to_i)).to_h
+scanners = File.read(ARGV[0]).lines.map(&.split(": ").map(&.to_i)).to_h
 
+def try(scanners, n)
   severity = 0
   (0..scanners.keys.last).each do |i|
     if scanners[i]? && (i + n) % (2 * scanners[i] - 2) == 0
@@ -11,9 +11,9 @@ def try(n)
 end
 
 puts "part1"
-puts try(0)
+puts try(scanners, 0)
 (0..Int32::MAX).each do |i|
-  if try(i) == 0
+  if try(scanners, i) == 0
     puts "part2"
     puts i
     exit
