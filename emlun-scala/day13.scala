@@ -50,24 +50,21 @@ object Main extends App {
     } yield state.severity(0)).sum
 
   def solveB(layers: List[Layer]) = {
-    val periods: Map[Int, Int] = layers.map({ l => (l.depth, l.period) }).toMap
     val positions: Seq[Int] = 0 to length(layers)
+    val periods: Vector[Int] = positions.toVector map { i => layers find { _.depth == i } map { _.period } getOrElse -1 }
 
-    (Stream from 0).flatMap({ delay =>
+    def search(delay: Int): Int = {
       val caughtAtTimes: Seq[Boolean] = positions.map({ playerPos =>
-        val t = playerPos + delay
-        val layerCatches = periods
-          .get(playerPos)
-          .map { period => t % period == 0 }
-          .getOrElse(false)
-        layerCatches
+        (periods(playerPos) > 0) && (playerPos + delay) % periods(playerPos) == 0
       })
 
       if (caughtAtTimes forall { _ == false })
-        Some(delay)
+        delay
       else
-        None
-    }).head
+        search(delay + 1)
+    }
+
+    search(0)
   }
 
   println(s"A: ${solveA(layers)}")
