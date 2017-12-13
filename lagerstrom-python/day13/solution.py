@@ -17,11 +17,11 @@ def get_data_list():
             data_list.append((step, depth))
     return data_list
 
-def is_caught(step, step_value):
-    if step % (((step_value - 1) * 2))  == 0:
+def is_caught(step, step_value, delay=0):
+    if (step + delay)  % (((step_value - 1) * 2))  == 0:
         return True
 
-def main():
+def first():
     data_list = get_data_list()
     ret_sum = 0
 
@@ -34,5 +34,26 @@ def main():
 
     return ret_sum
 
+
+def second():
+    data_list = get_data_list()
+    i = 0
+    while True:
+        ret_sum = 0
+        caught = False
+        for data in data_list:
+            step = data[0]
+            depth = data[1]
+
+            if is_caught(step, depth, i):
+                caught = True
+
+        if caught:
+            i += 1
+            continue
+        return i
+
+
 if __name__ == '__main__':
-    print(main())
+    print(first())
+    print(second())
