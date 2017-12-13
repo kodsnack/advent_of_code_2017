@@ -49,3 +49,6 @@
 (deftest day12 ()
   (is (= 175 (aoc2017.day12::part1 (input-for 2017 12))))
   (is (= 213 (aoc2017.day12::part2 (input-for 2017 12)))))
+
+(deftest day13 ()
+  (is (= 632 (aoc2017.day13::part1 (input-for 2017 13)))))
