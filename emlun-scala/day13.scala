@@ -22,7 +22,6 @@ object Main extends App {
   }
 
   case class State(layers: List[Layer], t: Int) {
-    def next: State = copy(t = t + 1)
     def toString(delay: Int): String = layers map { _.toString(t, t - delay) } mkString "\n"
 
     def severity(delay: Int): Int =
