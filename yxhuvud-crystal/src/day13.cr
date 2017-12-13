@@ -1,16 +1,15 @@
 scanners = File.read(ARGV[0]).lines.map(&.split(": ").map(&.to_i)).to_h
 
-def try(scanners, n)
-  severity = 0
-  (0..scanners.keys.last).each do |i|
-    if scanners[i]? && (i + n) % (2 * scanners[i] - 2) == 0
-      severity += (i + n) * scanners[i]
-    end
+def try(scanners, delay)
+  (0..scanners.keys.last).sum do |i|
+    x = scanners[i]?
+    if x && (i + delay) % (2 * x - 2) == 0
+      (i + delay) * x
+    end || 0
   end
-  severity
 end
 
 puts "part1"
 puts try(scanners, 0)
 puts "part2"
-puts (0..Int32::MAX).find {|i| try(scanners, i) == 0 }
+puts (0..Int32::MAX).find { |i| try(scanners, i) == 0 }
