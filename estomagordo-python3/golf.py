@@ -2,6 +2,12 @@ from os import fsencode, fsdecode, listdir, system, name
 from io import StringIO
 from contextlib import redirect_stdout
 
+def custom_sort(fsfile):
+    numend = 0
+    while fsfile[numend].isnumeric():
+        numend += 1
+    return (int(fsfile[:numend]), fsfile[numend:])
+
 path = 'estomagordo-python3\\'
 golf = 'golf\\'
 readme = 'README.md'
@@ -15,8 +21,9 @@ system('cls' if name == 'nt' else 'clear')
 print("Welcome to the golfing experience part of estomagordo's 2017 Advent of Code submissions!\nThe following golfing solutions have been found.")
 
 results = []
+fsfiles = sorted([f for f in listdir(path + golf) if f.endswith('.py')], key = lambda fsfile: custom_sort(fsfile))
 
-for f in listdir(path + golf):
+for f in fsfiles:
     out = StringIO()
 
     filename = fsdecode(f)
