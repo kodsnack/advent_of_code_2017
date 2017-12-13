@@ -44,8 +44,7 @@ int main() {
     }
 
     for(const auto & i : v) {
-        int d, p;
-        std::tie(d,p) = i;
+        auto [d, p] = i;
         if(d % p == 0) ans1 += d * (p/2 + 1);
     }
 
