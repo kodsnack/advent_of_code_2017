@@ -41,3 +41,11 @@
 (deftest day10 ()
   (is (= 19591 (aoc2017.day10::part1 (input-for 2017 10))))
   (is (string= "62e2204d2ca4f4924f6e7a80f1288786" (aoc2017.day10::part2 (input-for 2017 10)))))
+
+(deftest day11 ()
+  (is (= 773 (aoc2017.day11::part1 (input-for 2017 11))))
+  (is (= 1560 (aoc2017.day11::part2 (input-for 2017 11)))))
+
+(deftest day12 ()
+  (is (= 175 (aoc2017.day12::part1 (input-for 2017 12))))
+  (is (= 213 (aoc2017.day12::part2 (input-for 2017 12)))))
