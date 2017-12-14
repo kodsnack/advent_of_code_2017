@@ -83,6 +83,7 @@ int main() {
         }
     }
     std::array<std::array<bool, 128>, 128> a1;
+    for(auto & r : a1) for(auto & c : r) c = false;
 
     for(int i = 0; i < 128; i++) {
         std::ostringstream tmp;
@@ -102,6 +103,8 @@ int main() {
     }
 
     std::array<std::array<int, 128>, 128> a2;
+    for(auto & r : a2) for(auto & c : r) c = 0;
+
     for(int y = 0; y < 128; y++) {
         for(int x = 0; x < 128; x++) {
             if(a1[y][x] && !a2[y][x]) {
