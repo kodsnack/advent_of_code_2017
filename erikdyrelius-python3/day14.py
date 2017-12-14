@@ -22,12 +22,36 @@ def knot(inp):
             pos = (pos + ln - l - skip)%ln
             skip = (skip + 1)%ln
     vals = vals[pos:] + vals[:pos]
-    print(''.join([format(reduce(xor, [vals[j] for j in range(i, i+16)]),"02x") for i in range(0, 256, 16)]))
     return ''.join([format(reduce(xor, [vals[j] for j in range(i, i+16)]),"08b") for i in range(0, 256, 16)])
 
-s = 0
+s = ""
 print(inp)
 for i in range(128):
-    s = s + knot("{}-{}".format(inp, i)).count("1")
-print(s)
-#print(knot("AoC 2017"+chr(17)+chr(31)+chr(73)+chr(47)+chr(23)))
+    s = s + knot("{}-{}".format(inp, i))
+s = list(s)
+print(s.count("1"))
+idx = 0
+while s.count("1") > 0:
+    idx += 1
+    for row in range(16):                
+        print(''.join(s[row*128:row*128+16]))
+    q = [s.index("1")]
+    print(q)
+    while len(q)>0:
+        q1 = q[0]
+        q = q[1:]
+        s[q1] = "2"
+        for i in [1, -1, 128, -128]:
+            q2 = i+q1
+            if (i == -1) and (q1 % 128) == 0: continue
+            if (i == 1) and (q1 % 128) == 127: continue
+            if (i == -128) and q2 < 0: continue
+            if (i == 128) and (q2 >= 128*128): continue
+            if (s[q2] == "1"):
+                q = q + [q2]
+    print(s.count("1"), s.count("2"), idx)
+    for row in range(16):                
+        print(''.join(s[row*128:row*128+16]))
+    for i in range(128*128):
+        if s[i] == "2":
+            s[i] = "0"
