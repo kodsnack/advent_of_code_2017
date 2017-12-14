@@ -45,16 +45,3 @@ while queue:
             group_queue.append((x,y-1))
             queue.remove((x,y-1))
 print "Part 2:", len(groups)
-    
-
-
-
-
-
-
-
-
-
-
-
-
