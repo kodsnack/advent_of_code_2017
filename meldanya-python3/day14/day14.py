@@ -52,7 +52,6 @@ def _bfs(root, grid, visited):
 
 def part2(grid):
     all_visited = set()
-    visiteds = []
     n = 0
     for i in range(len(grid)):
         for j in range(len(grid)):
@@ -60,7 +59,6 @@ def part2(grid):
                 v = set()
                 _bfs((i, j), grid, v)
                 all_visited |= v
-                visiteds.append(v)
                 n += 1
     return n
 
