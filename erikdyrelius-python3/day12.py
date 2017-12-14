@@ -1,5 +1,6 @@
 from aocbase import readInput
 import re
+import functools
 
 p = re.compile(r"\d+")
 inp = readInput()
@@ -23,11 +24,8 @@ def findConnected(inp):
         for i in allN:
             l = [s for s in allSets if i in s]
             if len(l) > 1:
-                newSet = frozenset()
-                for s in l:
-                    newSet = newSet | s
-                    if s in allSets: allSets.remove(s)
-                allSets.add(newSet)
+                allSets = allSets - set(l)
+                allSets.add(functools.reduce(frozenset.union, l))
                 changed = True
         if not changed: return allSets
 

@@ -1,0 +1,12 @@
+* Run Instructions
+
+=day13.go= takes one argument; a filename to a file that contains the puzzle
+input.
+
+Example:
+#+BEGIN_SRC bash
+go run day13.go puzzle.in
+#+END_SRC
+
+Note that part 2 takes about 80 seconds to solve on my machine, so this isn't
+the most efficient solution... 

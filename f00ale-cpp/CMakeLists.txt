@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
 project(AOC17)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 add_executable(p01 p01.cpp)
 add_executable(p02 p02.cpp)
@@ -15,3 +15,5 @@ add_executable(p09 p09.cpp)
 add_executable(p10 p10.cpp)
 add_executable(p11 p11.cpp)
 add_executable(p12 p12.cpp)
+add_executable(p13 p13.cpp)
+add_executable(p14 p14.cpp)
