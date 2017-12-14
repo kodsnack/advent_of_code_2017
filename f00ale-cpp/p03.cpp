@@ -28,7 +28,6 @@ int main() {
                 arr[y0+y][x0+x] += arr[y0+y+yy][x0+x+xx];
             }
         }
-        if(y0+y >= SIZE-1 || x0+x >= SIZE-1 || y0+y < 1 || x0+x < 1) std::cout << "out of range!" << std::endl;
         if(!ans2 && arr[y0+y][x0+x] > input) ans2 = arr[y0+y][x0+x];
         if(dy == 0 && dx == 1) {
             if(arr[y0+y-1][x0+x] == 0) { dy = -1; dx = 0; }
