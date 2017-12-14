@@ -1,29 +1,11 @@
 object Main extends App {
 
   case class Layer(depth: Int, range: Int) {
-    def scannerPos(t: Int): Int = (t % period) match {
-      case i if i < range => i
-      case i              => range * 2 - 2 - i
-    }
     def severity: Int = depth * range
-    def toString(t: Int, player: Int): String = (
-      depth + " "
-      + ((0 until range)
-          .zipWithIndex
-          .map { case (r, i) =>
-            val scanner = if (scannerPos(t) == r) "S" else " "
-            if (player == depth && i == 0) s"(${scanner})"
-            else s"[${scanner}]"
-          }
-          .mkString(" ")
-        )
-    )
     def period: Int = range * 2 - 2
   }
 
   case class State(layers: List[Layer], t: Int) {
-    def toString(delay: Int): String = layers map { _.toString(t, t - delay) } mkString "\n"
-
     def severity(delay: Int): Int =
       (catchingLayer(delay)
         map { _.severity }
