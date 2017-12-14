@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import json
+
 state_list = list(range(256))
 current_position = 0
 skip_size = 0
@@ -82,13 +84,64 @@ def hexstring_to_binary(string_value):
         ret_val.append(hex_to_bin(s))
     return ''.join(ret_val)
 
-def main():
+
+def generate_big_list():
     answer1 = 0
     key_string = 'hxtvlmkl-'
-    for x in range(0, 128):
-        tmp_string = key_string + str(x)
+    global big_list
+    for y in range(0, 128):
+        tmp_string = key_string + str(y)
+
         knot_hash = string_to_hash(tmp_string)
-        answer1 += sum(list(map(int, hexstring_to_binary(knot_hash))))
-    print(answer1)
+        bin_string = hexstring_to_binary(knot_hash)
+        big_list[y] = list(bin_string)
+
+
+def get_neighbours(x, y):
+    global big_list
+    neighbours = []
+    if x != 0:
+        neighbours.append((x - 1, y))
+    if y != 0:
+        neighbours.append((x, y -1))
+    if (x + 1) != len(big_list):
+        neighbours.append((x + 1, y))
+    if (y + 1) !=  len(big_list):
+        neighbours.append((x, y + 1))
+
+    return neighbours
+
+def get_region(x, y):
+    global big_list
+
+    region = []
+
+    if big_list[y][x] == '1':
+        region.append((x, y))
+        big_list[y][x] = '1337'
+    else:
+        return region
+
+    neighbours = get_neighbours(x, y)
+
+    for n in neighbours:
+        if big_list[n[1]][n[0]] == '1':
+            region += get_region(n[0], n[1])
+    return region
+
+big_list = [[]] * 128
+
+def main():
+    group_found = False
+    global big_list
+    generate_big_list()
+
+    region_count = 0
+    for y in range(0, 128):
+        for x in range(0, 128):
+            if big_list[y][x] == '1':
+                get_region(x, y)
+                region_count += 1
+    print(region_count)
 if __name__ == '__main__':
     main()
