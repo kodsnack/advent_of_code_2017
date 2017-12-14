@@ -79,18 +79,20 @@ object Main extends App {
       }
 
     def nameNeighbors(bitlist: Vector[Int], i: Int, name: Int): Vector[Int] =
-      getNeighbors(i).filter({ n => bitlist(n) == 0 }).foldLeft(bitlist) { (resultBitlist, neighbor: Int) =>
-        nameNeighbors(resultBitlist.updated(neighbor, name), neighbor, name)
-      }
+      getNeighbors(i)
+        .filter({ n => bitlist(n) == 0 })
+        .foldLeft(bitlist) { (resultBitlist, neighbor: Int) =>
+          nameNeighbors(resultBitlist.updated(neighbor, name), neighbor, name)
+        }
 
-    def nameRegions(bitlist: Vector[Int], nextName: Int = 1): Vector[Int] = {
+    def nameRegions(bitlist: Vector[Int], nextName: Int): Vector[Int] = {
       val zeroIndex = bitlist.indexOf(0)
-      if (zeroIndex >= 0) {
+      if (zeroIndex >= 0)
         nameRegions(
           nameNeighbors(bitlist.updated(zeroIndex, nextName), zeroIndex, nextName),
           nextName + 1
         )
-      } else
+      else
         bitlist
     }
 
