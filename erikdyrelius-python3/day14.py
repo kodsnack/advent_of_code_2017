@@ -4,7 +4,7 @@ import functools
 from itertools import chain
 from functools import reduce
 from operator import xor
-
+from collections import deque
 
 inp = """hfdlxzhv"""
 ex = """flqrgnkx"""
@@ -30,36 +30,30 @@ def generateKnots(key):
 def numberUsed(l):
     return l.count("1")
 
+width = 128
+height = 128
+
 def countIslands(l):
     islands = 0
-    while numberUsed(l):
+    pixelsLit = numberUsed(l)
+    while pixelsLit > 0:
         islands += 1
-        
+        q = deque((s.index("1"),))
+        while len(q) > 0:
+            address = q.pop()
+            if l[address] == "1":
+                l[address] = "0"
+                pixelsLit -= 1
+            if address % width != 0 and l[address-1] == "1":
+                q.append(address-1)
+            if address % width != (width-1) and l[address+1] == "1":
+                q.append(address+1)
+            if address >= width and l[address-width] == "1":
+                q.append(address-width)
+            if address+width < height*width and l[address+width] == "1":
+                q.append(address+width)
+    return islands
 
-s = list(generateKnots(inp))
-print("Solution 14.2:", s.count("1"))
-idx = 0
-while s.count("1") > 0:
-    idx += 1
-    for row in range(16):                
-        print(''.join(s[row*128:row*128+16]))
-    q = [s.index("1")]
-    print(q)
-    while len(q)>0:
-        q1 = q[0]
-        q = q[1:]
-        s[q1] = "2"
-        for i in [1, -1, 128, -128]:
-            q2 = i+q1
-            if (i == -1) and (q1 % 128) == 0: continue
-            if (i == 1) and (q1 % 128) == 127: continue
-            if (i == -128) and q2 < 0: continue
-            if (i == 128) and (q2 >= 128*128): continue
-            if (s[q2] == "1"):
-                q = q + [q2]
-    print(s.count("1"), s.count("2"), idx)
-    for row in range(16):                
-        print(''.join(s[row*128:row*128+16]))
-    for i in range(128*128):
-        if s[i] == "2":
-            s[i] = "0"
+sin = list(generateKnots(inp))
+print("Solution 14.1:", numberUsed(sin))
+print("Solution 14.2:", countIslands(sin))
