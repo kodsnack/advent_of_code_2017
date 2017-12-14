@@ -15,10 +15,7 @@ object Main extends App {
     def catchingLayer(delay: Int): Option[Layer] = layers.find { l => l.depth == (t - delay) && t % l.period == 0 }
   }
 
-  def length(layers: List[Layer]): Int =
-    layers
-      .map { _.depth }
-      .max
+  def length(layers: List[Layer]): Int = layers.map({ _.depth }).max
 
   val layers: List[Layer] = (for {
     line <- io.Source.stdin.getLines()
