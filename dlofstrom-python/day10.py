@@ -12,10 +12,11 @@ def knot(lengths, r, N):
         for length in lengths:
             #List of numbers to reverse (current postion is at index 0)
             reverse = numbers[:length]
+            reverse.reverse()
             #Rest of the list
-            rest = [v for v in numbers if v not in reverse]
+            rest = numbers[length:]#[v for v in numbers if v not in reverse]
             #Assemble twisted knot (position is at index 0)
-            numbers = rest + list(reversed(reverse))
+            numbers = rest + reverse
             #Shift numbers the number of skips (position still at index 0)
             numbers = numbers[skip_steps:] + numbers[:skip_steps]
             #Increment position (to keep track of shifted list)
