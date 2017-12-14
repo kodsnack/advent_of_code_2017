@@ -1,0 +1,9 @@
+* Run Instructions
+
+=day14.go= takes one argument; the puzzle input.
+
+Example:
+
+#+BEGIN_SRC bash
+go run day14.go flqrgnkx
+#+END_SRC
