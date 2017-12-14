@@ -1,11 +1,12 @@
 scanners = File.read(ARGV[0]).lines.map(&.split(": ").map(&.to_i)).to_h
 
 def try(scanners, delay)
-  (0..scanners.keys.last).sum do |i|
-    x = scanners[i]?
-    if x && (i + delay) % (2 * x - 2) == 0
-      (i + delay) * x
-    end || 0
+  scanners.sum do |(i, v)|
+    if (i + delay) % (2 * v - 2) == 0
+      (i + delay) * v
+    else
+      0
+    end
   end
 end
 
