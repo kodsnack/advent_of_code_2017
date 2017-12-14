@@ -73,3 +73,6 @@
 [submodule "albertdahlin-elm"]
 	path = albertdahlin-elm
 	url = git@github.com:albertdahlin/AdventOfCode.git
+[submodule "baboons-php7"]
+	path = baboons-php7
+	url = https://github.com/baboons/advent-of-code-2017
