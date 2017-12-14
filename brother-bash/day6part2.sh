@@ -2,7 +2,7 @@
 
 inarray() { local q=$1 e; shift; (( $# )) && for e; do [[ $q = "$e" ]] && return; done; }
 
-filename="$(dirname "$0")/testdata_a.txt"
+filename="$(dirname "$0")/testdata_b.txt"
 if [[ $1 ]]; then
 	if ! [[ -f $1 ]]; then
 		echo "Invalid input file. Using test data."
@@ -49,15 +49,20 @@ read -r -a dataBanks < "$filename"
 
 result=0
 declare -a seen
+declare -A counter
 while :; do
 	result=$((result+1))
 	signature=$(balancebanks "${dataBanks[@]}")
 	lazyhash=${signature// /-}
 	if inarray "$lazyhash" "${seen[@]}"; then
-		break
+		if [[ ${counter[$lazyhash]} ]] && (( ${counter[$lazyhash]} > 0 )); then
+			echo $((result-${counter[$lazyhash]}))
+			break
+		fi
+	else
+		counter[$lazyhash]=$result
 	fi
 	# Store hash and reset banks for new balance try
 	read -r -a seen <<< "${seen[*]} $lazyhash"
 	read -r -a dataBanks <<< "$signature"
 done
-echo $result
