@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import json
+
 state_list = list(range(256))
 current_position = 0
 skip_size = 0
@@ -82,14 +84,70 @@ def hexstring_to_binary(string_value):
         ret_val.append(hex_to_bin(s))
     return ''.join(ret_val)
 
-def main():
+def main_write():
     answer1 = 0
     key_string = 'hxtvlmkl-'
+    big_list = [[]] * 128
     for x in range(0, 128):
         tmp_string = key_string + str(x)
-        print(tmp_string)
         knot_hash = string_to_hash(tmp_string)
+        bin_string = hexstring_to_binary(knot_hash)
+        for s in bin_string:
+            big_list[x].append(s)
         answer1 += sum(list(map(int, hexstring_to_binary(knot_hash))))
     print(answer1)
+    with open('calc.txt', 'w') as f:
+        f.write(json.dumps(big_list))
+
+def get_neighbours(x, y):
+    global big_list
+    neighbours = []
+    neighbours.append((x + 1, y))
+    neighbours.append((x + 1, y + 1))
+    neighbours.append((x, y + 1))
+    if x != 0:
+        neighbours.append((x - 1, y + 1))
+        neighbours.append((x - 1, y))
+        neighbours.append((x - 1, y - 1))
+    if y != 0:
+        neighbours.append((x, y - 1))
+        neighbours.append((x + 1, y - 1))
+
+    real_neighbours = []
+
+    if big_list[y][x] == 1:
+        real_neighbours = [(x, y)]
+
+    if big_list[y][x] != '1':
+        return []
+
+    while True:
+        print(real_neighbours)
+        for n in real_neighbours:
+            if big_list[n[1]][n[0]] == '1':
+                big_list[n[1]][n[0]] = '1337'
+                real_neighbours += get_neighbours(n[0], n[1])
+                print('hje')
+            else:
+                continue
+
+    return real_neighbours
+
+big_list = []
+
+def main_read():
+    group_id = 1
+    group_found = False
+    global big_list
+    with open('calc.json', 'r') as f:
+        big_list = json.loads(f.read())
+
+    print(get_neighbours(2,4))
+
+    for y, y_list in enumerate(big_list):
+        y -= 1
+        for x, x_val in enumerate(y_list):
+            x -= 1
+            pass
 if __name__ == '__main__':
-    main()
+    main_read()
