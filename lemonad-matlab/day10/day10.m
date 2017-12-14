@@ -1,6 +1,7 @@
 %
 % Day 10, Advent of code 2017 (Jonas Nockert / @lemonad)
 %
+% Note: Day 14 depends on the functions of this day!
 
 runtests('day10Test.m');
 
