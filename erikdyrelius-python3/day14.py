@@ -9,7 +9,7 @@ from operator import xor
 inp = """hfdlxzhv"""
 ex = """flqrgnkx"""
 
-def knot(inp):
+def knot(inp, fmt="08b"):
     inp = list(chain(map(ord, inp), [17, 31, 73, 47, 23]))
     skip = 0
     pos = 0
@@ -22,14 +22,22 @@ def knot(inp):
             pos = (pos + ln - l - skip)%ln
             skip = (skip + 1)%ln
     vals = vals[pos:] + vals[:pos]
-    return ''.join([format(reduce(xor, [vals[j] for j in range(i, i+16)]),"08b") for i in range(0, 256, 16)])
+    return ''.join([format(reduce(xor, [vals[j] for j in range(i, i+16)]),fmt) for i in range(0, 256, 16)])
 
-s = ""
-print(inp)
-for i in range(128):
-    s = s + knot("{}-{}".format(inp, i))
-s = list(s)
-print(s.count("1"))
+def generateKnots(key):
+    return "".join(map(lambda i, k=key:knot("{}-{}".format(key, i)), range(128)))
+
+def numberUsed(l):
+    return l.count("1")
+
+def countIslands(l):
+    islands = 0
+    while numberUsed(l):
+        islands += 1
+        
+
+s = list(generateKnots(inp))
+print("Solution 14.2:", s.count("1"))
 idx = 0
 while s.count("1") > 0:
     idx += 1
