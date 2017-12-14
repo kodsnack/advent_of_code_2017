@@ -20,28 +20,19 @@ print "Part 1:", c
 
 
 #Part 2
-queue = [(i,j) for j in range(128) for i in range(128) if m[j][i]=='1']
-groups = []
+def remove_adjecent(square):
+    x,y = square
+    for s in [(x+1,y),(x-1,y),(x,y+1),(x,y-1)]:
+        if s in queue:
+            queue.remove(s)
+            remove_adjecent(s)
+
+queue = set([(i,j) for j in range(128) for i in range(128) if m[j][i]=='1'])
+group_count = 0
 while queue:
     #Pop first square in group
-    group_start = queue.pop(0)
-    group_queue = [group_start]
-    groups.append([])
-    #Remove all adjacent # from squares in group
-    while group_queue:
-        #Pop sub square and remove adjacent from queue and add to group_queue
-        x,y = group_queue.pop(0)  
-        groups[-1].append((x,y))
-        if (x+1,y) in queue:
-            group_queue.append((x+1,y))
-            queue.remove((x+1,y))
-        if (x,y+1) in queue:
-            group_queue.append((x,y+1))
-            queue.remove((x,y+1))
-        if (x-1,y) in queue:
-            group_queue.append((x-1,y))
-            queue.remove((x-1,y))
-        if (x,y-1) in queue:
-            group_queue.append((x,y-1))
-            queue.remove((x,y-1))
-print "Part 2:", len(groups)
+    square = queue.pop()
+    group_count += 1
+    #Remove all adjacent # from square
+    remove_adjecent(square)
+print "Part 2:", group_count
