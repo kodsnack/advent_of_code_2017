@@ -9,22 +9,16 @@ namespace tor_selden_csharp
 {
     class Day14
     {
-        static string[] input = File.ReadAllLines(Path.Combine(Program.BasePath, "input14.txt"));
+        static string input = "hxtvlmkl";
 
         internal static void A()
         {
-            ParseInput();
+            var foo = Day10.PrepareInput(input);
 
+            var bar = Day10.HashFunctionB(Day10.L,0,0,)
 
         }
 
-            private static void ParseInput()
-            {
-                foreach (var row in input)
-                {
-                    var temp = row.Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries);
-                    
-                }
-            }
+
     }
 }
