@@ -9,27 +9,27 @@ let example = [
 
 let parse line = Scanf.sscanf line "%d: %d" (fun depth range -> depth,range);;
 
-let scan_pos range t = (* may be seen as triangle function *)
-  let range = range - 1 in
-  range - abs (t mod (range * 2) - range)
+(* may be seen as a triangle function *)
+let scanner_at_top range t =
+  let range = range - 1 in range - abs (t mod (range * 2) - range) = 0
 ;;
 
-let rec travel delay caught t = function
-  | [] -> caught
-  | (depth, range) as layer :: layers ->
-    let caught' = if scan_pos range (delay + depth) = 0
-      then (layer :: caught)
-      else caught
-    in travel delay caught' (max depth t) layers
+let rec severity sum t = function
+  | [] -> sum
+  | (depth, range) :: layers ->
+    if scanner_at_top range depth
+    then severity (sum + range * depth) depth layers
+    else severity sum depth layers
 ;;
 
-let part1 = List.(map parse >> travel 0 [] 0 >> map (fun (d,r) -> d * r) >> fold_left ( + ) 0);;
+let part1 = List.map parse >> severity 0 0;;
 
 assert (example |> part1 = 24);;
 
 let rec find_safe delay layers =
-  if travel delay [] 0 layers = [] then delay
-  else find_safe (delay + 1) layers
+  if layers |> List.exists (fun (depth, range) -> scanner_at_top range (delay + depth))
+  then find_safe (delay + 1) layers
+  else delay
 ;;
 
 let part2 = List.map parse >> find_safe 0;;
