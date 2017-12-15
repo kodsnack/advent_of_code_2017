@@ -1,10 +1,15 @@
 object Main extends App {
 
-  val startA: Long = 512
-  val startB: Long = 191
-
-  // val startA: Long = 65
-  // val startB: Long = 8921
+  val (startA: Long, startB: Long) =
+    (
+      io.Source.stdin.getLines().map({ line =>
+        line.trim.split(" ") match {
+          case Array("Generator", name, "starts", "with", start) => start.toLong
+        }
+      }).toList
+    ) match {
+      case List(a, b) => (a, b)
+    }
 
   val factorA = 16807
   val factorB = 48271
@@ -20,8 +25,21 @@ object Main extends App {
       step(factor, filterMultiplier)(v)
   }
 
-  val streamA = Iterator.iterate(startA)(step(factorA, filterA))
-  val streamB = Iterator.iterate(startB)(step(factorB, filterB))
+  def solve(startA: Long, startB: Long, filterA: Long, filterB: Long, sample: Int): Long = {
+    val streamA = Iterator.iterate(startA)(step(factorA, filterA))
+    val streamB = Iterator.iterate(startB)(step(factorB, filterB))
+    (streamA zip streamB
+      drop 1
+      take sample
+      count {
+        case (a, b) => (a % 65536) == (b % 65536)
+      }
+    )
+  }
 
-  println(streamA.zip(streamB).drop(1).take(5000000).count({ case (a, b) => (a % 65536) == (b % 65536) }))
+  def solveA(startA: Long, startB: Long): Long = solve(startA, startB, 1, 1, 40000000)
+  def solveB(startA: Long, startB: Long): Long = solve(startA, startB, filterA, filterB, 5000000)
+
+  println(s"A: ${solveA(startA, startB)}")
+  println(s"B: ${solveB(startA, startB)}")
 }
