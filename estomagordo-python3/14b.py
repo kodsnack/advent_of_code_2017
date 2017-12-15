@@ -25,14 +25,11 @@ def solve(key):
                     vy, vx = visiting
                     grid[vy][vx] = '2'
 
-                    if vy < 127 and grid[vy + 1][vx] == '1':
-                        frontier.append((vy + 1, vx))
-                    if vy > 0 and grid[vy - 1][vx] == '1':
-                        frontier.append((vy - 1, vx))
-                    if vx < 127 and grid[vy][vx + 1] == '1':
-                        frontier.append((vy, vx + 1))
-                    if vx > 0 and grid[vy][vx - 1] == '1':
-                        frontier.append((vy, vx - 1))
+                    for neighbour in utilities.get_four_neighbours(visiting):
+                        ny, nx = neighbour
+                        if 0 <= ny < 128 and 0 <= nx < 128 and grid[ny][nx] == '1':
+                            frontier.append(neighbour)
+
                 count += 1
 
     return count

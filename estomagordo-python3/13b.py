@@ -15,6 +15,6 @@ def solve(firewalls):
 
     return delay
 
-with open('input.txt', 'r') as f:
+with open('input_13.txt', 'r') as f:
     firewalls = [list(map(int, line.split(': '))) for line in f.readlines()]
     print(solve(firewalls))
