@@ -1,10 +1,5 @@
 import Foundation
 
-let url = URL(fileURLWithPath: NSHomeDirectory() + "/Documents/advent_of_code_2017/idrougge-rexx/day10.txt")
-//let lengths = try! Data.init(contentsOf: url) + [17, 31, 73, 47, 23]
-//let lengths = "AoC 2017".data(using: .ascii)! + [17, 31, 73, 47, 23]
-//let lengths = "flqrgnkx-0".data(using: .ascii)! + [17, 31, 73, 47, 23]
-
 func knothash(input:String) -> [Int] {
     let listlength = 256
     var list = (0..<listlength).map{$0}
@@ -36,24 +31,6 @@ func knothash(input:String) -> [Int] {
     return dense
 }
 
-func hashToHex(hash:[Int]) -> String {
-    let hex = hash.map{String.init(format:"%02x", $0)}.reduce("",+)
-    print(hex)
-    return hex
-}
-func hashToBin(hash:[Int]) {
-    let bin = hash[0..<1].reduce(""){ str, num in
-        let bin = String(num, radix: 2)
-        return str + String(repeating: "0", count: 8 - bin.count) + bin
-    }
-    print(bin)
-}
-//hashToBin(hash: [15,16,15])
-//hashToHex(hash: knothash(input: "AoC 2017"))
-//hashToBin(hash: knothash(input: "AoC 2017"))
-/*
-hashToBin(hash: knothash(input: "flqrgnkx-0"))
-*/
 func countBits(_ nr:Int) -> Int {
     var nr = nr,  bits = 0
     while nr > 0 {
@@ -62,10 +39,10 @@ func countBits(_ nr:Int) -> Int {
     }
     return bits
 }
+
 var bitcount = 0
 (0..<128).forEach{ nr in
-    print("flqrgnkx-\(nr)")
     let hash = knothash(input: "ugkiagan-\(nr)")
     bitcount = hash.reduce(bitcount){ acc, val in return acc + countBits(val) }
-    print(bitcount)
 }
+print(bitcount)
