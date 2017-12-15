@@ -3,6 +3,9 @@ from functools import reduce
 def get_eight_neighbours(pos):
     return [(x,y) for x in range(pos[0] - 1, pos[0] + 2) for y in range(pos[1] - 1, pos[1] + 2) if [x, y] != pos]
 
+def get_four_neighbours(pos):
+    return [(pos[0] + 1, pos[1]), (pos[0] - 1, pos[1]), (pos[0], pos[1] + 1), (pos[0], pos[1] - 1)]
+
 def knot_hash(hashkey):
     n = 256
 

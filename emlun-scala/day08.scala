@@ -1,4 +1,4 @@
-object Main extends App {
+object Day08 extends App {
 
   type State = Map[String, Int]
 

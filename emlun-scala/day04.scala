@@ -1,4 +1,4 @@
-object Main extends App {
+object Day04 extends App {
   val passphrases: List[List[String]] = (for {
     line <- io.Source.stdin.getLines
     trimmed = line.trim

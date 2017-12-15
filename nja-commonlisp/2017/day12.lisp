@@ -23,9 +23,7 @@
 (defun add (connected-ids groups)
   (let* ((connected-groups (groups-containing connected-ids groups))
          (other-groups (set-difference groups connected-groups)))
-    (if connected-groups
-        (add (apply #'connect connected-ids connected-groups) other-groups)
-        (cons connected-ids other-groups))))
+    (cons (apply #'connect connected-ids connected-groups) other-groups)))
 
 (defun join (groups)
   (loop for result = nil then (add group result)
