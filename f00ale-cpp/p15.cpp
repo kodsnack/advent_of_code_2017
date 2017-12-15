@@ -1,18 +1,10 @@
 #include <iostream>
-#include <vector>
-#include <tuple>
-#include <map>
-#include <set>
-#include <array>
-#include <string>
-#include <deque>
-#include <algorithm>
 
 int main() {
     int ans1 = 0;
     int ans2 = 0;
-    int64_t a = 0;
-    int64_t b = 0;
+    uint64_t a = 0;
+    uint64_t b = 0;
     {
         bool done = false;
         bool innum = false;
