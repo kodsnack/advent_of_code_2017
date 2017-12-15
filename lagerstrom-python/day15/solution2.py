@@ -26,8 +26,6 @@ def generator2():
 def main():
     judge_count = 0
     for gen1, gen2 in zip(generator1(), generator2()):
-        #if gen1 == None or gen2 == None:
-        #    continue
         last_16_bits_gen1 = '{:032b}'.format(gen1)[-16:]
         last_16_bits_gen2 = '{:032b}'.format(gen2)[-16:]
         if last_16_bits_gen1 == last_16_bits_gen2:
