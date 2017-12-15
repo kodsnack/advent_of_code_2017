@@ -9,10 +9,19 @@ object Main extends App {
   val factorA = 16807
   val factorB = 48271
 
-  def step(factor: Long)(prev: Long): Long = (prev * factor) % 2147483647l
+  val filterA = 4
+  val filterB = 8
 
-  val streamA = Iterator.iterate(startA)(step(factorA))
-  val streamB = Iterator.iterate(startB)(step(factorB))
+  def step(factor: Long, filterMultiplier: Long)(prev: Long): Long = {
+    val v = (prev * factor) % 2147483647l
+    if (v % filterMultiplier == 0)
+      v
+    else
+      step(factor, filterMultiplier)(v)
+  }
 
-  println(streamA.zip(streamB).take(40000000).count({ case (a, b) => (a % 65536) == (b % 65536) }))
+  val streamA = Iterator.iterate(startA)(step(factorA, filterA))
+  val streamB = Iterator.iterate(startB)(step(factorB, filterB))
+
+  println(streamA.zip(streamB).drop(1).take(5000000).count({ case (a, b) => (a % 65536) == (b % 65536) }))
 }
