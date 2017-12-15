@@ -1,4 +1,4 @@
-PROGRAMS=$(wildcard day*.scala)
+PROGRAMS=$(sort $(wildcard day*.scala))
 
 default: runall
 
