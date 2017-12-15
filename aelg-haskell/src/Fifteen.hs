@@ -9,14 +9,16 @@ import           Data.Word
 parse :: [String] -> (Int, Int)
 parse [a, b] = (read . last . words $ a, read . last . words $ b)
 
+wrap x = x `rem` 2147483647
+
 solve1 :: [String] -> Int
-solve1 s = length $ filter matches l
+solve1 s = length $ filter matches $ take 40000000 l
   where
-    (a, b) = parse s
+    factors = parse s
     update (a, b) _ =
-      ( (a * 16807 `rem` 2147483647, b * 48271 `rem` 2147483647)
-      , (a * 16807 `rem` 2147483647, b * 48271 `rem` 2147483647))
-    (acc, l) = mapAccumL update (a, b) [1 .. 40000000]
+      let p = (wrap (a * 16807), wrap (b * 48271))
+      in (p, p)
+    (acc, l) = mapAccumL update factors [1 ..]
     matches (a, b) = (a .&. 0xffff) == (b .&. 0xffff)
 
 solve2 :: [String] -> Int
@@ -30,7 +32,8 @@ solve2 s =
   where
     (a, b) = parse s
     update factor a _ =
-      (a * factor `rem` 2147483647, a * factor `rem` 2147483647)
+      let v = wrap (a * factor)
+      in (v, v)
     (accA, lA) = mapAccumL (update 16807) a [1 ..]
     (accB, lB) = mapAccumL (update 48271) b [1 ..]
     matches (a, b) = (a .&. 0xffff) == (b .&. 0xffff)
