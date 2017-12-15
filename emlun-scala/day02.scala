@@ -1,4 +1,4 @@
-object Main extends App {
+object Day02 extends App {
   val lineChecksums = for {
     line <- io.Source.stdin.getLines
   } yield {

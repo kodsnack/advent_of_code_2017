@@ -1,4 +1,4 @@
-object Main extends App {
+object Day14 extends App {
 
   val keystring: String = io.Source.stdin.getLines().mkString("\n").trim
 

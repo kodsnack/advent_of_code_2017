@@ -1,4 +1,4 @@
-object Main extends App {
+object Day12 extends App {
 
   val groups: List[Set[Int]] = (for {
     line <- io.Source.stdin.getLines()

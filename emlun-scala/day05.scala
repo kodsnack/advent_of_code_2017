@@ -1,4 +1,4 @@
-object Main extends App {
+object Day05 extends App {
   val jumps: List[Int] = io.Source.stdin.getLines().map(_.trim.toInt).toList
 
   def editA(offset: Int): Int = offset + 1
