@@ -57,3 +57,13 @@
 (deftest day14 ()
   (is (= 8230 (aoc2017.day14::part1 "hfdlxzhv")))
   (is (= 1103 (aoc2017.day14::part2 "hfdlxzhv"))))
+
+(deftest day15 ()
+  (let ((args '(512 191)))
+    (is (= 567 (apply #'aoc2017.day15::part1 args)))
+    (is (= 323 (apply #'aoc2017.day15::part2 args)))))
+
+(deftest day15.alt ()
+  (let ((args '(512 191)))
+    (is (= 567 (apply #'aoc2017.day15.alt::part1 args)))
+    (is (= 323 (apply #'aoc2017.day15.alt::part2 args)))))
