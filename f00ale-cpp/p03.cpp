@@ -1,10 +1,11 @@
 #include <iostream>
 
+constexpr int SIZE = 1000;
+int arr[SIZE][SIZE];
+
 int main() {
     int input;
     std::cin >> input;
-    constexpr int SIZE = 1000;
-    int arr[SIZE][SIZE];
     for(int y = 0; y < SIZE; y++)
         for(int x = 0; x < SIZE; x++)
             arr[y][x] = 0;

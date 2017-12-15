@@ -18,6 +18,10 @@ proc parseTable(inp: string): seq[FireWall] =
             result.add((matches[0].parseInt, (matches[1].parseInt - 1) * 2))
         else:
             echo "Error-> ", line
+    result.sort do (x, y: FireWall) -> int:
+        result = cmp(x.prd, y.prd)
+        if result == 0:
+            result = cmp(x.dst, y.dst)
 
 proc calcSeverity(fws: seq[FireWall]): int =
     for fw in fws:

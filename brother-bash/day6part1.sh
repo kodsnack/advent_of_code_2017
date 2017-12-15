@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source "$(dirname "$0")/../functions.sh"
+inarray() { local q=$1 e; shift; (( $# )) && for e; do [[ $q = "$e" ]] && return; done; }
 
 filename="$(dirname "$0")/testdata_a.txt"
 if [[ $1 ]]; then
