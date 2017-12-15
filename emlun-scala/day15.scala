@@ -1,4 +1,4 @@
-object Main extends App {
+object Day15 extends App {
 
   val (startA: Long, startB: Long) =
     (

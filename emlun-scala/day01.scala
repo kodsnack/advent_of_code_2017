@@ -1,4 +1,4 @@
-object Main extends App {
+object Day01 extends App {
   val digits: List[Int] = (for {
     line <- io.Source.stdin.getLines
     digit <- line.trim

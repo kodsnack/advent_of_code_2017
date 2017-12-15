@@ -1,4 +1,4 @@
-object Main extends App {
+object Day06 extends App {
   val banks: List[Int] = (for {
     line <- io.Source.stdin.getLines
     bank <- line.trim.split(raw"\s+")

@@ -1,6 +1,6 @@
 import scala.language.implicitConversions
 
-object Main extends App {
+object Day09 extends App {
 
   val stream = for {
     line <- io.Source.stdin.getLines

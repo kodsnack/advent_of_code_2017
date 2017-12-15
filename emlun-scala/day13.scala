@@ -1,4 +1,4 @@
-object Main extends App {
+object Day13 extends App {
 
   case class Layer(depth: Int, range: Int) {
     def severity: Int = depth * range
