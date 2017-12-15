@@ -7,6 +7,7 @@ clean:
 
 runall: $(foreach day,$(PROGRAMS),$(patsubst day%.scala,run%,$(day)))
 timeall: $(foreach day,$(PROGRAMS),$(patsubst day%.scala,time%,$(day)))
+.PRECIOUS: Day%.class
 
 run%: day%.scala
 	scala $< < day$*.in
