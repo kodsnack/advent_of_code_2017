@@ -24,5 +24,6 @@
                  (:file "day13")
                  (:file "day14")
                  (:file "day15")
+                 (:file "day15.alt")
                  (:file "tests"))))
   :depends-on (#:alexandria #:fiasco #:cl-ppcre))
