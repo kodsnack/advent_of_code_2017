@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace tor_selden_csharp
 {
-    class Day10
+    public class Day10
     {
 
         internal static void A()
@@ -28,26 +28,32 @@ namespace tor_selden_csharp
 
         internal static void B()
         {
+            string data = "120,93,0,90,5,80,129,74,1,165,204,255,254,2,50,113";
+
+            var knotHash = CalcKnotHash(data);
+            Console.WriteLine(knotHash);
+        }
+
+        public static string CalcKnotHash(string data)
+        {
+            List<byte> input = Encoding.ASCII.GetBytes(data).ToList();
             int currentPos = 0;
             int skipSize = 0;
             int rounds = 64;
             List<int> list = new List<int>();
-            var length_A = "120,93,0,90,5,80,129,74,1,165,204,255,254,2,50,113".Split(new[] { ',' }).Select(i => int.Parse(i)).ToList();
 
-            //B
-            //List<byte> length_B = new List<byte> { 3, 4, 1, 5, 17, 31, 73, 47, 23 }; //DEBUG
-            //List<byte> input = Encoding.ASCII.GetBytes("1,2,3").ToList(); //DEBUG
-
-            List<byte> input= Encoding.ASCII.GetBytes("120,93,0,90,5,80,129,74,1,165,204,255,254,2,50,113").ToList();
-            List<byte> suffix = new List<byte> { 17, 31, 73, 47, 23 };
+            List<byte> suffix = new List<byte> {17, 31, 73, 47, 23};
             var length_B = input.Concat(suffix).ToList();
 
-            for (int i = 0; i < 256; i++) { list.Add(i); }
+            for (int i = 0; i < 256; i++)
+            {
+                list.Add(i);
+            }
 
             List<int> sparseHash = HashFunctionB(list, currentPos, skipSize, length_B, rounds);
             List<int> denseHash = DenseHashFunction(sparseHash);
             string knotHash = KnotHash(denseHash);
-            Console.WriteLine(knotHash);
+            return knotHash;
         }
 
         private static string KnotHash(List<int> denseHash)
