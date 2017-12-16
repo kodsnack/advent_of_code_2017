@@ -10,15 +10,13 @@ def permute(input, positions)
       i = $1.to_i
       positions[0..(i - 1)], positions[i..15] = positions[(15 - i + 1)..15], positions[0..(15 - i)]
     when /x(\d+)\/(\d+)/
-      i1 = $1.to_i || raise "unreachable"
-      i2 = $2.to_i || raise "unreachable"
+      i1 = $1.to_i
+      i2 = $2.to_i
       positions[i1], positions[i2] = positions.values_at(i2, i1)
     when /p(.)\/(.)/
       i1 = positions.index($1) || raise "unreachable"
       i2 = positions.index($2) || raise "unreachable"
       positions[i1], positions[i2] = positions[i2], positions[i1]
-    else
-      raise "unreachable"
     end
   end
 end
@@ -33,8 +31,6 @@ period = (1..Int32::MAX).find do |i|
   permute(input, positions)
   positions == original
 end || raise "unreachable"
-
-positions = original.dup
 
 (1000000000 % period).times do
   permute(input, positions)
