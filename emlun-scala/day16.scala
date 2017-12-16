@@ -31,24 +31,17 @@ object Day16 extends App {
 
   def danceAll(programs: String, moves: List[Move]): String = moves.foldLeft(programs)(dance)
 
-  def danceTimes(programs: String, moves: List[Move], timesLeft: Int, history: List[String]): String =
-    if (timesLeft <= 0)
+  def danceTimes(programs: String, moves: List[Move], timesLeft: Int, history: List[String]): String = {
+    val index = history.indexOf(programs)
+    val period = index + 1
+
+    if (timesLeft <= 0 || index == 0)
       programs
-    else {
-      val next = danceAll(programs, moves)
-      val index = history.indexOf(programs)
-      if (index >= 0) {
-        val period = index + 1
-        if (index == 0)
-          programs
-        else if (timesLeft >= period)
-          danceTimes(programs, moves, timesLeft % period, history)
-        else
-          danceTimes(next, moves, timesLeft - 1, programs +: history)
-      }
-      else
-        danceTimes(next, moves, timesLeft - 1, programs +: history)
-    }
+    else if (index > 0 && timesLeft >= period)
+      danceTimes(programs, moves, timesLeft % period, history)
+    else
+      danceTimes(danceAll(programs, moves), moves, timesLeft - 1, programs +: history)
+  }
 
   val startPos = "abcdefghijklmnop"
 
