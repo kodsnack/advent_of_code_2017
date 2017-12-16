@@ -2,6 +2,7 @@ def solve(programs, instructions):
     bill = 1000000000
     states = {''.join(programs): 0}
     j = 1
+
     while True:
         for instruction in instructions:
             command = instruction[0]
@@ -39,9 +40,7 @@ def solve(programs, instructions):
 
     return ''.join(programs)
 
-#print(solve(['a', 'b', 'c', 'd', 'e'], ['s1', 'x3/4', 'pe/b']))
-
-with open('input.txt', 'r') as f:    
+with open('input_16.txt', 'r') as f:    
     instructions = f.read().split(',')
     a = ord('a')
     programs = [chr(a + x) for x in range(16)]
