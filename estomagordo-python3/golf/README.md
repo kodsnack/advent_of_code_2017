@@ -25,3 +25,6 @@ Golfed result EQUALS the regular result. The solution was shortened from 678 to 
 
 9b.py
 Golfed result EQUALS the regular result. The solution was shortened from 548 to 153 chars, or 27.92% of the original.
+
+12a.py
+Golfed result EQUALS the regular result. The solution was shortened from 810 to 309 chars, or 38.15% of the original.
