@@ -8,6 +8,7 @@ namespace tor_selden_csharp
 {
     public class Day10
     {
+        static string data = "120,93,0,90,5,80,129,74,1,165,204,255,254,2,50,113";
 
         internal static void A()
         {
@@ -15,7 +16,7 @@ namespace tor_selden_csharp
             int skipSize = 0;
             int rounds = 1;
             List<int> list = new List<int>();
-            var length_A = "120,93,0,90,5,80,129,74,1,165,204,255,254,2,50,113".Split(new[] { ',' }).Select(i => int.Parse(i)).ToList();
+            var length_A = data.Split(new[] { ',' }).Select(i => int.Parse(i)).ToList();
 
             int size = 256;
 
@@ -28,8 +29,6 @@ namespace tor_selden_csharp
 
         internal static void B()
         {
-            string data = "120,93,0,90,5,80,129,74,1,165,204,255,254,2,50,113";
-
             var knotHash = CalcKnotHash(data);
             Console.WriteLine(knotHash);
         }
@@ -155,7 +154,6 @@ namespace tor_selden_csharp
                     skipSize++;
                 }
             }
-
             return list;
         }
     }

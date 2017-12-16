@@ -14,14 +14,9 @@ namespace tor_selden_csharp
 
         internal static void A()
         {
-
-
             //int memoryLocation = 361527;
             int size = (int)Math.Sqrt(memoryLocation) + 2;
-
-
             int[,] memory = CreatMemory(size, memoryLocation);
-
             int dist = Math.Abs(size / 2 - xPos) + Math.Abs(size / 2 - yPos);
             Console.WriteLine(dist);
         }
@@ -33,10 +28,8 @@ namespace tor_selden_csharp
             int x = size / 2;
             int y = size / 2;
             int i = 1;
-            //mem[x, y] = i;
             while (true)
             {
-                //Debug(mem);
                 do
                 {
                     if (i == memPos) { xPos = x; yPos = y; return mem; };
@@ -88,12 +81,9 @@ namespace tor_selden_csharp
         {
             int size = (int)Math.Sqrt(memoryLocation) + 10;
 
-
             int[,] memory = CreatMemoryB(size, memoryLocation);
-
             int memPos = memory[xPos, yPos];
             Console.WriteLine(memPos);
-
         }
 
         private static int[,] CreatMemoryB(int size, int memPos)
@@ -103,10 +93,8 @@ namespace tor_selden_csharp
             int x = size / 2;
             int y = size / 2;
             int i = 1;
-            //mem[x, y] = i;
             while (true)
             {
-                //Debug(mem);
                 do
                 {
                     if (i > memPos) { xPos = x; yPos = y; return mem; };

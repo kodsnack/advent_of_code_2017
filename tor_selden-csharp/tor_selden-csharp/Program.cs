@@ -30,10 +30,16 @@ namespace tor_selden_csharp
             //Day11.AB();
             //Day12.A();
             //Day12.B();
-            Day13.AB();
+            //Day13.AB();
+            //Day14.A();
+            //Day14.B();
+            //Day15.A();
+            //Day15.B();
+            //Day16.AB();
+            
 
             s.Stop();
-            System.Console.WriteLine(s.ElapsedMilliseconds);
+            System.Console.WriteLine($"Time: {s.ElapsedMilliseconds}");
         }
 
 

@@ -18,14 +18,9 @@ namespace tor_selden_csharp
 
         public static Dictionary<string, int> totalWeights = new Dictionary<string, int>();
 
-
         public static void B()
         {
-
             string seed = "mkxke";
-            //var weight1 = TotalWeight(seed, programs[seed].Item2);
-            //var tot = programs.Sum(w => w.Value.Item1); 
-            //var res = programs.Where(p=>TotalWeight(p.Value.Item2).
 
             foreach (var program in programs)
             {
@@ -33,9 +28,6 @@ namespace tor_selden_csharp
                 var w = TotalWeight(program.Key, program.Value.Item2);
                 string res = $"{program.Key},{w}" + Environment.NewLine;
                 totalWeights.Add(program.Key, w);
-
-                //Console.WriteLine(res);
-                //File.AppendAllText("day7.txt", res);
             }
 
             foreach (var program in programs.Keys)
@@ -63,7 +55,6 @@ namespace tor_selden_csharp
 
         private static bool IsBalanced(string program)
         {
-            //return programs[program].Item2.Select(w => TotalWeight(w, programs[w].Item2)).Distinct().Count() == 1;
             return programs[program].Item2.Select(w => totalWeights[w]).Distinct().Count() == 1;
         }
 

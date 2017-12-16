@@ -15,15 +15,14 @@ namespace tor_selden_csharp
         static int[] programs = new int[16];
         static int[] startPrograms = new int[16];
 
-        internal static void A()
+        internal static void AB()
         {
             for (int i = 'a'; i < 'a' + 16; i++)
             {
                 programs[i - 'a'] = (char)i;
                 startPrograms[i - 'a'] = (char)i;
             }
-
-
+            
             //A
             Dance(1);
             var result = programs.Select(p => (char)p).ToArray();
