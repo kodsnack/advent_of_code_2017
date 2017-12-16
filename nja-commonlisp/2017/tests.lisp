@@ -67,3 +67,7 @@
   (let ((args '(512 191)))
     (is (= 567 (apply #'aoc2017.day15.alt::part1 args)))
     (is (= 323 (apply #'aoc2017.day15.alt::part2 args)))))
+
+(deftest day16 ()
+  (is (string= "olgejankfhbmpidc" (aoc2017.day16::part1 (input-for 2017 16))))
+  (is (string= "gfabehpdojkcimnl" (aoc2017.day16::part2 (input-for 2017 16)))))
