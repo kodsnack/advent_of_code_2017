@@ -35,8 +35,8 @@ template <int N = 256> inline int doSwaps(const std::vector<int> lengths)
 //-------------------
 
 template <int N = 256>
-inline
-int doSwaps(const std::vector<int> lengths, std::array<int, N>& circularList, int& position, int& skip)
+inline int doSwaps(const std::vector<int> lengths, std::array<int, N>& circularList, int& position,
+                   int& skip)
 {
 	for(auto length : lengths)
 	{
@@ -44,7 +44,7 @@ int doSwaps(const std::vector<int> lengths, std::array<int, N>& circularList, in
 		{
 			int j1 = position + i;
 			int j2 = position + length - 1 - i;
-			swap(circularList[j1 % N], circularList[j2 % N]);
+			std::swap(circularList[j1 % N], circularList[j2 % N]);
 		}
 		position += length + skip++;
 		position = position % N;
@@ -120,9 +120,8 @@ inline auto knotHash(const std::string& inputStr)
 	return denseHashL;
 }
 
-std::string knotHashStr(const std::string& inputStr)
+inline std::string knotHashStr(const std::string& inputStr)
 {
 	auto hexStr = toHex(knotHash(inputStr));
 	return hexStr;
 }
-
