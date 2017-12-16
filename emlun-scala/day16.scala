@@ -32,12 +32,12 @@ object Day16 extends App {
   def danceAll(programs: String, moves: List[Move]): String = moves.foldLeft(programs)(dance)
 
   def danceTimes(programs: String, moves: List[Move], timesLeft: Int, history: List[String]): String = {
-    val index = history.indexOf(programs)
-    val period = index + 1
+    val repeatIndex = history.indexOf(programs)
+    val period = repeatIndex + 1
 
-    if (timesLeft <= 0 || index == 0)
+    if (timesLeft <= 0 || repeatIndex == 0)
       programs
-    else if (index > 0 && timesLeft >= period)
+    else if (repeatIndex > 0 && timesLeft >= period)
       danceTimes(programs, moves, timesLeft % period, history)
     else
       danceTimes(danceAll(programs, moves), moves, timesLeft - 1, programs +: history)
