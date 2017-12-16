@@ -21,6 +21,12 @@ struct SpinMove
 	{
 	}
 	int count;
+
+	void apply(string& state) const
+	{
+		const auto len = state.length();
+		state = state.substr(len - count, count) + state.substr(0, len - count);
+	}
 };
 struct ExchangeMove
 {
@@ -31,6 +37,11 @@ struct ExchangeMove
 	}
 	int posA;
 	int posB;
+
+	void apply(string& state) const
+	{
+		swap(state[posA], state[posB]);
+	}
 };
 struct PartnerMove
 {
@@ -41,6 +52,13 @@ struct PartnerMove
 	}
 	char nameA;
 	char nameB;
+
+	void apply(string& state) const
+	{
+		auto pos1 = state.find(nameA);
+		auto pos2 = state.find(nameB);
+		swap(state[pos1], state[pos2]);
+	}
 };
 using Move = variant<SpinMove, ExchangeMove, PartnerMove>;
 using Moves = vector<Move>;
@@ -73,77 +91,55 @@ Moves parseMoves(const string& movesString)
 	return moves;
 }
 
-template <class... Ts> struct overloaded : Ts...
+void applyMoves(string& state, const Moves& moves)
 {
-	using Ts::operator()...;
-};
-template <class... Ts> overloaded(Ts...)->overloaded<Ts...>;
-
-string applyMove(const string& state0, Move danceMove)
-{
-	return std::visit(overloaded{[state0](SpinMove arg) {
-		                             auto len = state0.length();
-		                             return state0.substr(len - arg.count, arg.count) +
-		                                    state0.substr(0, len - arg.count);
-	                             },
-
-	                             [state0](ExchangeMove arg) {
-		                             auto state = state0;
-		                             swap(state[arg.posA], state[arg.posB]);
-		                             return state;
-	                             },
-	                             [state0](PartnerMove arg) {
-		                             auto state = state0;
-		                             auto pos1 = state0.find(arg.nameA);
-		                             auto pos2 = state0.find(arg.nameB);
-		                             swap(state[pos1], state[pos2]);
-		                             return state;
-	                             }},
-	                  danceMove);
-}
-
-string applyMoves(const string& state0, const Moves& moves)
-{
-	auto state = state0;
-	for(auto& dancemove : moves)
+	for(auto& m : moves)
 	{
-		state = applyMove(state, dancemove);
+		std::visit([&state](auto&& dm) { dm.apply(state); }, m);
 	}
-	return state;
 }
 
-void unittest_part1()
+/*void unittest_part1()
 {
-	string state = "abcde";
-	string movesStr = "s1,x3/4,pe/b";
-	auto moves = parseMoves(movesStr);
-	auto state1 = applyMoves(state, moves);
-	assert(state1 == "baedc");
-}
+    string state = "abcde";
+    string movesStr = "s1,x3/4,pe/b";
+    auto moves = parseMoves(movesStr);
+    applyMoves(state, moves);
+    assert(state == "baedc");
+}*/
 
 void solve_part1()
 {
 	auto input = readLines(INPUT_FILE).at(0);
 	auto moves = parseMoves(input);
-	auto finalState = applyMoves("abcdefghijklmnop"s, moves);
-	cout << "Day 16 - part 1: " << finalState << endl;
+	auto state = "abcdefghijklmnop"s;
+	applyMoves(state, moves);
+	cout << "Day 16 - part 1: " << state << endl;
 }
 
 void solve_part2()
 {
 	auto input = readLines(INPUT_FILE).at(0);
 	auto moves = parseMoves(input);
-	auto state = "abcdefghijklmnop"s;
-	for(int i = 0; i < 1000000000; ++i)
+	auto state0 = "abcdefghijklmnop"s;
+
+	vector<string> dances;
+	dances.push_back(state0);
+	auto state = state0;
+	while(true)
 	{
-		state = applyMoves(state, moves);
-	}
-	cout << "Day 16 - part 2: " << state << endl;
+		applyMoves(state, moves);
+		if(state == state0)
+			break;
+		dances.push_back(state);
+	};
+	auto finalState = dances[1000000000 % dances.size()];
+	cout << "Day 16 - part 2: " << finalState << endl;
 }
 
 int main()
 {
-	unittest_part1();
+	//	unittest_part1();
 	solve_part1();
 	solve_part2();
 	return 0;
