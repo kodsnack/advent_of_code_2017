@@ -3,11 +3,9 @@
 #include <tuple>
 #include <map>
 #include <set>
-#include <algorithm>
-#include <string>
 #include <array>
 #include <sstream>
-#include <iomanip>
+#include <deque>
 
 constexpr int len = 256;
 
@@ -45,21 +43,6 @@ std::array<int, 16> knothash(std::string input) {
         dense[i/16] ^= data[i];
     }
     return dense;
-}
-
-void infect(std::array<std::array<bool, 128>, 128> & a1, std::array<std::array<int, 128>, 128> & a2, int y, int x, int val) {
-    if(a2[y][x]) {
-        if(a2[y][x] != val) std::cout << y << " " << x << " already " << a2[y][x] << " want " << val << std::endl;
-        return;
-    }
-    if(a1[y][x]) {
-        a2[y][x] = val;
-        if(y > 0) infect(a1, a2, y-1, x, val);
-        if(x > 0) infect(a1, a2, y, x-1, val);
-        if(y < 127) infect(a1, a2, y+1, x, val);
-        if(x < 127) infect(a1, a2, y, x+1, val);
-    }
-
 }
 
 int main() {
@@ -109,7 +92,18 @@ int main() {
         for(int x = 0; x < 128; x++) {
             if(a1[y][x] && !a2[y][x]) {
                 ans2++;
-                infect(a1, a2, y, x, ans2);
+                std::deque<std::tuple<int,int>> q{ { y, x } };
+                while(!q.empty()) {
+                    auto [r, c] = q.front();
+                    q.pop_front();
+                    if(a1[r][c] && !a2[r][c]) {
+                        a2[r][c] = ans2;
+                        if(r > 0) q.emplace_back(r-1, c);
+                        if(c > 0) q.emplace_back(r, c-1);
+                        if(r < 127) q.emplace_back(r+1, c);
+                        if(c < 127) q.emplace_back(r, c+1);
+                    }
+                }
             }
         }
     }

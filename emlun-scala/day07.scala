@@ -1,4 +1,4 @@
-object Main extends App {
+object Day07 extends App {
   val basePattern = raw"(\S+) \((\d+)\)(.*)".r
 
   case class RawProgram(name: String, weight: Int, children: Set[String])

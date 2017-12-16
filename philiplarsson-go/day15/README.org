@@ -1,0 +1,14 @@
+* Run Instructions
+
+=day15.go= takes two arguments; starting value for generator A and starting
+value for generator B.
+
+Example:
+
+#+BEGIN_SRC bash
+go run day15.go 65 8921
+#+END_SRC
+
+
+** Run Tests
+This day I tried writing a few tests. Run these with =go test=.

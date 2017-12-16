@@ -1,4 +1,4 @@
-object Main extends App {
+object Day10 extends App {
 
   val (nums, bytes): (List[Int], List[Int]) = io.Source.stdin.getLines()
     .map { line =>

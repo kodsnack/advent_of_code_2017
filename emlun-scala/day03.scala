@@ -1,4 +1,4 @@
-object Main extends App {
+object Day03 extends App {
   val input = io.Source.stdin.getLines.toSeq.head.trim.toInt
 
   def btmRight(level: Int): Int = 1 + 4 * (level * (level + 1))
