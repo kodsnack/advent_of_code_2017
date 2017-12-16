@@ -18,6 +18,8 @@
 (defpackage #:aoc2017.day12 (:use #:cl) (:export #:join))
 (defpackage #:aoc2017.day13 (:use #:cl))
 (defpackage #:aoc2017.day14 (:use #:cl #:aoc2017.day10 #:aoc2017.day12))
+(defpackage #:aoc2017.day15 (:use #:cl))
+(defpackage #:aoc2017.day15.alt (:use #:cl))
 
 (fiasco:define-test-package #:aoc2017.tests
   (:use #:aoc))
