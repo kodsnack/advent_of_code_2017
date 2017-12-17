@@ -1,3 +1,6 @@
+import System.Environment   
+import Data.List 
+
 import D1 (solve1, solve2)
 import D2 (solve1, solve2)
 import D3 (solve1, solve2)
@@ -61,4 +64,12 @@ solveDay' x s1 s2 = do
     let answer2 = s2 input
     putStrLn $ "Day " ++ show x ++ ", Part two: " ++ (show answer2)
 
-main = mapM solveDay [1..25]
+solveAll = mapM_ solveDay [1..25]
+  
+main = do  
+    args <- getArgs  
+    case args of
+        [] -> solveAll
+        _  -> do
+            let days = map read args
+            mapM_ solveDay days
