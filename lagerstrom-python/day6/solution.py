@@ -1,20 +1,11 @@
 #!/usr/bin/env python3
 
 import hashlib
-seen_list = {}
-
-def seen_before(my_list):
-    list_hash = hashlib.sha256(str(my_list).encode('utf-8','ignore')).hexdigest()
-
-    if list_hash in seen_list:
-        return True
-
-    seen_list[list_hash] = my_list
-
-    return False
+seen_dict = {}
 
 def main():
     step_sum = 0
+    global seen_dict
     with open('data.txt', 'r') as f:
         input_list = list(map(int, f.read().strip().split('\t')))
 
@@ -33,11 +24,15 @@ def main():
             except:
                 cur_pos = 0
 
-        if seen_before(input_list):
-            return step_sum + 1
+        seen_hash =  hashlib.sha256(str(input_list).encode('utf-8','ignore')).hexdigest()
+        if seen_hash in seen_dict:
+            print('Answer1: %d' % (step_sum + 1))
+            print('Answer2: %d' % (step_sum - seen_dict[seen_hash]))
+            return
         else:
+            seen_dict[seen_hash] = step_sum
             step_sum += 1
 
 
 if __name__ == '__main__':
-    print(main())
+    main()
