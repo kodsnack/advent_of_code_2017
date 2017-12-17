@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace tor_selden_csharp
 {
@@ -12,7 +7,6 @@ namespace tor_selden_csharp
     {
         static int steps = 363;
         static List<int> buffer = new List<int> { 0 };
-        static LinkedList<int> linkedBuffer = new LinkedList<int>();
 
         internal static void A()
         {
