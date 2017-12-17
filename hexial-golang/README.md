@@ -6,3 +6,5 @@ Everything is run as unit tests. Example for day01
 ```
 go test ./day01
 ```
+
+Install the source code in `$GOPATH/src/AdventOfCode2017` if you want to run it
