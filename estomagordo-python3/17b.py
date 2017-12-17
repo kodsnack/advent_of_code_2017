@@ -7,7 +7,7 @@ def solve(n):
         pos = (pos + n) % (x + 1)
         if pos == 0:
             after = x + 1
-        pos = (pos + 1) % (x + 2)
+        pos += 1
         
     return after
        
