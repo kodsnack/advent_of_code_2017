@@ -19,7 +19,7 @@ def solve(programs, instructions):
 
     return ''.join(programs)
 
-with open('input.txt', 'r') as f:    
+with open('input_16.txt', 'r') as f:    
     instructions = f.read().split(',')
     a = ord('a')
     programs = [chr(a + x) for x in range(16)]
