@@ -45,25 +45,6 @@ def calc_hash(line):
     hash1 = dohash(list1)
     return hash1
 
-class Grid:
-
-    def __init__(self):
-        self.grid = {}
-        self.grid[0] = {}
-        self.grid[0][0] = 1
-
-    def get(self, x, y):
-        if x not in self.grid:
-            return 0
-        if y not in self.grid[x]:
-            return 0
-        return self.grid[x][y]
-
-    def put(self, x, y, val):
-        if x not in self.grid:
-            self.grid[x] = {}
-        self.grid[x][y] = val
-
 def main():
 
     parser = OptionParser(usage='usage: %prog [options]')
@@ -76,10 +57,6 @@ def main():
                       help='Run using test data')
 
     (opts, args) = parser.parse_args()
-
-    grid = Grid()
-    grid.put(0, 0, 1)
-    assert grid.get(0, 0) == 1
 
     def gen(x, f):
         return (x * f) % 2147483647
