@@ -71,3 +71,7 @@
 (deftest day16 ()
   (is (string= "olgejankfhbmpidc" (aoc2017.day16::part1 (input-for 2017 16))))
   (is (string= "gfabehpdojkcimnl" (aoc2017.day16::part2 (input-for 2017 16)))))
+
+(deftest day17 ()
+  (is (= 1487 (aoc2017.day17::part1 367)))
+  (is (= 25674054 (aoc2017.day17::part2 367))))
