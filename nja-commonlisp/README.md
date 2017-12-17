@@ -26,6 +26,7 @@ To load "advent-of-code":
 [package aoc2017.day15]...........................
 [package aoc2017.day15.alt].......................
 [package aoc2017.day16]...........................
+[package aoc2017.day17]...........................
 [package aoc2017.tests]........
 (:ADVENT-OF-CODE)
 CL-USER> (fiasco:all-tests)
@@ -48,8 +49,9 @@ ALL-TESTS (Suite)
     DAY15                                                                 [ OK ]
     DAY15.ALT                                                             [ OK ]
     DAY16                                                                 [ OK ]
+    DAY17                                                                 [ OK ]
 
 T
-(#<test-run of ALL-TESTS: 19 tests, 34 assertions, 0 failures in 6.281 sec>)
+(#<test-run of ALL-TESTS: 20 tests, 36 assertions, 0 failures in 6.86 sec>)
 CL-USER>
 ```
