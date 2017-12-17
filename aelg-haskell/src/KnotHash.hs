@@ -26,7 +26,7 @@ sparseHash l = finalList
         newList = reverse' pos i list
 
 denseHash :: [Int] -> [Int]
-denseHash (x:xs) = foldl xor 0 (take 16 (x : xs)) : denseHash (drop 16 (x : xs))
+denseHash (x:xs) = foldl' xor 0 (take 16 (x : xs)) : denseHash (drop 16 (x : xs))
 denseHash [] = []
 
 toHex :: [Int] -> String
