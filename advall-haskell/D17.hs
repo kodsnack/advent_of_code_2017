@@ -1,12 +1,32 @@
 module D17 where
 
-parseInput :: String -> String
-parseInput input = undefined
+import Data.List (foldl')
+
+parseInput :: String -> Int
+parseInput input = read input
 
 
-solve1 :: String -> String
-solve1 input = "not yet implemented"
+insertions :: Int -> Int -> Int -> [Int] -> [Int]
+insertions lim jmp v xs
+    | v == lim = xs
+    | otherwise = insertions lim jmp (v+1) (take (v+1) (v : (drop jmp (cycle xs) )))
+
+solve1 :: String -> Int
+solve1 input = head $ tail $ insertions 2018 (inp+1) 1 [0]
+    where inp = parseInput input
 
 
-solve2 :: String -> String
-solve2 input = "not yet implemented"
+positions :: Int -> Int -> Int -> Int -> [(Int,Int)]
+positions p v lim jmp
+    | v <= lim  = (p,v-1) : (positions p' (v+1) lim jmp)
+    | otherwise = []
+    where
+        p' = ((p + jmp) `mod` v) + 1
+
+solve2 :: String -> Int
+solve2 input = foldl' go 0 (positions 0 1 50000000 inp)
+    where
+        inp = parseInput input
+        go prevV (p,v)
+            | p == 1 = v
+            | otherwise = prevV
