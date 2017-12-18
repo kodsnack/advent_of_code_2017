@@ -27,5 +27,6 @@
                  (:file "day15.alt")
                  (:file "day16")
                  (:file "day17")
+                 (:file "day18")
                  (:file "tests"))))
-  :depends-on (#:alexandria #:fiasco #:cl-ppcre))
+  :depends-on (#:alexandria #:fiasco #:cl-ppcre #:queues.simple-queue))
