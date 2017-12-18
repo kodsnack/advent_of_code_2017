@@ -7,20 +7,18 @@ use SebastianBergmann\CodeCoverage\Report\PHP;
 class Day7 extends AbstractAdventOfCode
 {
     protected $class = 7;
-    private $programs = [];
+    private $tower = [];
 
     public function firstPart(): string
     {
-        $this->programs = $this->marshalPrograms();
-        return $this->bottomProgram(key($this->programs));
+        $this->tower = $this->marshalPrograms();
+        return $this->bottomProgram(key($this->tower));
     }
 
     public function secondPart(): string
     {
-        $this->programs = $this->marshalPrograms();
-        $bottomProgram = $this->bottomProgram(key($this->programs));
-
-        return $this->findUnbalancedDisk($bottomProgram);
+        $rootProgram = $this->firstPart();
+        return $this->balancedDisk($rootProgram);
     }
 
     private function marshalPrograms(): array
@@ -41,7 +39,7 @@ class Day7 extends AbstractAdventOfCode
 
     private function bottomProgram(string $currentProgram): string
     {
-        foreach ($this->programs as $programName => $program) {
+        foreach ($this->tower as $programName => $program) {
             if (is_array($program->children) && in_array($currentProgram, $program->children)) {
                 return $this->bottomProgram($programName);
             }
@@ -50,32 +48,39 @@ class Day7 extends AbstractAdventOfCode
         return $currentProgram;
     }
 
-    private function findUnbalancedDisk(string $currentProgram): string
+    private function balancedDisk(string $currentProgram): string
     {
-        $partialSum = null;
-        if (!is_array($this->programs[$currentProgram]->children)) {
-            return null;
-        }
+        $prevWeight = 0;
+        $partialSum = [];
+        $partialSumChildren = [];
+        while(true) {
+            foreach ($this->tower[$currentProgram]->children as $children) {
+                $sum = $this->tower[$children]->weight;
+                if (isset($this->tower[$children]->children)) {
+                    $partialSumChildren[$children] = array_reduce(
+                        $this->tower[$children]->children,
+                        function ($carry, $idx) {
+                            $carry += $this->tower[$idx]->weight;
+                            return $carry;
+                        },
+                        0
+                    );
+                    $partialSum[$children] = $sum + $partialSumChildren[$children];
+                }
+            }
 
-        foreach ($this->programs[$currentProgram]->children as $children) {
-            $sum = $this->programs[$children]->weight;
-            $sum += array_reduce(
-                $this->programs[$children]->children,
-                function($carry, $idx) {
-                    var_dump($idx);
-                    $carry += $this->programs[$idx]->weight;
-                    var_dump($carry);
-                    return $carry;
-                },
-                0
-            );
-            if ($partialSum == null) {
-                echo 'partial sum: ', $sum, PHP_EOL;
-                $partialSum = $sum;
-            } elseif ($partialSum != $sum){
-                echo 'partial sum: ', $sum, PHP_EOL;
+            $checkUnbalanceValues = array_count_values($partialSum);
+            if (sizeof($checkUnbalanceValues) > 1) {
+                $uniqueValue = array_search(1, $checkUnbalanceValues);
+                $multipleValues = array_unique(array_diff_assoc($partialSum, array_unique($partialSum)));
+                $programToUpdate = (array_search($uniqueValue, $partialSum));
+
+                $prevWeight = (current($multipleValues) - $partialSumChildren[array_search($uniqueValue, $partialSum)]);
+                $this->tower[$programToUpdate]->weight = $prevWeight;
+                $currentProgram = key($multipleValues);
+            } else {
+                return $prevWeight - sizeof($checkUnbalanceValues);
             }
         }
-        return $currentProgram;
     }
 }
