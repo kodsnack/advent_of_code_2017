@@ -19,10 +19,10 @@ object Day18 extends App {
   case class Jgz(value: String, diff: String) extends Instruction
 
   case class MachineState(
-    program: List[Instruction],
+    program: Vector[Instruction],
     registers: Map[String, Long],
     eip: Int,
-    queue: List[Long] = Nil,
+    queue: Vector[Long] = Vector.empty,
     waiting: Boolean = false,
     numSent: Long = 0,
   ) {
@@ -88,7 +88,7 @@ object Day18 extends App {
                 queue = queue :+ partner.queue.last,
                 eip = eip + 1
               ),
-              partner.copy(queue = Nil)
+              partner.copy(queue = Vector.empty)
             )
           else
             (
@@ -99,14 +99,14 @@ object Day18 extends App {
         case Receive(register) =>
           (
             queue match {
-              case Nil => copy(waiting = true)
-              case next :: rest =>
+              case next +: rest =>
                 copy(
                   registers = registers + (register -> next),
                   queue = rest,
                   waiting = false,
                   eip = eip + 1
                 )
+              case _ => copy(waiting = true)
             },
             partner
           )
@@ -134,16 +134,16 @@ object Day18 extends App {
       case rcvPattern(value) => Recover(value)
       case jgzPattern(value, diff) => Jgz(value, diff)
     }
-  } yield instruction).toList
+  } yield instruction).toVector
 
   def solveA(state: MachineState, partner: MachineState): Long = state.queue match {
-    case result :: rest => result
+    case result +: rest => result
     case _ => {
       val (next, nextPartner) = state.next(partner)
       solveA(next, nextPartner)
     }
   }
-  def solveA(program: List[Instruction]): Long = solveA(MachineState(program, Map.empty, 0), MachineState(Nil, Map.empty, 0))
+  def solveA(program: Vector[Instruction]): Long = solveA(MachineState(program, Map.empty, 0), MachineState(Vector.empty, Map.empty, 0))
 
   def solveB(states: (MachineState, MachineState)): Long = states match {
     case (stateA, stateB) => {
@@ -162,7 +162,7 @@ object Day18 extends App {
       }
     }
   }
-  def solveB(program: List[Instruction]): Long = {
+  def solveB(program: Vector[Instruction]): Long = {
     val programB = program map {
       case Recover(v) => Receive(v)
       case i => i
