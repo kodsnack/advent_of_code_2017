@@ -143,7 +143,8 @@ object Day18 extends App {
       solveA(next, nextPartner)
     }
   }
-  def solveA(program: Vector[Instruction]): Long = solveA(MachineState(program, Map.empty, 0), MachineState(Vector.empty, Map.empty, 0))
+  def solveA(program: Vector[Instruction]): Long =
+    solveA(MachineState(program, Map.empty, 0), MachineState(Vector.empty, Map.empty, 0))
 
   def solveB(states: (MachineState, MachineState)): Long = states match {
     case (stateA, stateB) => {
