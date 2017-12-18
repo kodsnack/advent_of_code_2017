@@ -19,7 +19,7 @@ object Day18 extends App {
   case class Rcv(value: String) extends Instruction
   case class Jgz(value: String, diff: String) extends Instruction
 
-  case class MachineState(program: List[Instruction], registers: Map[String, Long], eip: Int, recovered: Option[Long] = None, played: Option[Long] = None) {
+  case class MachineState(id: String, program: List[Instruction], registers: Map[String, Long], eip: Int, queue: List[Long] = Nil, waiting: Boolean = false, numSent: Long = 0) {
     def resolve(value: String): Long =
       if (value.length == 1 && value(0).isLetter)
         registers get value getOrElse 0
@@ -30,50 +30,81 @@ object Day18 extends App {
 
     def isFinished: Boolean = !(program.indices contains eip)
 
-    def next: MachineState =
+    def wake(partner: MachineState): (MachineState, MachineState) =
+      if (waiting)
+        copy(waiting = false).next(partner)
+      else
+        (this, partner)
+
+    def next(partner: MachineState): (MachineState, MachineState) =
       program(eip) match {
-        case Snd(value) =>
-          copy(
-            played = Some(resolve(value)),
-            eip = eip + 1
+        case Snd(value) => {
+          (
+            copy(eip = eip + 1, numSent = numSent + 1),
+            partner.copy(queue = partner.queue :+ resolve(value))
           )
+            // .wake(copy(eip = eip + 1, numSent = numSent + 1)) match { case (b, a) => (a, b) }
+        }
 
         case Set(register, value) =>
-          copy(
-            registers = registers + (register -> resolve(value)),
-            eip = eip + 1
+          (
+            copy(
+              registers = registers + (register -> resolve(value)),
+              eip = eip + 1
+            ),
+            partner
           )
 
         case Add(register, value) =>
-          copy(
-            registers = registers + (register -> (resolve(register) + resolve(value))),
-            eip = eip + 1
+          (
+            copy(
+              registers = registers + (register -> (resolve(register) + resolve(value))),
+              eip = eip + 1
+            ),
+            partner
           )
 
         case Mul(register, value) =>
-          copy(
-            registers = registers + (register -> resolve(register) * resolve(value)),
-            eip = eip + 1
+          (
+            copy(
+              registers = registers + (register -> resolve(register) * resolve(value)),
+              eip = eip + 1
+            ),
+            partner
           )
 
         case Mod(register, value) =>
-          copy(
-            registers = registers + (register -> resolve(register) % resolve(value)),
-            eip = eip + 1
+          (
+            copy(
+              registers = registers + (register -> resolve(register) % resolve(value)),
+              eip = eip + 1
+            ),
+            partner
           )
 
-        case Rcv(value) =>
-          copy(
-            recovered = if (resolve(value) != 0) played
-                        else recovered,
-            eip = eip + 1
+        case Rcv(register) =>
+          (
+            queue match {
+              case Nil => copy(waiting = true)
+              case next :: rest =>
+                copy(
+                  registers = registers + (register -> next),
+                  queue = rest,
+                  waiting = false,
+                  eip = eip + 1
+                )
+            },
+            partner
           )
 
         case Jgz(value, diff) =>
-          copy(
-            eip =
-              if (resolve(value) > 0) eip + resolve(diff).toInt
-              else (eip + 1)
+          (
+            copy(
+              eip =
+                if (resolve(value) > 0) eip + resolve(diff).toInt
+                else (eip + 1)
+            ),
+            partner
           )
       }
   }
@@ -91,25 +122,30 @@ object Day18 extends App {
     }
   } yield instruction).toList
 
-  def run(state: MachineState): MachineState = {
-    println()
-    println(state.nextInstruction)
-    println(state.registers)
-    println(state.played)
-    println(state.recovered)
-    state.nextInstruction match {
-    case _: Rcv => {
-      val next = state.next
-      state.recovered map { s => state } getOrElse (run(next))
+  def run(states: (MachineState, MachineState)): Long = states match {
+    case (stateA, stateB) => {
+      if (stateA.isFinished && stateB.isFinished)
+        stateB.numSent
+      else if (stateA.waiting && stateB.waiting)
+        stateB.numSent
+      else {
+        println()
+        println(s"A: ${if (stateA.isFinished) "End" else stateA.nextInstruction} ${stateA.eip} ${stateA.registers} ${stateA.queue}")
+        println(s"B: ${if (stateB.isFinished) "End" else stateB.nextInstruction} ${stateB.eip} ${stateB.registers} ${stateB.queue}")
+
+        if (stateA.isFinished)
+          run(stateB.next(stateA))
+        else if (stateB.isFinished)
+          run(stateA.next(stateB))
+        else {
+          val (interA, interB) = stateA.next(stateB)
+          val (nextB, nextA) = interB.next(interA)
+          run((nextA, nextB))
+        }
+      }
     }
-    case _ => state.next match {
-      case newState if newState.isFinished => newState
-      case newState => run(newState)
-    }
-  }
   }
 
-  println("A:\n" + (run(MachineState(program, Map.empty, 0)).recovered))
-  // println("B:\n" + (run(MachineState(program, Map.empty, 0)).registers mkString "\n"))
+  println("B:\n" + (run((MachineState("A", program, Map("p" -> 0), 0), MachineState("B", program, Map("p" -> 1), 0)))))
 
 }
