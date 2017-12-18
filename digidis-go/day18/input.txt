@@ -7,7 +7,7 @@ add i -1
 jgz i -2
 add a -1
 set i 127
-set p 622
+set p 826
 mul p 8505
 mod p a
 mul p 129749

@@ -1,4 +1,4 @@
-/* Advent of code 2017, day 1, puzzle 1 in ANSI REXX */
+/* Advent of code 2017, day 11, puzzle 1 in ANSI REXX */
 directions. = 0
 directions.e = 1
 directions.w = -1

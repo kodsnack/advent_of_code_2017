@@ -21,6 +21,7 @@ if __name__ == '__main__':
     with open('dec16input.txt') as f:
         arr = [chr(n) for n in range(97,113)]
         arr2 = arr[:]
+        arr3 = arr[:]
         d = f.readline().strip().split(',')
 
         # part 1
@@ -33,5 +34,5 @@ if __name__ == '__main__':
             mem.add(''.join(arr2))
             dance(arr2, d)
         for _ in range(1000000000%len(mem)):
-            dance(arr2, d)
+            dance(arr3, d)
         print(''.join(arr2))
