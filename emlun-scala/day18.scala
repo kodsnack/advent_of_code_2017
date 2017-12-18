@@ -20,8 +20,8 @@ object Day18 extends App {
 
   case class MachineState(
     program: Vector[Instruction],
-    registers: Map[String, Long],
-    eip: Int,
+    registers: Map[String, Long] = Map.empty,
+    eip: Int = 0,
     queue: Vector[Long] = Vector.empty,
     waiting: Boolean = false,
     numSent: Long = 0,
@@ -144,7 +144,7 @@ object Day18 extends App {
     }
   }
   def solveA(program: Vector[Instruction]): Long =
-    solveA(MachineState(program, Map.empty, 0), MachineState(Vector.empty, Map.empty, 0))
+    solveA(MachineState(program), MachineState(Vector.empty))
 
   def solveB(states: (MachineState, MachineState)): Long = states match {
     case (stateA, stateB) => {
@@ -168,7 +168,7 @@ object Day18 extends App {
       case Recover(v) => Receive(v)
       case i => i
     }
-    solveB((MachineState(programB, Map("p" -> 0), 0), MachineState(programB, Map("p" -> 1), 0)))
+    solveB((MachineState(programB, Map("p" -> 0)), MachineState(programB, Map("p" -> 1))))
   }
 
   println(s"A: ${solveA(program)}")
