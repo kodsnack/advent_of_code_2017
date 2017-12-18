@@ -3,7 +3,8 @@ module Eighteen
   ) where
 
 import           Data.Char
-import qualified Data.Map.Strict as M
+import qualified Data.Map.Strict              as M
+import           Text.ParserCombinators.ReadP
 
 type State = M.Map Char Int
 
@@ -22,20 +23,24 @@ data Op
   | Jgz D D
   deriving (Show)
 
-readD (c:s)
-  | isDigit c = Value (read (c : s))
-  | c == '-' = Value (read (c : s))
-  | otherwise = Register c
+instance Read Op where
+  readsPrec _ =
+    readP_to_S $
+    choice
+      [ string "snd" >> Snd <$> dP
+      , string "rcv" >> Rcv <$> dP
+      , string "set" >> Set <$> dP <*> dP
+      , string "add" >> Add <$> dP <*> dP
+      , string "mul" >> Mul <$> dP <*> dP
+      , string "mod" >> Mod <$> dP <*> dP
+      , string "jgz" >> Jgz <$> dP <*> dP
+      ]
 
-parse = map (go . words)
-  where
-    go ["snd", x]    = Snd (readD x)
-    go ["rcv", x]    = Rcv (readD x)
-    go ["set", x, y] = Set (readD x) (readD y)
-    go ["add", x, y] = Add (readD x) (readD y)
-    go ["mul", x, y] = Mul (readD x) (readD y)
-    go ["mod", x, y] = Mod (readD x) (readD y)
-    go ["jgz", x, y] = Jgz (readD x) (readD y)
+valueP = skipSpaces >> Value <$> readS_to_P reads
+
+registerP = skipSpaces >> Register <$> get
+
+dP = valueP <++ registerP
 
 regToInt state (Value x)    = x
 regToInt state (Register x) = M.findWithDefault 0 x state
@@ -70,16 +75,16 @@ runP pos state ops inQ outQ = runOp curOp
         then jump $ regToInt state a
         else nextAnd state
 
-solve1 :: [String] -> Int
+--solve1 :: [String] -> Int
 solve1 s = last sent
   where
     (sent, _, _) = runP 0 M.empty ops [] []
-    ops = parse s
+    ops = map read s
 
 solve2 :: [String] -> Int
 solve2 s = go 0 (M.singleton 'p' 0) [] 0 (M.singleton 'p' 1) [] 0
   where
-    ops = parse s
+    ops = map read s
     go pos0 state0 q0 pos1 state1 q1 noOfSends
       | null send0 && null send1 = noOfSends
       | otherwise = go p0' s0' inQ0 p1' s1' inQ1 (noOfSends + length send1)
