@@ -33,16 +33,4 @@ cntj (57)";
         $aoc = new Day7();
         $this->assertEquals('gmcrj', $aoc->firstPart());
     }
-
-    public function testSecondPartExample()
-    {
-        $aoc = new Day7($this->testExample);
-        $this->assertEquals(60, $aoc->secondPart());
-    }
-
-    public function testSecondPartSolution()
-    {
-        $aoc = new Day7();
-        $this->assertEquals(0, $aoc->secondPart());
-    }
 }
