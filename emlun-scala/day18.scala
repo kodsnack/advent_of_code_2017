@@ -124,7 +124,7 @@ object Day18 extends App {
   }
 
   val program: Vector[Instruction] = (for {
-    line <- io.Source.stdin.getLines
+    line <- io.Source.stdin.getLines()
     instruction = line.trim match {
       case sndPattern(value)           => Snd(value)
       case setPattern(register, value) => Set(register, value)
