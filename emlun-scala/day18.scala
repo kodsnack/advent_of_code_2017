@@ -8,18 +8,24 @@ object Day18 extends App {
   val rcvPattern = raw"rcv (\S+)".r
   val jgzPattern = raw"jgz (\S+) (\S+)".r
 
-  val registerPattern = raw"^[a-bA-B]$$".r
-
   trait Instruction
   case class Snd(value: String) extends Instruction
   case class Set(register: String, value: String) extends Instruction
   case class Add(register: String, value: String) extends Instruction
   case class Mul(register: String, value: String) extends Instruction
   case class Mod(register: String, value: String) extends Instruction
-  case class Rcv(value: String) extends Instruction
+  case class Recover(value: String) extends Instruction
+  case class Receive(value: String) extends Instruction
   case class Jgz(value: String, diff: String) extends Instruction
 
-  case class MachineState(id: String, program: List[Instruction], registers: Map[String, Long], eip: Int, queue: List[Long] = Nil, waiting: Boolean = false, numSent: Long = 0) {
+  case class MachineState(
+    program: List[Instruction],
+    registers: Map[String, Long],
+    eip: Int,
+    queue: List[Long] = Nil,
+    waiting: Boolean = false,
+    numSent: Long = 0,
+  ) {
     def resolve(value: String): Long =
       if (value.length == 1 && value(0).isLetter)
         registers get value getOrElse 0
@@ -30,12 +36,6 @@ object Day18 extends App {
 
     def isFinished: Boolean = !(program.indices contains eip)
 
-    def wake(partner: MachineState): (MachineState, MachineState) =
-      if (waiting)
-        copy(waiting = false).next(partner)
-      else
-        (this, partner)
-
     def next(partner: MachineState): (MachineState, MachineState) =
       program(eip) match {
         case Snd(value) => {
@@ -43,7 +43,6 @@ object Day18 extends App {
             copy(eip = eip + 1, numSent = numSent + 1),
             partner.copy(queue = partner.queue :+ resolve(value))
           )
-            // .wake(copy(eip = eip + 1, numSent = numSent + 1)) match { case (b, a) => (a, b) }
         }
 
         case Set(register, value) =>
@@ -82,7 +81,22 @@ object Day18 extends App {
             partner
           )
 
-        case Rcv(register) =>
+        case Recover(value) =>
+          if (resolve(value) != 0)
+            (
+              copy(
+                queue = queue :+ partner.queue.last,
+                eip = eip + 1
+              ),
+              partner.copy(queue = Nil)
+            )
+          else
+            (
+              copy(eip = eip + 1),
+              partner
+            )
+
+        case Receive(register) =>
           (
             queue match {
               case Nil => copy(waiting = true)
@@ -117,35 +131,45 @@ object Day18 extends App {
       case addPattern(register, value) => Add(register, value)
       case mulPattern(register, value) => Mul(register, value)
       case modPattern(register, value) => Mod(register, value)
-      case rcvPattern(value) => Rcv(value)
+      case rcvPattern(value) => Recover(value)
       case jgzPattern(value, diff) => Jgz(value, diff)
     }
   } yield instruction).toList
 
-  def run(states: (MachineState, MachineState)): Long = states match {
+  def solveA(state: MachineState, partner: MachineState): Long = state.queue match {
+    case result :: rest => result
+    case _ => {
+      val (next, nextPartner) = state.next(partner)
+      solveA(next, nextPartner)
+    }
+  }
+  def solveA(program: List[Instruction]): Long = solveA(MachineState(program, Map.empty, 0), MachineState(Nil, Map.empty, 0))
+
+  def solveB(states: (MachineState, MachineState)): Long = states match {
     case (stateA, stateB) => {
       if (stateA.isFinished && stateB.isFinished)
         stateB.numSent
       else if (stateA.waiting && stateB.waiting)
         stateB.numSent
+      else if (stateA.isFinished)
+        solveB(stateB.next(stateA))
+      else if (stateB.isFinished)
+        solveB(stateA.next(stateB))
       else {
-        println()
-        println(s"A: ${if (stateA.isFinished) "End" else stateA.nextInstruction} ${stateA.eip} ${stateA.registers} ${stateA.queue}")
-        println(s"B: ${if (stateB.isFinished) "End" else stateB.nextInstruction} ${stateB.eip} ${stateB.registers} ${stateB.queue}")
-
-        if (stateA.isFinished)
-          run(stateB.next(stateA))
-        else if (stateB.isFinished)
-          run(stateA.next(stateB))
-        else {
-          val (interA, interB) = stateA.next(stateB)
-          val (nextB, nextA) = interB.next(interA)
-          run((nextA, nextB))
-        }
+        val (interA, interB) = stateA.next(stateB)
+        val (nextB, nextA) = interB.next(interA)
+        solveB((nextA, nextB))
       }
     }
   }
+  def solveB(program: List[Instruction]): Long = {
+    val programB = program map {
+      case Recover(v) => Receive(v)
+      case i => i
+    }
+    solveB((MachineState(programB, Map("p" -> 0), 0), MachineState(programB, Map("p" -> 1), 0)))
+  }
 
-  println("B:\n" + (run((MachineState("A", program, Map("p" -> 0), 0), MachineState("B", program, Map("p" -> 1), 0)))))
-
+  println(s"A: ${solveA(program)}")
+  println(s"B: ${solveB(program)}")
 }
