@@ -153,7 +153,7 @@ object Day18 extends App {
       else if (stateA.waiting && stateB.waiting)
         stateB.numSent
       else if (stateA.isFinished)
-        solveB(stateB.next(stateA))
+        solveB(stateB.next(stateA).swap)
       else if (stateB.isFinished)
         solveB(stateA.next(stateB))
       else {
