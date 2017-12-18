@@ -126,13 +126,13 @@ object Day18 extends App {
   val program: Vector[Instruction] = (for {
     line <- io.Source.stdin.getLines
     instruction = line.trim match {
-      case sndPattern(value) => Snd(value)
+      case sndPattern(value)           => Snd(value)
       case setPattern(register, value) => Set(register, value)
       case addPattern(register, value) => Add(register, value)
       case mulPattern(register, value) => Mul(register, value)
       case modPattern(register, value) => Mod(register, value)
-      case rcvPattern(value) => Recover(value)
-      case jgzPattern(value, diff) => Jgz(value, diff)
+      case rcvPattern(value)           => Recover(value)
+      case jgzPattern(value, diff)     => Jgz(value, diff)
     }
   } yield instruction).toVector
 
