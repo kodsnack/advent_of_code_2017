@@ -82,3 +82,6 @@
 [submodule "plux-erlang"]
 	path = plux-erlang
 	url = git@github.com:plux/advent2017-erl.git
+[submodule "hillerstorm-Elm"]
+	path = hillerstorm-Elm
+	url = https://github.com/hillerstorm/advent-of-code-2017.git
