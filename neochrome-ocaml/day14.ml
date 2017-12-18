@@ -40,17 +40,73 @@ module Knot = struct
 
 end
 
-let rec bits_in = function
+let rec bits_set_in = function
   | 0 -> 0
-  | n -> 1 + (bits_in (n land (n - 1)))
+  | n -> 1 + (bits_set_in (n land (n - 1)))
 ;;
 
-let example = "flqrgnkx";;
-
-Seq.range 0 127
-|> Seq.map (Printf.printf "%s-%d" example)
-|> Seq.map (fun key -> key |> Knot.hash |> List.map bits_in |> List.fold_left ( + ) 0)
-|> Seq.to_list
-|> List.fold_left ( + ) 0
-|> print_int
+let disk_hashes input =
+  Seq.range 0 127 |> Seq.to_list
+  |> List.map (Printf.sprintf "%s-%d" input)
+  |> List.map (Knot.hash)
 ;;
+
+let example = "flqrgnkx" |> disk_hashes;;
+let input = "jzgqcdpd" |> disk_hashes;;
+
+let count_all_set_bits = List.map bits_set_in >> List.fold_left ( + ) 0;;
+
+let part1 = List.map count_all_set_bits >> List.fold_left ( + ) 0;;
+
+assert (example |> part1 = 8108);;
+input |> part1 |> Printf.printf "part1: %d\n%!";;
+
+let test = [|
+  [|0;0;0;0;0;0|];
+  [|0;1;0;0;0;0|];
+  [|0;1;1;0;1;0|];
+  [|0;0;0;0;1;0|];
+  [|0;1;0;1;1;0|];
+  [|0;0;0;0;0;0|];
+|];;
+
+let count_regions grid =
+  let size = Array.length grid - 1 in
+  let rec iter x y count =
+    if y = size then count
+    else if x = size then iter 0 (y + 1) count
+    else if grid.(1 + y).(1 + x) <> 1 then iter (x + 1) y count
+    else begin
+      fill (1 + x) (1 + y);
+      iter (x + 1) y (count + 1)
+    end
+  and fill x y =
+    if grid.(y).(x) <> 1 then ()
+    else begin
+      grid.(y).(x) <- 2;
+      [0,-1;1,0;0,1;-1,0] |> List.iter (fun (dx,dy) -> fill (x + dx) (y + dy));
+    end
+  in iter 0 0 0
+;;
+
+assert (test |> count_regions = 3);;
+
+let is_set i n = (1 lsl i) land n <> 0;;
+
+let as_grid width hashes =
+  (Array.make (width + 2) 0) ::
+  (List.map (fun hash ->
+    let bits = Array.make (width + 2) 0 in
+    hash |> List.iteri (fun i n ->
+      for j = 0 to 7 do
+        if is_set j n then bits.((i * 8) + 8 - j) <- 1
+      done
+    );bits
+  ) hashes) @ [Array.make (width + 2) 0]
+  |> Array.of_list
+;;
+
+let part2 = as_grid 128 >> count_regions;;
+
+assert (example |> part2 = 1242);;
+input |> part2 |> Printf.printf "part2: %d\n%!";;
