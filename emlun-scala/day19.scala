@@ -1,10 +1,6 @@
-import scala.annotation.tailrec
+import scala.language.implicitConversions
 
 object Day19 extends App {
-
-  val map: Vector[Vector[Char]] = (for {
-    line <- io.Source.stdin.getLines()
-  } yield line.toVector).toVector
 
   implicit def pairToPairOps(a: (Int, Int)) = new PairOps(a)
   class PairOps(a: (Int, Int)) {
@@ -41,31 +37,34 @@ object Day19 extends App {
       }
   }
 
-  def solveA(map: Vector[Vector[Char]]) = {
+  def solveA(map: Vector[Vector[Char]]): String = {
     val startPos: (Int, Int) = (map(0).indexOf('|'), 0)
     val startDir: (Int, Int) = (0, 1)
-
     val startState = State(startPos, startDir, Nil)
 
     Iterator.iterate[Option[State]](Some(startState))(step(map))
       .takeWhile { _.isDefined }
-      .toSeq
+      .toIterable
       .last
       .get
       .collected
       .mkString("")
   }
 
-  def solveB(map: Vector[Vector[Char]]) = {
+  def solveB(map: Vector[Vector[Char]]): Int = {
     val startPos: (Int, Int) = (map(0).indexOf('|'), 0)
     val startDir: (Int, Int) = (0, 1)
-
     val startState = State(startPos, startDir, Nil)
 
     Iterator.iterate[Option[State]](Some(startState))(step(map))
       .takeWhile { _.isDefined }
       .length
   }
+
+  val map: Vector[Vector[Char]] =
+    io.Source.stdin.getLines()
+      .map(_.toVector)
+      .toVector
 
   println(s"A: ${solveA(map)}")
   println(s"B: ${solveB(map)}")
