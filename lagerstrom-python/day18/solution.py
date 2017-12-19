@@ -22,7 +22,6 @@ class Solution:
         while self.pos < len(self.instruction_list):
             instruction_split = self.instruction_list[self.pos].split(' ')
             token = instruction_split[0]
-            print(instruction_split)
             syntax_dict[token](instruction_split)
             if self.recover:
                 print(self.sound_freq)
@@ -37,7 +36,6 @@ class Solution:
             return self.variable_state[variable]
 
     def set(self, instruction_split):
-        print(self.variable_state)
         var1 = instruction_split[1]
         var2 = self.get_var_value(instruction_split[2])
         self.variable_state[var1] = int(var2)
