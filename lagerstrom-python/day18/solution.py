@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 
+import queue
+import threading
+import time
 
 class Solution:
-    def __init__(self, instruction_file):
-        syntax_dict = {
+    def __init__(self, instruction_file, file_id, input_pipe, output_pipe):
+        self.syntax_dict = {
             'set': self.set,
             'add': self.add,
             'mul': self.mul,
@@ -12,32 +15,40 @@ class Solution:
             'rcv': self.rcv,
             'jgz': self.jgz
         }
+        self.input_pipe = input_pipe
+        self.output_pipe = output_pipe
         self.sound_freq = 0
         self.variable_state = {}
+        self.variable_state['p'] = file_id
         self.pos = 0
-        self.recover = False
+        self.send_times = 0
+        self.file_id = file_id
         with open(instruction_file, 'r') as f:
             self.instruction_list = f.read().strip().split('\n')
 
+    def debug(self, message):
+        debug_output = 'Thread[%d]: ' % self.file_id
+        print(debug_output, message)
+
+    def start(self):
         while self.pos < len(self.instruction_list):
             instruction_split = self.instruction_list[self.pos].split(' ')
             token = instruction_split[0]
-            print(instruction_split)
-            syntax_dict[token](instruction_split)
-            if self.recover:
-                print(self.sound_freq)
-                break
+            self.syntax_dict[token](instruction_split)
+            self.debug(' '.join(instruction_split))
+            self.debug(self.variable_state)
+        self.debug('Have exited while loop')
 
     def get_var_value(self, variable):
-        if variable[0] == '-':
-            return int(variable)
-        if variable.isdigit():
-            return int(variable)
-        else:
-            return self.variable_state[variable]
+        op = 0
+        try:
+            op = int(variable)
+        except ValueError:
+            if variable in self.variable_state:
+                    op = self.variable_state[variable]
+        return op
 
     def set(self, instruction_split):
-        print(self.variable_state)
         var1 = instruction_split[1]
         var2 = self.get_var_value(instruction_split[2])
         self.variable_state[var1] = int(var2)
@@ -46,7 +57,7 @@ class Solution:
 
     def add(self, instruction_split):
         var1 = instruction_split[1]
-        var2 = instruction_split[2]
+        var2 = self.get_var_value(instruction_split[2])
         self.variable_state[var1] += int(var2)
         self.pos += 1
 
@@ -64,23 +75,24 @@ class Solution:
 
     def mod(self, instruction_split):
         var1 = instruction_split[1]
-        var2 = instruction_split[2]
-        var_val = self.get_var_value(var2)
-        self.variable_state[var1] %= var_val
+        var2 = self.get_var_value(instruction_split[2])
+        self.variable_state[var1] %= var2
         self.pos += 1
 
 
     def snd(self, instruction_split):
         var_val = self.get_var_value(instruction_split[1])
-        self.sound_freq = var_val
+        self.output_pipe.put(var_val)
         self.pos += 1
+
+        if self.file_id == 1:
+            self.send_times += 1
+            print('Program1 send times: %d' % self.send_times)
 
 
     def rcv(self, instruction_split):
         var1 = self.get_var_value(instruction_split[1])
-        if var1 != 0:
-            self.variable_state[var1] = self.sound_freq
-            self.recover = True
+        self.variable_state[var1] = int(self.input_pipe.get())
         self.pos += 1
 
 
@@ -95,8 +107,22 @@ class Solution:
         else:
             self.pos += 1
 
+
 def main():
-    sol = Solution('data.txt')
+
+    prog1_input = queue.Queue()
+    prog2_input = queue.Queue()
+
+    prog1 = Solution('data.txt', 0, prog1_input, prog2_input)
+    prog2 = Solution('data.txt', 1, prog2_input, prog1_input)
+
+    t1 = threading.Thread(target=prog1.start)
+    t2 = threading.Thread(target=prog2.start)
+
+    t1.start()
+    t2.start()
+
+
 
 if __name__ == '__main__':
     main()
