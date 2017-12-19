@@ -79,13 +79,17 @@ class Solution:
         var_val = self.get_var_value(instruction_split[1])
         self.output_pipe.put(var_val)
         self.pos += 1
-
-        if self.file_id == 1:
-            self.send_times += 1
-            print('Program1 send times: %d' % self.send_times)
+        self.send_times += 1
 
     def rcv(self, instruction_split):
         var1 = instruction_split[1]
+        sleep_cycles = 0
+        while self.input_pipe.empty():
+            time.sleep(0.01)
+            if sleep_cycles > 2:
+                self.debug('Reached deadlock, will exit')
+                exit(1)
+            sleep_cycles += 1
         self.variable_state[var1] = int(self.input_pipe.get())
         self.pos += 1
 
@@ -102,7 +106,6 @@ class Solution:
 
 
 def main():
-
     prog1_input = queue.Queue()
     prog2_input = queue.Queue()
 
@@ -115,6 +118,8 @@ def main():
     t1.start()
     t2.start()
 
+    t2.join()
+    print('Answer2: %d' % prog2.send_times)
 
 if __name__ == '__main__':
     main()
