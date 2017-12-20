@@ -24,6 +24,14 @@ func FileAsLineArray(filename string) []string {
 	}
 }
 
+func FileAsRuneArray(filename string) [][]rune {
+	a := make([][]rune, 0)
+	for _, s := range FileAsLineArray(filename) {
+		a = append(a, []rune(s))
+	}
+	return a
+}
+
 func FileAsString(filename string) string {
 	f, err := os.Open(filename)
 	if err != nil {
