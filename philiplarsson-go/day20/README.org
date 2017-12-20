@@ -1,0 +1,9 @@
+* Run Instructions
+
+=day20.go= takes one argument ; a filename to a file that contains the puzzle
+input.
+
+Example:
+#+BEGIN_SRC bash
+go run day20.go puzzle.in
+#+END_SRC
