@@ -25,7 +25,7 @@ object Day20 extends App {
     def willTurn: Boolean = v.signa == a.signa
   }
 
-  val particlePattern = raw"p=<(-?\d+),(-?\d+),(-?\d+)>, v=<(-?\d+),(-?\d+),(-?\d+)>, a=<(-?\d+),(-?\d+),(-?\d+)>".r
+  val particlePattern = raw"p=<\s*(-?\d+),\s*(-?\d+),\s*(-?\d+)>, v=<\s*(-?\d+),\s*(-?\d+),\s*(-?\d+)>, a=<\s*(-?\d+),\s*(-?\d+),\s*(-?\d+)>".r
 
   val particles: List[Particle] = (
     io.Source.stdin.getLines()
@@ -47,17 +47,32 @@ object Day20 extends App {
   def step(particles: List[Particle]): List[Particle] =
     particles map { _.step }
 
+  def stepB(particles: List[Particle]): List[Particle] =
+    removeColliders(particles map { _.step })
+
   def findClosest(particles: List[Particle]): Particle = {
     particles
       .minBy { particle => particle.a.manhattan }
   }
 
+  def removeColliders(particles: List[Particle]): List[Particle] =
+    particles
+      .groupBy { _.p }
+      .filter { case (_, group) => group.size == 1 }
+      .flatMap { case (_, group) => group }
+      .toList
+
   def solveA(particles: List[Particle]) = {
     // val states = Iterator.iterate(particles)(step)
     // (states map findClosest).take(10).toList
-    findClosest(particles)
+    findClosest(particles).id
   }
 
-  println(s"A: ${solveA(particles).id}")
-  // println(s"B: ${b}")
+  def solveB(particles: List[Particle]) = {
+    val states = Iterator.iterate(particles)(stepB)
+    (states).drop(100000).next().size
+  }
+
+  println(s"A: ${solveA(particles)}")
+  println(s"B: ${solveB(particles)}")
 }
