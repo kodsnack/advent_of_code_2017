@@ -24,6 +24,7 @@
 (defpackage #:aoc2017.day17 (:use #:cl))
 (defpackage #:aoc2017.day18 (:use #:cl #:queues))
 (defpackage #:aoc2017.day19 (:use #:cl))
+(defpackage #:aoc2017.day20 (:use #:cl))
 
 (fiasco:define-test-package #:aoc2017.tests
   (:use #:aoc))
