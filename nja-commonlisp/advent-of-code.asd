@@ -29,5 +29,6 @@
                  (:file "day17")
                  (:file "day18")
                  (:file "day19")
+                 (:file "day20")
                  (:file "tests"))))
   :depends-on (#:alexandria #:fiasco #:cl-ppcre #:queues.simple-queue))
