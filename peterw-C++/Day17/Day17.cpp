@@ -46,6 +46,7 @@ void solve_part1()
 	cout << "Day 15 - part 1: " << b << endl;
 }
 
+// inital solution, works but is very slow. Took minutes to solve..
 int fillBuffer2(int skipLength, int count)
 {
 	forward_list<int> b;
@@ -71,9 +72,38 @@ int fillBuffer2(int skipLength, int count)
 	return *it;
 }
 
+// New solution that is fast
+int fillBuffer2_v2(int skipLength, int count)
+{
+	int pos = 0;
+	int valueAtPos1 = -1;
+	for(int i = 1; i <= count; ++i)
+	{
+		auto length = i;
+		pos = ((pos + skipLength) % length) + 1;
+		if(pos==1)
+		{
+			valueAtPos1 = i;
+		}
+		if(pos==0)
+			throw std::exception(); // we need to find another algorithm...
+	}
+	if(valueAtPos1==-1)
+		throw std::exception(); // we need to find another algorithm...
+	return valueAtPos1;
+}
+
+// inital solution, works but is very slow. Took minutes to solve..
 void solve_part2()
 {
 	auto b = fillBuffer2(377, 50000000);
+	cout << "Day 15 - part 2: " << b << endl;
+}
+
+// New solution that is fast
+void solve_part2_v2()
+{
+	auto b = fillBuffer2_v2(377, 50000000);
 	cout << "Day 15 - part 2: " << b << endl;
 }
 
@@ -81,6 +111,7 @@ int main()
 {
 	unittest_part1();
 	solve_part1();
-	solve_part2();
+//	solve_part2(); // inital slow solution
+	solve_part2_v2();
 	return 0;
 }
