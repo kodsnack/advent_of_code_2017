@@ -43,7 +43,7 @@ void unittest_part1()
 void solve_part1()
 {
 	auto b = fillBuffer(377, 2017);
-	cout << "Day 15 - part 1: " << b << endl;
+	cout << "Day 17 - part 1: " << b << endl;
 }
 
 // inital solution, works but is very slow. Took minutes to solve..
@@ -97,14 +97,14 @@ int fillBuffer2_v2(int skipLength, int count)
 void solve_part2()
 {
 	auto b = fillBuffer2(377, 50000000);
-	cout << "Day 15 - part 2: " << b << endl;
+	cout << "Day 17 - part 2: " << b << endl;
 }
 
 // New solution that is fast
 void solve_part2_v2()
 {
 	auto b = fillBuffer2_v2(377, 50000000);
-	cout << "Day 15 - part 2: " << b << endl;
+	cout << "Day 17 - part 2: " << b << endl;
 }
 
 int main()
