@@ -47,17 +47,14 @@ parse = map (fst . head . readP_to_S particleP)
 
 maxT (a1, a2, a3) = maximum [abs a1, abs a2, abs a3]
 
-sortP :: Particle -> Particle -> Ordering
-sortP (a1, a2, a3) (b1, b2, b3)
-  | maxT a3 /= maxT b3 = maxT a3 `compare` maxT b3
-  | maxT a2 /= maxT b2 = maxT a2 `compare` maxT b2
-  | otherwise = maxT a1 `compare` maxT b1
+pseudoDistance t ((px, py, pz), (vx, vy, vz), (ax, ay, az)) =
+  abs (p t (px, vx, ax)) + abs (p t (py, vy, ay)) + abs (p t (pz, vz, az))
+  where
+    p t (p, v, a) = p + v * t + a * (t * t)
 
 solve1 :: [String] -> Int
-solve1 s = fromJust $ elemIndex p ps
-  where
-    p = minimumBy sortP ps
-    ps = parse s
+solve1 =
+  fst . head . sortOn snd . zip [0 ..] . map (pseudoDistance 100000) . parse
 
 update :: ParticleP -> ParticleP
 update (ParticleP ((p1, p2, p3), (v1, v2, v3), (a1, a2, a3))) =
