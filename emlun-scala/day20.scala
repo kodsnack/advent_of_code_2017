@@ -10,15 +10,11 @@ object Day20 extends App {
     def manhattan: Int = a match {
       case (a, b, c) => Math.abs(a) + Math.abs(b) + Math.abs(c)
     }
-    def signa: V3 = a match {
-      case (a, b, c) => (a.signum, b.signum, c.signum)
-    }
   }
 
   type V3 = (Int, Int, Int)
   case class Particle(id: Int, p: V3, v: V3, a: V3) {
     def step: Particle = copy(v = v + a, p = p + (v + a))
-    def willTurn: Boolean = v.signa == a.signa
   }
 
   val particlePattern = raw"p=<\s*(-?\d+),\s*(-?\d+),\s*(-?\d+)>, v=<\s*(-?\d+),\s*(-?\d+),\s*(-?\d+)>, a=<\s*(-?\d+),\s*(-?\d+),\s*(-?\d+)>".r
