@@ -1,7 +1,7 @@
 module D20 where
 
 import Data.List.Split (splitOneOf)
-import Data.List (minimumBy, sort, groupBy)
+import Data.List (minimumBy, sort, groupBy, sortOn)
 import Data.Ord (comparing)
 
 type State = ((Int,Int,Int),(Int,Int,Int),(Int,Int,Int))
@@ -13,12 +13,18 @@ parseInput input = zip [0..] $ map parseLine $ lines input
         parseLine = toTup . (map read) . (filter (/= "")) . (splitOneOf "pva=<>, ")
         toTup [px,py,pz,vx,vy,vz,ax,ay,az] = ((px,py,pz),(vx,vy,vz),(ax,ay,az))
 
+nSteps1 :: Int -> [(Id,State)] -> [(Id,State)]
+nSteps1 0 xs = xs
+nSteps1 i xs = nSteps1 (i-1) $ map (\(id,s) -> (id, step s)) xs
 
 solve1 :: String -> Id
-solve1 input = fst $ minimumBy (comparing snd) $ map manhattanAcc $ parseInput input
+solve1 input = fst $ minimumBy (comparing manhattanPos) $ nSteps1 10000 $ head 
+                   $ groupBy sameManhAcc $ sortOn manhattanAcc $ parseInput input
     where
-        manhattanAcc (id,(_,_,a)) = (id, manhattan a)
-        manhattan (x,y,z) = abs x + abs y + abs z
+        manhattanPos (_,(p,_,_)) = manhattan p
+        sameManhAcc x y          = manhattanAcc x == manhattanAcc y
+        manhattanAcc (_,(_,_,a)) = manhattan a
+        manhattan (x,y,z)        = abs x + abs y + abs z
 
 nSteps :: Int -> [State] -> [State]
 nSteps 0 ss = ss
@@ -34,7 +40,7 @@ removeColliding :: [State] -> [State]
 removeColliding ps = concat $ filter ((== 1) . length) $ groupBy samePos $ sort ps
     where 
         samePos s1 s2 = pos s1 == pos s2
-        pos (p,v,a) = p
+        pos (p,v,a)   = p
 
 solve2 :: String -> Int
 solve2 input = length $ nSteps 1000 $ map snd $ parseInput input
