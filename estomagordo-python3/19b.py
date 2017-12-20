@@ -35,6 +35,6 @@ def solve(graph):
         y = ny
         x = nx
 
-with open('input.txt', 'r') as f:
+with open('input_19.txt', 'r') as f:
     graph = [line for line in f]
     print(solve(graph))
