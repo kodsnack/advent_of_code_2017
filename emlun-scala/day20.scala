@@ -23,11 +23,9 @@ object Day20 extends App {
 
   val particlePattern = raw"p=<\s*(-?\d+),\s*(-?\d+),\s*(-?\d+)>, v=<\s*(-?\d+),\s*(-?\d+),\s*(-?\d+)>, a=<\s*(-?\d+),\s*(-?\d+),\s*(-?\d+)>".r
 
-  def step(particles: List[Particle]): List[Particle] =
-    particles map { _.step }
+  def step(particles: List[Particle]): List[Particle] = particles map { _.step }
 
-  def findClosest(particles: List[Particle]): Particle =
-    particles minBy { particle => particle.a.manhattan }
+  def findClosest(particles: List[Particle]): Particle = particles minBy { _.a.manhattan }
 
   def removeColliders(particles: List[Particle]): List[Particle] =
     particles
