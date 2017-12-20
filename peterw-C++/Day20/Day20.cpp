@@ -109,7 +109,7 @@ void solve_part1()
 		return p1.a.distance() < p2.a.distance();
 	});
 	auto i = distance(particles.begin(), minIt);
-	cout << "Day 19 - part 1: " << i << endl;
+	cout << "Day 20 - part 1: " << i << endl;
 }
 
 //------------
@@ -152,7 +152,7 @@ void solve_part2()
 		removeCollisions(particles);
 		cout << "t=" << i << ", particle count: " << particles.size() << endl;
 	}
-	cout << "Day 19 - part 2: " << particles.size() << endl;
+	cout << "Day 20 - part 2: " << particles.size() << endl;
 }
 
 //------------
