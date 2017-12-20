@@ -26,9 +26,6 @@ object Day20 extends App {
   def step(particles: List[Particle]): List[Particle] =
     particles map { _.step }
 
-  def stepB(particles: List[Particle]): List[Particle] =
-    removeColliders(particles map { _.step })
-
   def findClosest(particles: List[Particle]): Particle =
     particles minBy { particle => particle.a.manhattan }
 
