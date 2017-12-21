@@ -1,11 +1,6 @@
 import sys
 import math
 
-input = """p=< 0,1,0>, v=< 2,-3,0>, a=<-1,-1,0>\r
-p=< 1,1,0>, v=< 2,-3,0>, a=<-1,-1,0>\r
-p=< 0,-1,0>, v=< 0,-2,0>, a=<-1,-1,0>\r
-p=< 1,1,0>, v=< 0,2,0>, a=<1,1,0>\r
-"""
 input = sys.stdin.read()
 input = [[[int(n) for n in w[3:-1].split(',')] for w in l.split(', ')] for l in input.split('\n') if l]
 
