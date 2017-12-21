@@ -30,10 +30,6 @@ class Pattern
     end
     [ss, ss2.map(&.join)]
   end
-
-  def match?(arr : Array(String))
-    @variants.index(arr)
-  end
 end
 
 def chunks(lines)
@@ -49,10 +45,7 @@ def solve(lines, times, patterns)
   times.times do
     chunks = chunks(lines)
     lines = chunks.flat_map do |chunk|
-      o = chunk.map do |c|
-        p = patterns.find &.match?(c)
-        p ? p.output : raise "fail"
-      end
+      o = chunk.map { |c| patterns[c] }
       o[0].size.times.flat_map do |i|
         o.map(&.[i]).join
       end.to_a
@@ -67,8 +60,10 @@ start = <<-EOS
 ###
 EOS
 
-patterns = File.read("inputs/day21").lines.map(&.split(/ => /)).map do |p|
-  Pattern.new(p[0], p[1])
+patterns = {} of Array(String) => Array(String)
+File.read("inputs/day21").lines.map(&.split(/ => /)).map do |p|
+  p = Pattern.new(p[0], p[1])
+  p.variants.each {|v| patterns[v] = p.output }
 end
 
 lines = start.lines
