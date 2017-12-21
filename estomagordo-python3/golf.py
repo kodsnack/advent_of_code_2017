@@ -2,15 +2,21 @@ from os import fsencode, fsdecode, listdir, system, name
 from io import StringIO
 from contextlib import redirect_stdout
 
+four_spaces = '    '
+path = 'estomagordo-python3\\'
+golf = 'golf\\'
+readme = 'README.md'
+
+def tabbify(s):
+    while four_spaces in s:
+        s = s.replace(four_spaces, '\t')
+    return s
+
 def custom_sort(fsfile):
     numend = 0
     while fsfile[numend].isnumeric():
         numend += 1
     return (int(fsfile[:numend]), fsfile[numend:])
-
-path = 'estomagordo-python3\\'
-golf = 'golf\\'
-readme = 'README.md'
 
 rm = []
 with open(path + golf + readme, 'r') as f:
@@ -34,6 +40,10 @@ for f in fsfiles:
 
     with open(path + golf + filename, 'r') as golfed:
         contents = golfed.read()
+
+        result.append(four_spaces in contents)
+        contents = tabbify(contents)
+        result.append(contents)
         
         with redirect_stdout(out):
             exec(contents)
@@ -55,7 +65,7 @@ for f in fsfiles:
     results.append(result)
 
 for result in results:
-    name, golflen, golfsult, regulen, regusult = result
+    name, shortened, file_raw, golflen, golfsult, regulen, regusult = result
     equals = golfsult == regusult
     eqstr = 'EQUALS' if equals else 'DOES NOT EQUAL'
     percentage = round(100.0 * float(golflen) / float(regulen), 2)
@@ -82,6 +92,10 @@ for result in results:
             rm[i] = output
     else:
         rm.append(newconsoutput + '\n')
+
+    if shortened:
+        with open(path + golf + filename, 'w') as f:
+            f.write(file_raw)
 
     print(newconsoutput)
 

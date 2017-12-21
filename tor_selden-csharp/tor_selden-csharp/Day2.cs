@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace tor_selden_csharp
 {
@@ -34,16 +31,14 @@ namespace tor_selden_csharp
                 {
                     for (int j = 0; j < row.Count; j++)
                     {
-                        if ((row[i] % row[j] == 0) && i!=j )
+                        if ((row[i] % row[j] == 0) && i != j)
                         {
-                            checksum += row[i]/row[j];
+                            checksum += row[i] / row[j];
                         }
                     }
-
                 }
             }
             Console.WriteLine(checksum);
-
         }
     }
 }

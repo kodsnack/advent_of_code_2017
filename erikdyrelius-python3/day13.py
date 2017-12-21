@@ -45,4 +45,3 @@ print("Puzzle 1, example {}".format(calcSeverity(parseTable(ex))))
 print("Puzzle 1, solution {}".format(calcSeverity(parseTable(inp))))
 print("Puzzle 2, example {}".format(findPassage(parseTable(ex))))
 print("Puzzle 2, solution {}".format(findPassage(parseTable(inp))))
-#3875560

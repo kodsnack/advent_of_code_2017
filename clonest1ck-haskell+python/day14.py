@@ -80,7 +80,7 @@ filled = 0
 regions = 0
 
 for i in range(128):
-    bins = "";
+    bins = ""
     hashcode = knotHash(puzzle_input + str(i))
 
     for char in hashcode:

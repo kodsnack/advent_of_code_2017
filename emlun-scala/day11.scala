@@ -1,4 +1,4 @@
-object Main extends App {
+object Day11 extends App {
 
   val moves: List[String] = (for {
     line <- io.Source.stdin.getLines()
