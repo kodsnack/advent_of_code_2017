@@ -89,21 +89,28 @@ object Day21 extends App {
       .reduceLeft[Image]({ case (a, b) => a mergev b })
   }
 
-  def step(rules: List[Rule])(image: Image): Image =
+  def step(update: Image => Image)(image: Image): Image =
     merge(
       image
         .split
-        .map { part =>
-          rules.find({ _.input contains part }).get.output
-        }
+        .map(update)
         .toSeq
     )
+
+  def memoize[I, O](f: I => O): I => O = new scala.collection.mutable.HashMap[I, O]() {
+    override def apply(key: I) = getOrElseUpdate(key, f(key))
+  }
+
+  def updater(rules: List[Rule]): Image => Image =
+    memoize { image =>
+      rules.find({ _.input contains image }).get.output
+    }
 
   val start: Image = parseImage(".#./..#/###")
   val rules: List[Rule] = (io.Source.stdin.getLines() map parseRule).toList
 
-  def solveA(rules: List[Rule]): Int = Iterator.iterate(start)(step(rules)).drop(5).next().numOn
-  def solveB(rules: List[Rule]): Int = Iterator.iterate(start)(step(rules)).drop(18).next().numOn
+  def solveA(rules: List[Rule]): Int = Iterator.iterate(start)(step(updater(rules))).drop(5).next().numOn
+  def solveB(rules: List[Rule]): Int = Iterator.iterate(start)(step(updater(rules))).drop(18).next().numOn
 
   println(s"A: ${solveA(rules)}")
   println(s"B: ${solveB(rules)}")
