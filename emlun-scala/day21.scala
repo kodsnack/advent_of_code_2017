@@ -26,7 +26,7 @@ object Day21 extends App {
     def mergev(other: Image): Image =
       Image(pixels ++ other.pixels)
 
-    def splitv: List[Image] = {
+    def splitv: Iterator[Image] = {
       val splitSize: Int =
         if (pixels.size % 2 == 0) 2
         else 3
@@ -34,7 +34,6 @@ object Day21 extends App {
       pixels
         .sliding(splitSize, splitSize)
         .map(Image)
-        .toList
     }
 
     def splith: List[Image] = {
@@ -49,7 +48,7 @@ object Day21 extends App {
         .toList
     }
 
-    def split: List[Image] = splitv flatMap { _.splith }
+    def split: Iterator[Image] = splitv flatMap { _.splith }
 
     def numOn: Int = pixels.flatten.count(_ == true)
 
@@ -79,15 +78,14 @@ object Day21 extends App {
     case Array(i, o) => new Rule(parseImage(i), parseImage(o))
   }
 
-  def merge(images: List[Image]): Image = images match {
-    case List(single) => single
+  def merge(images: Seq[Image]): Image = images.size match {
+    case 1 => images.head
     case _ => {
       val rowLength = Math.sqrt(images.size).round.toInt
-      print(s"images length: ${images.size}, rowLength: ${rowLength}")
 
       images
         .sliding(images.size / rowLength, rowLength)
-        .map { row: List[Image] =>
+        .map { row: Seq[Image] =>
           row.reduceLeft[Image]({ case (a, b) => a mergeh b })
         }
         .reduceLeft[Image]({ case (a, b) => a mergev b })
@@ -95,24 +93,14 @@ object Day21 extends App {
   }
 
 
-  def step(rules: List[Rule])(image: Image): Image = {
-    println()
-    println(s"step ${image}")
-    println(s"split: ${image.split}")
-    println(s"replaced: ${image.split
-      .map({ part =>
-        rules.find({ _.input contains part }).get.output
-      }).length}")
-    val result = merge(image
+  def step(rules: List[Rule])(image: Image): Image =
+    merge(image
       .split
       .map { part =>
         rules.find({ _.input contains part }).get.output
       }
+      .toSeq
     )
-
-    println(s"merged: ${result}")
-    result
-  }
 
   val start: Image = parseImage(".#./..#/###")
 
@@ -134,6 +122,41 @@ object Day21 extends App {
     Iterator.iterate(start)(step(rules)).drop(5).next().numOn
   }
 
+  def solveB(rules: List[Rule]) = {
+    def countFutureOns(image: Image, futureDepth: Int): Int = {
+      if (futureDepth == 0)
+        image.numOn
+      else {
+        image.split
+          .map(step(rules))
+          .map({ countFutureOns(_, futureDepth - 1) })
+          .sum
+      }
+    }
+
+    def countNextOns(image: Image) = (for {
+      i <- image.split
+      next = step(rules)(i)
+    } yield next.numOn).sum
+
+    for { i <- 1 to 18 } {
+      println()
+      println(Iterator.iterate(start)(step(rules)).drop(i).next())
+      println(s"i: ${i}")
+      println("On: " + Iterator.iterate(start)(step(rules)).drop(i).next().numOn)
+      println("Next on: " + countNextOns(Iterator.iterate(start)(step(rules)).drop(i - 1).next()))
+      println("Future on: " + countFutureOns(start, i))
+
+      /*
+      println("Nexts:")
+      for { im <- Iterator.iterate(start)(step(rules)).drop(i).next().split.map(step(rules)) } {
+        println(im)
+        println(s"On: ${im.numOn}")
+      }
+      */
+    }
+  }
+
   println(s"A: ${solveA(rules)}")
-  // println(s"B: ${solveB(particles)}")
+  println(s"B: ${solveB(rules)}")
 }
