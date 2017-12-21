@@ -6,8 +6,9 @@ def score(particle):
     
     velsum = 0
     for x in range(3, 6):
-        if particle[x] * particle[x + 3] < 0:
-            velsum += particle[x]
+        prod = (particle[x] * particle[x + 3])
+        sign = -1 if prod < 0 else 1
+        velsum += particle[x] * sign
 
     return (accsum, velsum, dist(particle))
 
