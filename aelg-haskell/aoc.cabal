@@ -39,6 +39,7 @@ library
                      , Eighteen
                      , Nineteen
                      , Twenty
+                     , Twentyone
                      , KnotHash
   build-depends:       base >= 4.7 && < 5
                      , containers >= 0.5.8
