@@ -1,7 +1,5 @@
 #use "./lib.ml";;
 
-let example = "s1,x3/4,pe/b";;
-
 let spin n programs =
   let l = String.length programs in
   String.init l (fun i -> if i < n then programs.[l - n + i] else programs.[i - n])
@@ -52,9 +50,24 @@ let rec dance programs = function
 let parse = Str.split (Str.regexp ",");;
 
 let part1 programs = parse >> dance programs;;
-assert (example |> part1 "abcde" = "baedc");;
+assert ("s1,x3/4,pe/b" |> part1 "abcde" = "baedc");;
+
+let part2 programs sequence =
+  let codes = parse sequence in
+  let seen = Hashtbl.create 1000 in
+  let rec find_repeated programs = function
+    | 0 -> programs
+    | n ->
+      try step programs (n mod (Hashtbl.find seen programs - n))
+      with Not_found -> Hashtbl.add seen programs n; find_repeated (dance programs codes) (n - 1)
+  and step programs = function
+    | 0 -> programs
+    | n -> step (dance programs codes) (n - 1)
+  in find_repeated programs 1_000_000_000
+;;
 
 File.open_in "day16.input" (fun ch ->
   let sequence = Stream.of_lines ch |> Stream.to_list |> List.hd in
   sequence |> part1 "abcdefghijklmnop" |> Printf.printf "part1: %s\n%!";
+  sequence |> part2 "abcdefghijklmnop" |> Printf.printf "part2: %s\n%!";
 );;
