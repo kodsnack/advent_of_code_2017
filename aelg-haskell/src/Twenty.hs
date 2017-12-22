@@ -6,6 +6,7 @@ import           Data.List
 import           Data.Maybe
 import qualified Data.Set                     as S
 import           Text.ParserCombinators.ReadP
+import           Util
 
 type Triple = (Int, Int, Int)
 
@@ -64,7 +65,7 @@ update (ParticleP ((p1, p2, p3), (v1, v2, v3), (a1, a2, a3))) =
     (p1', p2', p3') = (p1 + v1', p2 + v2', p3 + v3')
 
 solve2 :: [String] -> Int
-solve2 = length . (!! 10000) . iterate tick . sorted
+solve2 = length . iterateN 10000 tick . sorted
   where
     sorted = sort . map ParticleP . parse
     tick = removeDup . sort . map update

@@ -6,14 +6,13 @@ import           Control.Arrow
 import           Data.List
 import qualified Data.Map.Strict as M
 import           Data.Maybe
-
-type Pos = (Int, Int)
+import           Grid as G
 
 type ShellAndOffset = (Int, Int)
 
 type Order = Int
 
-type Grid = M.Map Pos Int
+type IntGrid = G.Grid Int
 
 shellOffset :: Order -> ShellAndOffset
 shellOffset = shellOffset' 0
@@ -27,17 +26,17 @@ shellOffset = shellOffset' 0
 fromShellAndOffset :: ShellAndOffset -> Pos
 fromShellAndOffset (s, offset) = fst $ foldl move (shellStartPos s, offset) dirs
   where
-    shellStartPos s = ((-s) + 1, s)
+    shellStartPos s = (s, (-s) + 1)
     dirs =
-      [ ((1, 0), shellSide - 1)
-      , ((0, -1), shellSide)
-      , ((-1, 0), shellSide)
-      , ((0, 1), shellSide + 1)
+      [ (Down, shellSide - 1)
+      , (G.Left, shellSide)
+      , (Up, shellSide)
+      , (G.Right, shellSide + 1)
       ]
     shellSide = s * 2
-    move ((y, x), offset) ((dy, dx), l)
-      | offset < l = ((y + dy * offset, x + dx * offset), 0)
-      | otherwise = ((y + dy * l, x + dx * l), offset - l)
+    move (pos, offset) (dir, l)
+      | offset < l = (moveMany offset dir pos, 0)
+      | otherwise = (moveMany l dir pos, offset - l)
 
 pos :: Order -> Pos
 pos = fromShellAndOffset . shellOffset
@@ -47,11 +46,10 @@ solve1 [s] = abs x + abs y
   where
     (x, y) = pos $ read s - 1
 
-updateGrid :: Grid -> Order -> (Grid, Int)
+updateGrid :: IntGrid -> Order -> (IntGrid, Int)
 updateGrid g n = (M.insert (pos n) sumAdjacent g, sumAdjacent)
   where
-    sumAdjacent = sum $ map (flip (M.findWithDefault 0) g) (adjacent (pos n))
-    adjacent (x, y) = map ((+ x) *** (+ y)) ((,) <$> [-1, 0, 1] <*> [-1, 0, 1])
+    sumAdjacent = sum $ adjacentWithDefault 0 g (pos n)
 
 solve2 :: [String] -> Int
 solve2 [s] = head $ dropWhile notDone (snd $ mapAccumL updateGrid init [1 ..])
