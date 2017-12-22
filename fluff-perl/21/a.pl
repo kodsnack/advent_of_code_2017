@@ -29,7 +29,7 @@ for(1..$iters) {
     $image = $#results > 0 ? mergeimage(@results) : $results[0];
 
     my $count = grep { $_ eq "#" } split(//, $image);
-#    print "$_ => $count\n";
+    print "$_ => $count\n";
 }
 
 
@@ -93,9 +93,6 @@ sub process {
     
     foreach my $rule (@rules) {
 	my $pc = grep { $_ eq "#" } split(//, $image);
-	if($rule->comparePixelCount($pc)) {
-	    print $rule->match($image) . "\n";
-	    return $rule->getreplacement() if($rule->match($image) >= 0);
-	}
+	return $rule->getreplacement() if($rule->comparePixelCount($pc) && $rule->match($image) >= 0);
     }
 }
