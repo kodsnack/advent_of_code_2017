@@ -1,0 +1,13 @@
+* Run instructions
+
+=day21.go= takes one argument ; a filename to a file that contains the puzzle
+input.
+
+Example:
+#+BEGIN_SRC bash
+go run day21.go puzzle.in
+#+END_SRC
+
+To run test, use =go test -v= (flag =-v= is for verbose output).
+
+
