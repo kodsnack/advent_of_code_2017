@@ -10,73 +10,58 @@ object Day22 extends App {
     def unary_- : V2 = a match {
       case (aa, bb) => (-aa, -bb)
     }
-    def manhattan: Int = a match {
-      case (a, b) => Math.abs(a) + Math.abs(b)
-    }
-    def turnLeft: V2 = a match { case (x, y) => (y, -x) }
-    def turnRight: V2 = a match { case (x, y) => (-y, x) }
+    def turnLeft: V2  = a match { case (x, y) => ( y, -x) }
+    def turnRight: V2 = a match { case (x, y) => (-y,  x) }
   }
   type V2 = (Int, Int)
 
-  def parseMap(lines: Iterator[String]): (Set[V2], Int, Int) = {
+  def parseMap(lines: Iterator[String]): (Map[V2, Status], V2) = {
     val linesList = lines.toList
     val h = linesList.length
     val w = linesList.head.length
-    val map = (for {
-      (line, y) <- linesList.zipWithIndex
-      (cell, x) <- line.zipWithIndex
-      if cell == '#'
-    } yield (x, y)).toSet
-    (map, h, w)
+    val startPos: V2 = (w / 2, h / 2)
+
+    val map = (
+      for {
+        (line, y) <- linesList.zipWithIndex
+        (cell, x) <- line.zipWithIndex
+        if cell == '#'
+      } yield ((x, y) -> Infected)
+    ).toMap
+
+    (map, startPos)
   }
 
-  def burstA(state: State): State = state match {
+  def updateDir(infections: Map[V2, Status], pos: V2, dir: V2): V2 = infections.getOrElse(pos, Clean) match {
+    case Clean    => dir.turnLeft
+    case Weakened => dir
+    case Infected => dir.turnRight
+    case Flagged  => -dir
+  }
+
+  def updateStatusA(status: Status): Status = status match {
+    case Clean    => Infected
+    case Infected => Clean
+    case _        => ???
+  }
+  def updateStatusB(status: Status): Status = status.next
+
+  def burst(updateStatus: Status => Status)(state: State): State = state match {
     case State(infections, pos, dir, infectionsMade) => {
-      val nextDir: V2 = infections.get(pos) match {
-        case Some(Clean) | None => dir.turnLeft
-        case Some(Infected)  => dir.turnRight
-        case _ => ???
-      }
-
-      val nextStatus: Status = infections.get(pos) match {
-        case None           => Infected
-        case Some(Clean)    => Infected
-        case Some(Infected) => Clean
-        case _ => ???
-      }
-
+      val nextDir: V2 = updateDir(infections, pos, dir)
+      val nextStatus: Status = updateStatus(infections.getOrElse(pos, Clean))
       val nextInfections: Map[V2, Status] = infections.updated(pos, nextStatus)
-
       val nextPos = pos + nextDir
 
       State(nextInfections, nextPos, nextDir, infectionsMade + (if (nextStatus == Infected) 1 else 0))
     }
   }
 
-  def burstB(state: State): State = state match {
-    case State(infections, pos, dir, infectionsMade) => {
-      val nextDir: V2 = infections.get(pos) match {
-        case Some(Clean) | None => dir.turnLeft
-        case Some(Weakened)     => dir
-        case Some(Infected)     => dir.turnRight
-        case Some(Flagged)      => -dir
-      }
-
-      val nextStatus: Status = infections.getOrElse(pos, Clean).next
-
-      val nextInfections: Map[V2, Status] = infections.updated(pos, nextStatus)
-
-      val nextPos = pos + nextDir
-
-      State(nextInfections, nextPos, nextDir, infectionsMade + (if (nextStatus == Infected) 1 else 0))
-    }
-  }
-
-  sealed trait Status { def next: Status }
-  case object Clean extends Status { override def next = Weakened }
+  sealed trait Status                 {          def next: Status    }
+  case object Clean    extends Status { override def next = Weakened }
   case object Weakened extends Status { override def next = Infected }
-  case object Infected extends Status { override def next = Flagged }
-  case object Flagged extends Status { override def next = Clean }
+  case object Infected extends Status { override def next = Flagged  }
+  case object Flagged  extends Status { override def next = Clean    }
 
   case class State(infections: Map[V2, Status], pos: V2, dir: V2, infectionsMade: Int) {
     override def toString: String = {
@@ -106,31 +91,14 @@ object Day22 extends App {
     }
   }
 
-  def solveA(input: Set[V2], h: Int, w: Int) = {
-    // println(input mkString "\n")
+  def solveA(input: Map[V2, Status], startPos: V2) =
+    Iterator.iterate(State(map, startPos, (0, -1), 0))(burst(updateStatusA)).drop(10000).next().infectionsMade
 
-    val startPos: V2 = (w / 2, h / 2)
-    val startDir: V2 = (0, -1)
+  def solveB(input: Map[V2, Status], startPos: V2) =
+    Iterator.iterate(State(map, startPos, (0, -1), 0))(burst(updateStatusB)).drop(10000000).next().infectionsMade
 
-    val states = Iterator.iterate(State(map.map({ k => (k -> Infected) }).toMap, startPos, startDir, 0))(burstA).take(10001).toList
-    // println(states mkString "\n\n")
-    states.last.infectionsMade
-  }
+  val (map: Map[V2, Status], startPos: V2) = parseMap(io.Source.stdin.getLines())
 
-  def solveB(input: Set[V2], h: Int, w: Int) = {
-    // println(input mkString "\n")
-
-    val startPos: V2 = (w / 2, h / 2)
-    val startDir: V2 = (0, -1)
-
-    // val state = Iterator.iterate(State(map.map({ k => (k -> Infected) }).toMap, startPos, startDir, 0))(burstB).drop(1).take(10000000).next()
-    val state = Iterator.iterate(State(map.map({ k => (k -> Infected) }).toMap, startPos, startDir, 0))(burstB).drop(10000000).next()
-    // println(states mkString "\n\n")
-    state.infectionsMade
-  }
-
-  val (map: Set[V2], h: Int, w: Int) = parseMap(io.Source.stdin.getLines())
-
-  println(s"A: ${solveA(map, h, w)}")
-  println(s"B: ${solveB(map, h, w)}")
+  println(s"A: ${solveA(map, startPos)}")
+  println(s"B: ${solveB(map, startPos)}")
 }
