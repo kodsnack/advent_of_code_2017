@@ -30,6 +30,7 @@ import qualified Eighteen
 import qualified Nineteen
 import qualified Twenty
 import qualified Twentyone
+import qualified Twentytwo
 
 solved =
   M.fromList
@@ -54,6 +55,7 @@ solved =
     , (19, Nineteen.solve)
     , (20, Twenty.solve)
     , (21, Twentyone.solve)
+    , (22, Twentytwo.solve)
     ]
 
 getSolution x = M.findWithDefault notImplemented x solved
