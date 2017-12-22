@@ -63,33 +63,7 @@ object Day22 extends App {
   case object Infected extends Status { override def next = Flagged  }
   case object Flagged  extends Status { override def next = Clean    }
 
-  case class State(infections: Map[V2, Status], pos: V2, dir: V2, infectionsMade: Int) {
-    override def toString: String = {
-      val maxx = Math.max(infections.keySet.map({ _._1 }).max, pos._1)
-      val minx = Math.min(infections.keySet.map({ _._1 }).min, pos._1)
-      val maxy = Math.max(infections.keySet.map({ _._2 }).max, pos._2)
-      val miny = Math.min(infections.keySet.map({ _._2 }).min, pos._2)
-
-      val lines =
-        (miny to maxy) map { y =>
-          ((minx to maxx) map { x =>
-            val middle = infections.get((x, y)) match {
-              case Some(Infected) => '#'
-              case Some(Weakened) => 'W'
-              case Some(Flagged)  => 'F'
-              case Some(Clean)    => '.'
-              case None           => '.'
-            }
-            if ((x, y) == pos)
-              s"[${middle}]"
-            else
-              s" ${middle} "
-          }).mkString("").replaceAll("  ", " ").replaceAll(" \\[", "[").replaceAll("] ", "]")
-        } mkString "\n"
-
-      lines
-    }
-  }
+  case class State(infections: Map[V2, Status], pos: V2, dir: V2, infectionsMade: Int)
 
   def solveA(input: Map[V2, Status], startPos: V2) =
     Iterator.iterate(State(map, startPos, (0, -1), 0))(burst(updateStatusA)).drop(10000).next().infectionsMade
