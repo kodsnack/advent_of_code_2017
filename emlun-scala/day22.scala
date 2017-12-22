@@ -1,3 +1,5 @@
+import scala.language.implicitConversions
+
 object Day22 extends App {
 
   implicit def v2ToV2Ops(a: V2) = new V2Ops(a)
@@ -5,9 +7,14 @@ object Day22 extends App {
     def +(b: V2) = (a, b) match {
       case ((aa, ab), (ba, bb)) => (aa + ba, ab + bb)
     }
+    def unary_- : V2 = a match {
+      case (aa, bb) => (-aa, -bb)
+    }
     def manhattan: Int = a match {
       case (a, b) => Math.abs(a) + Math.abs(b)
     }
+    def turnLeft: V2 = a match { case (x, y) => (y, -x) }
+    def turnRight: V2 = a match { case (x, y) => (-y, x) }
   }
   type V2 = (Int, Int)
 
@@ -23,41 +30,71 @@ object Day22 extends App {
     (map, h, w)
   }
 
-  def burst(state: State): State = state match {
+  def burstA(state: State): State = state match {
     case State(infections, pos, dir, infectionsMade) => {
-      val nextDir: V2 =
-        if (infections contains pos)
-          dir match { case (x, y) => (-y, x) }
-        else
-          dir match { case (x, y) => (y, -x) }
+      val nextDir: V2 = infections.get(pos) match {
+        case Some(Clean) | None => dir.turnLeft
+        case Some(Infected)  => dir.turnRight
+        case _ => ???
+      }
 
-      val (nextInfections: Set[V2], didInfect: Boolean) =  (
-        if (infections contains pos)
-          ((infections - pos), false)
-        else
-          ((infections + pos), true)
-      )
+      val nextStatus: Status = infections.get(pos) match {
+        case None           => Infected
+        case Some(Clean)    => Infected
+        case Some(Infected) => Clean
+        case _ => ???
+      }
+
+      val nextInfections: Map[V2, Status] = infections.updated(pos, nextStatus)
 
       val nextPos = pos + nextDir
 
-      State(nextInfections, nextPos, nextDir, infectionsMade + (if (didInfect) 1 else 0))
+      State(nextInfections, nextPos, nextDir, infectionsMade + (if (nextStatus == Infected) 1 else 0))
     }
   }
 
-  case class State(infections: Set[V2], pos: V2, dir: V2, infectionsMade: Int) {
+  def burstB(state: State): State = state match {
+    case State(infections, pos, dir, infectionsMade) => {
+      val nextDir: V2 = infections.get(pos) match {
+        case Some(Clean) | None => dir.turnLeft
+        case Some(Weakened)     => dir
+        case Some(Infected)     => dir.turnRight
+        case Some(Flagged)      => -dir
+      }
+
+      val nextStatus: Status = infections.getOrElse(pos, Clean).next
+
+      val nextInfections: Map[V2, Status] = infections.updated(pos, nextStatus)
+
+      val nextPos = pos + nextDir
+
+      State(nextInfections, nextPos, nextDir, infectionsMade + (if (nextStatus == Infected) 1 else 0))
+    }
+  }
+
+  sealed trait Status { def next: Status }
+  case object Clean extends Status { override def next = Weakened }
+  case object Weakened extends Status { override def next = Infected }
+  case object Infected extends Status { override def next = Flagged }
+  case object Flagged extends Status { override def next = Clean }
+
+  case class State(infections: Map[V2, Status], pos: V2, dir: V2, infectionsMade: Int) {
     override def toString: String = {
-      val maxx = Math.max(infections.map({ _._1 }).max, pos._1)
-      val minx = Math.min(infections.map({ _._1 }).min, pos._1)
-      val maxy = Math.max(infections.map({ _._2 }).max, pos._2)
-      val miny = Math.min(infections.map({ _._2 }).min, pos._2)
+      val maxx = Math.max(infections.keySet.map({ _._1 }).max, pos._1)
+      val minx = Math.min(infections.keySet.map({ _._1 }).min, pos._1)
+      val maxy = Math.max(infections.keySet.map({ _._2 }).max, pos._2)
+      val miny = Math.min(infections.keySet.map({ _._2 }).min, pos._2)
 
       val lines =
         (miny to maxy) map { y =>
           ((minx to maxx) map { x =>
-            val middle = if (infections contains (x, y))
-                '#'
-              else
-                '.'
+            val middle = infections.get((x, y)) match {
+              case Some(Infected) => '#'
+              case Some(Weakened) => 'W'
+              case Some(Flagged)  => 'F'
+              case Some(Clean)    => '.'
+              case None           => '.'
+            }
             if ((x, y) == pos)
               s"[${middle}]"
             else
@@ -70,19 +107,30 @@ object Day22 extends App {
   }
 
   def solveA(input: Set[V2], h: Int, w: Int) = {
-    println(input mkString "\n")
+    // println(input mkString "\n")
 
     val startPos: V2 = (w / 2, h / 2)
     val startDir: V2 = (0, -1)
 
-    val states = Iterator.iterate(State(map, startPos, startDir, 0))(burst).take(10001).toList
+    val states = Iterator.iterate(State(map.map({ k => (k -> Infected) }).toMap, startPos, startDir, 0))(burstA).take(10001).toList
     // println(states mkString "\n\n")
-    println(states.last.infectionsMade)
+    states.last.infectionsMade
   }
-  // def solveB(rules: List[Rule]): Int = Iterator.iterate(start)(step(updater(rules))).drop(18).next().numOn
+
+  def solveB(input: Set[V2], h: Int, w: Int) = {
+    // println(input mkString "\n")
+
+    val startPos: V2 = (w / 2, h / 2)
+    val startDir: V2 = (0, -1)
+
+    // val state = Iterator.iterate(State(map.map({ k => (k -> Infected) }).toMap, startPos, startDir, 0))(burstB).drop(1).take(10000000).next()
+    val state = Iterator.iterate(State(map.map({ k => (k -> Infected) }).toMap, startPos, startDir, 0))(burstB).drop(10000000).next()
+    // println(states mkString "\n\n")
+    state.infectionsMade
+  }
 
   val (map: Set[V2], h: Int, w: Int) = parseMap(io.Source.stdin.getLines())
 
   println(s"A: ${solveA(map, h, w)}")
-  // println(s"B: ${solveB(rules)}")
+  println(s"B: ${solveB(map, h, w)}")
 }
