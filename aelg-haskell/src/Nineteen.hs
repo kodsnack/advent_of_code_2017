@@ -2,33 +2,25 @@ module Nineteen
   ( solve
   ) where
 
-import           Prelude hiding (Left,Right)
+import           Grid as G
 import           Data.List
 import           Data.Maybe
 import           Data.Char
-
-
-data Dir = Up | Down | Left | Right deriving Eq
 
 start = fromJust . elemIndex '|' . head
 
 getPos s (x,y) = (s !! y) !! x
 
-move Down (x,y) = (x,y+1)
-move Up (x,y) = (x,y-1)
-move Left (x,y) = (x-1,y)
-move Right (x,y) = (x+1,y)
-
 look :: [String] -> Dir -> (Int, Int) -> (String, Int) -> (String, Int)
 look s dir pos ans
-  | (dir == Up || dir == Down) && left == '-' = follow s Left (move Left pos) ans
-  | (dir == Up || dir == Down) && right == '-' = follow s Right (move Right pos) ans
-  | (dir == Left || dir == Right) && up == '|' = follow s Up (move Up pos) ans
-  | (dir == Left || dir == Right) && down == '|' = follow s Down (move Down pos) ans
+  | (dir == Up || dir == Down) && left == '-' = follow s G.Left (move G.Left pos) ans
+  | (dir == Up || dir == Down) && right == '-' = follow s G.Right (move G.Right pos) ans
+  | (dir == G.Left || dir == G.Right) && up == '|' = follow s Up (move Up pos) ans
+  | (dir == G.Left || dir == G.Right) && down == '|' = follow s Down (move Down pos) ans
   | otherwise = ans
   where
-    left = getPos s (move Left pos)
-    right = getPos s (move Right pos)
+    left = getPos s (move G.Left pos)
+    right = getPos s (move G.Right pos)
     up = getPos s (move Up pos)
     down = getPos s (move Down pos)
 
