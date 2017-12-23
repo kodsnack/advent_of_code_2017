@@ -160,24 +160,23 @@ prog.run
 puts "part1: #{prog.invoked}"
 
 replacement = <<-EOS
-set g b #
-mod g d #
-jgz g 5 #
+set g b
+mul g 1
+mul g 1
+mod g d
+jgz g 3
 set f 0
-jnz 1 9
-mul d 1
-mul d 1
-mul d 1
-mul d 1
+jnz 1 7
 add d 1
 set g d
+mul g g
 sub g b
-jnz g -13
+jgz g 2
+jgz 1 -13
 EOS
 
 prog = Machine.new(0, program)
 prog.program[11..23] = prog.parser(replacement.strip.lines)
-
 prog.regs["a"] = 1_i64
 prog.run
 puts "part2: #{prog.regs["h"]}"
