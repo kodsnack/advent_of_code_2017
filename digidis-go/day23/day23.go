@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"math"
 	"strconv"
 	"strings"
 )
@@ -10,11 +11,10 @@ import (
 func main() {
 	part1, _ := run(parse("input.txt"))
 	fmt.Printf("Part 1: %v\n", part1)
-	fmt.Printf("Part 2 (go): %v\n", part2())
 
-	// asm code using the missing div instructions (mod is not needed)
+	// new asm code using mod + sqrt instructions for speed
 	_, part2 := run(parse("input2.txt"))
-	fmt.Printf("Part 2 (asm): %v\n", part2)
+	fmt.Printf("Part 2: %v\n", part2)
 }
 
 func parse(file string) (code [][]string) {
@@ -40,13 +40,18 @@ func run(code [][]string) (int, int) {
 			registers[op[1]] -= get(op[2])
 		case "mod":
 			registers[op[1]] %= get(op[2])
-		case "div":
-			registers[op[1]] /= get(op[2])
+		case "sqrt":
+			registers[op[1]] = int(math.Sqrt(float64(get(op[2]))))
 		case "mul":
 			registers[op[1]] *= get(op[2])
 			mul++
 		case "jnz":
 			if get(op[1]) != 0 {
+				pos += get(op[2])
+				continue
+			}
+		case "jgz":
+			if get(op[1]) > 0 {
 				pos += get(op[2])
 				continue
 			}
@@ -64,17 +69,4 @@ func get(r string) int {
 		return i
 	}
 	return registers[r]
-}
-
-// go version of part 2
-func part2() (h int) {
-	for b := 108400; b <= 125400; b += 17 {
-		for d := 2; d < b/2; d++ {
-			if b%d == 0 {
-				h++
-				break
-			}
-		}
-	}
-	return h
 }
