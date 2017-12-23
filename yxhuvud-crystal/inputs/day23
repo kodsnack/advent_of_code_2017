@@ -1,0 +1,32 @@
+set b 79
+set c b
+jnz a 2
+jnz 1 5
+mul b 100
+sub b -100000 # b == 107900
+set c b # c = 107900
+sub c -17000 # c = 124900
+set f 1 # for every 17th value between b and c.
+set d 2
+set e 2
+set g d # while while d < b && e < b
+mul g e #
+sub g b #
+jnz g 2 # f = 0 if d*e == b
+set f 0 #
+sub e -1 # e++
+set g e #
+sub g b #
+jnz g -8 # End loop if e == b
+sub d -1 # d++
+set g d
+sub g b
+jnz g -13 # end loop if d == b
+jnz f 2 #
+sub h -1 # h -= 1 if f != 0 (g däruppe)
+set g b
+sub g c
+jnz g 2
+jnz 1 3
+sub b -17
+jnz 1 -23 end for
