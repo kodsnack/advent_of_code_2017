@@ -44,12 +44,12 @@ object Day23 extends App {
           =>
           copy(
             registers = registers
-              .updated("e", resolve("b"))
-              .updated("f", if (resolve("b") % resolve("d") == 0) 0L else 1L)
-              .updated("g", 0L)
+              .updated(e, resolve(b))
+              .updated(f, if (resolve(b) % resolve(d) == 0) 0L else 1L)
+              .updated(g, 0L)
             ,
             eip = eip + (
-              if (resolve("b") % resolve("d") == 0) 13
+              if (resolve(b) % resolve(d) == 0) 13
               else 9
             )
           )
@@ -136,26 +136,8 @@ object Day23 extends App {
     })
   }
 
-  def isPrime(n: Long): Boolean =
-    if (n <= 2) false
-    else (3.to(Math.sqrt(n).floor.toInt, 2)).exists({ n % _ == 0 }) == false
-
-  def solveB(state: MachineState) = {
-    // val endState = Iterator.iterate(state.copy(program = state.program.take(10)))({ state: MachineState => state.next }).dropWhile({ !_.isFinished }).next()
-    // println(endState)
-
-    // val b = endState.resolve("b")
-    // val c = endState.resolve("c")
-
-    // val h = (for { i <- b.to(c, 17) } yield isPrime(i)).count(_ == false)
-
-    // h
-    val endState = Iterator.iterate(state)({ state: MachineState => state.next }).dropWhile({ state =>
-      println(state.eip + " " + state.registers)
-      !state.isFinished
-    }).next()
-    endState.registers("h")
-  }
+  def solveB(state: MachineState) =
+    Iterator.iterate(state)(_.next).dropWhile(!_.isFinished).next().registers("h")
 
   println(s"A: ${solveA(MachineState(program))}")
   println(s"B: ${solveB(MachineState(program, Map("a" -> 1), optimize = true))}")
