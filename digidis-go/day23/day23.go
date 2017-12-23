@@ -15,7 +15,6 @@ func main() {
 	// asm code using the missing div instructions (mod is not needed)
 	_, part2 := run(parse("input2.txt"))
 	fmt.Printf("Part 2 (asm): %v\n", part2)
-
 }
 
 func parse(file string) (code [][]string) {
@@ -27,24 +26,28 @@ func parse(file string) (code [][]string) {
 	return
 }
 
+var registers map[string]int
+
 func run(code [][]string) (int, int) {
-	registers := make(map[string]int)
+	registers = make(map[string]int)
 	var pos, mul int
 	for pos >= 0 && pos < len(code) {
 		op := code[pos]
 		switch op[0] {
 		case "set":
-			registers[op[1]] = get(registers, op[2])
+			registers[op[1]] = get(op[2])
 		case "sub":
-			registers[op[1]] = registers[op[1]] - get(registers, op[2])
+			registers[op[1]] -= get(op[2])
+		case "mod":
+			registers[op[1]] %= get(op[2])
 		case "div":
-			registers[op[1]] = registers[op[1]] / get(registers, op[2])
+			registers[op[1]] /= get(op[2])
 		case "mul":
-			registers[op[1]] = registers[op[1]] * get(registers, op[2])
+			registers[op[1]] *= get(op[2])
 			mul++
 		case "jnz":
-			if get(registers, op[1]) != 0 {
-				pos += get(registers, op[2])
+			if get(op[1]) != 0 {
+				pos += get(op[2])
 				continue
 			}
 		default:
@@ -55,7 +58,7 @@ func run(code [][]string) (int, int) {
 	return mul, registers["h"]
 }
 
-func get(registers map[string]int, r string) int {
+func get(r string) int {
 	i, err := strconv.Atoi(r)
 	if err == nil {
 		return i
