@@ -36,36 +36,23 @@ object Day23 extends App {
 
     def next: MachineState =
       program.drop(eip) match {
-        case Set(g, d) +: Mul(g1, e) +: Sub(g2, b) +: Jnz(g3, "2") +: Set(f, "0") +: Sub(e1, "-1") +: Set(g4, e2) +: Sub(g5, b1) +: Jnz(g6, "-8") +: rest
+        case Set(g, d) +: Mul(g1, e) +: Sub(g2, b) +: Jnz(g3, "2") +: Set(f, "0") +: Sub(e1, "-1") +: Set(g4, e2) +: Sub(g5, b1) +: Jnz(g6, "-8")
+              +: Sub (d1, "-1") +: Set(g7, d2) +: Sub(g8, b2) +: Jnz(g9, "-13") +: rest
           if optimize
-              && List(g, g1, g2, g3, g4, g5, g6).toSet.size == 1
+              && List(g, g1, g2, g3, g4, g5, g6, g7, g8, g9).toSet.size == 1
               && List(e, e1, e2).toSet.size == 1
-              && b1 == b
+              && List(b, b1, b2).toSet.size == 1
+              && List(d, d1, d2).toSet.size == 1
           =>
           copy(
             registers = registers
+              .updated(d, resolve(b))
               .updated(e, resolve(b))
-              .updated(f, if (resolve(b) % resolve(d) == 0) 0L else 1L)
+              .updated(f, if (isPrime(resolve(b))) 1L else 0L)
               .updated(g, 0L)
             ,
-            eip = eip + (
-              if (resolve(b) % resolve(d) == 0) 13
-              else 9
-            )
+            eip = eip + 13
           )
-
-        // case Sub (d, "-1") +: Set(g, d1) +: Sub(g1, b) +: Jnz(g2, "-13") +: rest
-          // if optimize
-              // && d1 == d
-              // && List(g, g1, g2).toSet.size == 1
-          // =>
-          // copy(
-            // registers = registers
-              // .updated("d", resolve("b"))
-              // .updated("g", 0L)
-            // ,
-            // eip = eip + 4
-          // )
 
         case Set(register, value) +: rest =>
           copy(
@@ -135,6 +122,10 @@ object Day23 extends App {
       }
     })
   }
+
+  def isPrime(n: Long): Boolean =
+    if (n % 2 == 0) false
+    else (3.to(Math.sqrt(n).ceil.toInt, 2)).exists({ n % _ == 0 }) == false
 
   def solveB(state: MachineState) =
     Iterator.iterate(state)(_.next).dropWhile(!_.isFinished).next().registers("h")
