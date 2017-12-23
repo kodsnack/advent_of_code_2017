@@ -100,6 +100,10 @@ object Day23 extends App {
       }
   }
 
+  def isPrime(n: Long): Boolean =
+    if (n % 2 == 0) false
+    else (3.to(Math.sqrt(n).ceil.toInt, 2)).exists({ n % _ == 0 }) == false
+
   val program: Vector[Instruction] = (for {
     line <- io.Source.stdin.getLines()
     instruction = line.trim match {
@@ -113,23 +117,22 @@ object Day23 extends App {
     }
   } yield instruction).toVector
 
-  def solveA(state: MachineState) = {
-    val states = Iterator.iterate(state)({ _.next }).takeWhile({ !_.isFinished })
-    states.count({ state =>
-      state.program(state.eip) match {
-        case m: Mul => true
-        case _ => false
+  def solveA(program: Vector[Instruction]) =
+    Iterator.iterate(MachineState(program))({ _.next })
+      .takeWhile { !_.isFinished }
+      .count { state =>
+        state.program(state.eip) match {
+          case m: Mul => true
+          case _ => false
+        }
       }
-    })
-  }
 
-  def isPrime(n: Long): Boolean =
-    if (n % 2 == 0) false
-    else (3.to(Math.sqrt(n).ceil.toInt, 2)).exists({ n % _ == 0 }) == false
+  def solveB(program: Vector[Instruction]) =
+    Iterator.iterate(MachineState(program, Map("a" -> 1), optimize = true))(_.next)
+      .dropWhile(!_.isFinished)
+      .next()
+      .registers("h")
 
-  def solveB(state: MachineState) =
-    Iterator.iterate(state)(_.next).dropWhile(!_.isFinished).next().registers("h")
-
-  println(s"A: ${solveA(MachineState(program))}")
-  println(s"B: ${solveB(MachineState(program, Map("a" -> 1), optimize = true))}")
+  println(s"A: ${solveA(program)}")
+  println(s"B: ${solveB(program)}")
 }
