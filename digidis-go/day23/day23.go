@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"math"
 	"strconv"
 	"strings"
 )
@@ -12,7 +11,7 @@ func main() {
 	part1, _ := run(parse("input.txt"))
 	fmt.Printf("Part 1: %v\n", part1)
 
-	// new asm code using mod + sqrt instructions for speed
+	// new asm code using mod and jb
 	_, part2 := run(parse("input2.txt"))
 	fmt.Printf("Part 2: %v\n", part2)
 }
@@ -40,8 +39,6 @@ func run(code [][]string) (int, int) {
 			registers[op[1]] -= get(op[2])
 		case "mod":
 			registers[op[1]] %= get(op[2])
-		case "sqrt":
-			registers[op[1]] = int(math.Sqrt(float64(get(op[2]))))
 		case "mul":
 			registers[op[1]] *= get(op[2])
 			mul++
@@ -50,8 +47,8 @@ func run(code [][]string) (int, int) {
 				pos += get(op[2])
 				continue
 			}
-		case "jgz":
-			if get(op[1]) > 0 {
+		case "jb":
+			if get(op[1]) < 0 {
 				pos += get(op[2])
 				continue
 			}
@@ -64,9 +61,9 @@ func run(code [][]string) (int, int) {
 }
 
 func get(r string) int {
-	i, err := strconv.Atoi(r)
-	if err == nil {
-		return i
+	if r[0] > '9' {
+		return registers[r]
 	}
-	return registers[r]
+	i, _ := strconv.Atoi(r)
+	return i
 }
