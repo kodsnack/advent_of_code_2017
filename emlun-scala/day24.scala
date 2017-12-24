@@ -1,6 +1,6 @@
 object Day24 extends App {
 
-  val input = (for {
+  val parts: List[Part] = (for {
     line <- io.Source.stdin.getLines()
     Array(a, b) = line.trim.split("/") map { _.toInt }
   } yield Part(a, b)).toList
@@ -29,19 +29,10 @@ object Day24 extends App {
 
   def score(bridge: List[Part]): Int = bridge.map(p => p.a + p.b).sum
 
-  def solveA(parts: List[Part]) = {
-    if (parts.toSet.size != parts.size) {
-      println("WARNIG: DUPLICATE PARTS!")
-    }
+  def solveA(parts: List[Part]): Int =
+    (validContinuations(Nil, parts.toSet) map score).max
 
-    score(validContinuations(Nil, parts.toSet) maxBy score)
-  }
-
-  def solveB(parts: List[Part]) = {
-    if (parts.toSet.size != parts.size) {
-      println("WARNIG: DUPLICATE PARTS!")
-    }
-
+  def solveB(parts: List[Part]): Int = {
     val bridge = validContinuations(Nil, parts.toSet) reduce { (a, b) =>
       if (a.length > b.length)
         a
@@ -52,10 +43,13 @@ object Day24 extends App {
       else
         b
     }
-
     score(bridge)
   }
 
-  println(s"A: ${solveA(input)}")
-  println(s"B: ${solveB(input)}")
+  if (parts.toSet.size != parts.size) {
+    println("WARNIG: DUPLICATE PARTS! Result may not be accurate!")
+  }
+
+  println(s"A: ${solveA(parts)}")
+  println(s"B: ${solveB(parts)}")
 }
