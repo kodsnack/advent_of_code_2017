@@ -1,25 +1,15 @@
 program = File.read(ARGV[0]).lines
 
 class Machine
-  property regs : Hash(String, Int64)
-  property pos
-  property invoked
+  property regs, pos, invoked
   property program : Array(String)
 
   def initialize(@program)
-    @regs = registry
+    @regs = Hash(String, Int64).new do |h, k|
+      k.to_i64? || (h[k] = 0i64)
+    end
     @pos = 0
     @invoked = 0
-  end
-
-  def registry
-    Hash(String, Int64).new do |h, k|
-      if k =~ /^-?\d+/
-        k.to_i64
-      else
-        h[k] = 0i64
-      end
-    end
   end
 
   def run
@@ -68,8 +58,8 @@ jgz g 2
 jgz 1 -13
 EOS
 
+program[11..23] = replacement.lines
 prog = Machine.new(program)
-prog.program[11..23] = replacement.strip.lines
 prog.regs["a"] = 1_i64
 prog.run
 puts "part2: #{prog.regs["h"]}"
