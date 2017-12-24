@@ -33,16 +33,7 @@ object Day24 extends App {
     (validContinuations(Nil, parts.toSet) map score).max
 
   def solveB(parts: List[Part]): Int = {
-    val bridge = validContinuations(Nil, parts.toSet) reduce { (a, b) =>
-      if (a.length > b.length)
-        a
-      else if (b.length > a.length)
-        b
-      else if (score(a) > score(b))
-        a
-      else
-        b
-    }
+    val bridge = validContinuations(Nil, parts.toSet) maxBy { b => (b.length, score(b)) }
     score(bridge)
   }
 
