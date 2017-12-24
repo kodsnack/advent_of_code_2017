@@ -16,7 +16,7 @@ def solve(lines):
         
         return max([build(lines[candidate[0]][1-candidate[1]], used + 2**candidate[0], count + 1, score + sum(lines[candidate[0]])) for candidate in possible])
 
-    return build(0, 0, 0, 0)
+    return build(0, 0, 0, 0)[1]
 
 with open('input.txt', 'r') as f:
     lines = [list(map(int, line.split('/'))) for line in f.readlines()]
