@@ -37,5 +37,25 @@ object Day24 extends App {
     score(validContinuations(Nil, parts.toSet) maxBy score)
   }
 
+  def solveB(parts: List[Part]) = {
+    if (parts.toSet.size != parts.size) {
+      println("WARNIG: DUPLICATE PARTS!")
+    }
+
+    val bridge = validContinuations(Nil, parts.toSet) reduce { (a, b) =>
+      if (a.length > b.length)
+        a
+      else if (b.length > a.length)
+        b
+      else if (score(a) > score(b))
+        a
+      else
+        b
+    }
+
+    score(bridge)
+  }
+
   println(s"A: ${solveA(input)}")
+  println(s"B: ${solveB(input)}")
 }
