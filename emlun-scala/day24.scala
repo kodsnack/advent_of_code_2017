@@ -14,17 +14,15 @@ object Day24 extends App {
 
   def validContinuations(prefix: List[Part], parts: Set[Part]): Iterator[List[Part]] = {
     val startValue = (prefix.headOption map { _.b } getOrElse 0)
-    val (starts, rests) = parts partition { p => p.a == startValue || p.b == startValue }
+    val starts = parts filter { p => p.a == startValue || p.b == startValue }
 
-    if (starts.isEmpty) {
+    if (starts.isEmpty)
       List(prefix).toIterator
-    } else {
-
+    else
       for {
         start <- starts.toIterator
         result <- validContinuations(start.align(startValue) +: prefix, parts - start)
       } yield result
-    }
   }
 
   def score(bridge: List[Part]): Int = bridge.map(p => p.a + p.b).sum
