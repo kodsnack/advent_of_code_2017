@@ -35,7 +35,7 @@ object Day21 extends App {
         else 3
 
       pixels
-        .sliding(splitSize, splitSize)
+        .grouped(splitSize)
         .map(Image)
     }
 
@@ -45,7 +45,7 @@ object Day21 extends App {
         else 3
 
       pixels
-        .map { _.sliding(splitSize, splitSize).toList }
+        .map { _.grouped(splitSize).toList }
         .transpose
         .map(Image)
         .toList
@@ -82,7 +82,7 @@ object Day21 extends App {
     val rowLength = Math.sqrt(images.size).round.toInt
 
     images
-      .sliding(images.size / rowLength, rowLength)
+      .grouped(rowLength)
       .map { row: Seq[Image] =>
         row.reduceLeft[Image]({ case (a, b) => a mergeh b })
       }
