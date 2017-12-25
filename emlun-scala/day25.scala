@@ -19,7 +19,7 @@ object Day25 extends App {
       case stepCountPattern(s) => s.toInt
     }
 
-    val instructions: Vector[Instruction] = (for {
+    val instructions: Map[(String, Boolean), Instruction] = (for {
       section <- program map { _.trim } grouped 10
       instruction <- section match {
         case List(
@@ -33,25 +33,29 @@ object Day25 extends App {
           writeValuePattern(writeValue2),
           movePattern(move2),
           nextStatePattern(nextState2),
-        ) =>
-          List(
-            Instruction(
-              currentState,
-              currentValue1.toInt == 1,
-              writeValue1.toInt == 1,
-              if (move1 == "right") 1 else -1,
-              nextState1
-            ),
-            Instruction(
-              currentState,
-              currentValue2.toInt == 1,
-              writeValue2.toInt == 1,
-              if (move2 == "right") 1 else -1,
-              nextState2
-            ),
+        ) => {
+          val ia = Instruction(
+            currentState,
+            currentValue1.toInt == 1,
+            writeValue1.toInt == 1,
+            if (move1 == "right") 1 else -1,
+            nextState1
           )
+          val ib = Instruction(
+            currentState,
+            currentValue2.toInt == 1,
+            writeValue2.toInt == 1,
+            if (move2 == "right") 1 else -1,
+            nextState2
+          )
+
+          List(
+            (currentState, ia.currentValue) -> ia,
+            (currentState, ib.currentValue) -> ib,
+          )
+        }
       }
-    } yield instruction).toVector
+    } yield instruction).toMap
 
     MachineState(
       startState,
@@ -71,41 +75,34 @@ object Day25 extends App {
   case class MachineState(
     state: String,
     finishCount: Int,
-    program: Vector[Instruction],
+    program: Map[(String, Boolean), Instruction],
     memory: Map[Int, Boolean] = Map.empty,
-    eip: Int = 0,
+    memoryAddress: Int = 0,
     stepCount: Int = 0,
   ) {
-    lazy val currentValue: Boolean = memory.getOrElse(eip, false)
-
-    def nextInstruction: Instruction =
-      program
-        .find { instruction =>
-          instruction.currentState == state && instruction.currentValue == currentValue
-        }
-        .get
-
     def isFinished: Boolean = stepCount >= finishCount
 
-    def next: MachineState = {
-      val instruction = nextInstruction
+    val currentValue: Boolean = memory.getOrElse(memoryAddress, false)
+    val nextInstruction: Instruction = program((state, currentValue))
+
+    def next: MachineState =
       copy(
         state = nextInstruction.nextState,
-        memory = memory.updated(eip, nextInstruction.writeValue),
-        eip = eip + instruction.move,
+        memory = memory.updated(memoryAddress, nextInstruction.writeValue),
+        memoryAddress = memoryAddress + nextInstruction.move,
         stepCount = stepCount + 1,
       )
-    }
   }
-
-  val blueprint: List[String] = io.Source.stdin.getLines().toList
 
   def solveA(blueprint: List[String]) = {
     val state = parseMachine(blueprint)
-    // println(state)
-    // println(state.program mkString "\n")
-    Iterator.iterate(state)(_.next).dropWhile(!_.isFinished).next().memory count { case (k, v) => v }
+    Iterator.iterate(state)(_.next)
+      .dropWhile { !_.isFinished }
+      .next()
+      .memory
+      .count { case (k, v) => v }
   }
 
+  val blueprint: List[String] = io.Source.stdin.getLines().toList
   println(s"A: ${solveA(blueprint)}")
 }
