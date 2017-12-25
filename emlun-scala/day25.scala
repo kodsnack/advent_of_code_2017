@@ -21,41 +21,26 @@ object Day25 extends App {
 
     val instructions: Map[(String, Boolean), Instruction] = (for {
       section <- program map { _.trim } grouped 10
-      instruction <- section match {
-        case List(
-          "",
-          statePattern(currentState),
-          currentValuePattern(currentValue1),
-          writeValuePattern(writeValue1),
-          movePattern(move1),
-          nextStatePattern(nextState1),
-          currentValuePattern(currentValue2),
-          writeValuePattern(writeValue2),
-          movePattern(move2),
-          nextStatePattern(nextState2),
-        ) => {
-          val ia = Instruction(
-            currentState,
-            currentValue1.toInt == 1,
-            writeValue1.toInt == 1,
-            if (move1 == "right") 1 else -1,
-            nextState1
-          )
-          val ib = Instruction(
-            currentState,
-            currentValue2.toInt == 1,
-            writeValue2.toInt == 1,
-            if (move2 == "right") 1 else -1,
-            nextState2
-          )
-
-          List(
-            (currentState, ia.currentValue) -> ia,
-            (currentState, ib.currentValue) -> ib,
-          )
-        }
+      (currentState, rest) = section match {
+        case "" :: statePattern(currentState) :: rest => (currentState, rest)
       }
-    } yield instruction).toMap
+      instructionText <- rest grouped 4
+      instruction = instructionText match {
+        case List(
+          currentValuePattern(currentValue),
+          writeValuePattern(writeValue),
+          movePattern(move),
+          nextStatePattern(nextState),
+        ) =>
+          Instruction(
+            currentState,
+            currentValue.toInt == 1,
+            writeValue.toInt == 1,
+            if (move == "right") 1 else -1,
+            nextState
+          )
+      }
+    } yield (currentState, instruction.currentValue) -> instruction).toMap
 
     MachineState(
       startState,
