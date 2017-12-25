@@ -1,0 +1,17 @@
+project Ada_Gnat_Project is
+   
+   for Languages use ("Ada");
+   for Main use ("main.adb");
+   for Create_Missing_Dirs use "True";
+
+   Day_Number := external ("Day", "00");
+
+   for Source_Dirs use (".", "day" & Day_Number);
+   for Object_Dir  use  "day" & Day_Number & "/obj";
+
+   package Compiler is
+      for Default_Switches ("Ada") use Compiler'Default_Switches ("Ada") &
+        ("-g", "-O3", "-gnatwae", "-gnaty-s");
+   end Compiler;
+
+end Ada_Gnat_Project;
