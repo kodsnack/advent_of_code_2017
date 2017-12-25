@@ -43,6 +43,7 @@ library
                      , Twentytwo
                      , Twentythree
                      , Twentyfour
+                     , Twentyfive
                      , KnotHash
                      , Grid
                      , Util
