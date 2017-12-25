@@ -27,3 +27,4 @@ add_executable(p21 p21.cpp)
 add_executable(p22 p22.cpp)
 
 add_executable(p24 p24.cpp)
+add_executable(p25 p25.cpp)
