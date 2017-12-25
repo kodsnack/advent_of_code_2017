@@ -11,7 +11,7 @@ abstract class AbstractAdventOfCode
 
     public function __construct($input = null)
     {
-        if (!$input) {
+        if (is_null($input)) {
             $input = file_get_contents(__DIR__.'/../Resources/Day'.$this->class.'Input');
         }
         $this->input = $input;

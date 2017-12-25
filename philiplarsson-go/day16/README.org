@@ -1,0 +1,13 @@
+* Run Instructions
+
+=day16.go= takes one argument; a filename to a file that contains the puzzle input.
+
+Example:
+
+#+BEGIN_SRC bash
+go run day16.go puzzle.in
+#+END_SRC
+
+
+** Run Tests
+Run tests with =go test=.

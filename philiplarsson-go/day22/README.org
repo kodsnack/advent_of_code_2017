@@ -1,0 +1,13 @@
+* Run Instructions
+
+=day22.go= takes one argument ; a filename to a file that contains the puzzle
+input.
+
+Example:
+#+BEGIN_SRC bash
+go run day22.go puzzle.in
+#+END_SRC
+
+I'm using some packages from day 19, but now put into the correct GOPATH. 
+These are copied into the =philiplarsson= folder.
+

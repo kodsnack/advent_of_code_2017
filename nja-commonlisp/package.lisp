@@ -20,6 +20,11 @@
 (defpackage #:aoc2017.day14 (:use #:cl #:aoc2017.day10 #:aoc2017.day12))
 (defpackage #:aoc2017.day15 (:use #:cl))
 (defpackage #:aoc2017.day15.alt (:use #:cl))
+(defpackage #:aoc2017.day16 (:use #:cl))
+(defpackage #:aoc2017.day17 (:use #:cl))
+(defpackage #:aoc2017.day18 (:use #:cl #:queues))
+(defpackage #:aoc2017.day19 (:use #:cl))
+(defpackage #:aoc2017.day20 (:use #:cl))
 
 (fiasco:define-test-package #:aoc2017.tests
   (:use #:aoc))

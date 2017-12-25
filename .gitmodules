@@ -76,3 +76,12 @@
 [submodule "baboons-php7"]
 	path = baboons-php7
 	url = https://github.com/baboons/advent-of-code-2017
+[submodule "LinAGKar-python"]
+	path = LinAGKar-python
+	url = git@github.com:LinAGKar/advent-of-code-2017-python.git
+[submodule "plux-erlang"]
+	path = plux-erlang
+	url = git@github.com:plux/advent2017-erl.git
+[submodule "hillerstorm-Elm"]
+	path = hillerstorm-Elm
+	url = https://github.com/hillerstorm/advent-of-code-2017.git

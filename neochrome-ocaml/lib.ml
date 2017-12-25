@@ -74,9 +74,24 @@ module Seq = struct
     | Element(e, seq) -> f e; iter f (seq ())
   ;;
 
+  let fold f init seq =
+    let acc = ref init in
+    iter (fun e -> acc := f !acc e) seq;
+    !acc
+  ;;
+
   let rec map f = function
     | Empty -> Empty
     | Element(e, seq) -> Element(f e, fun () -> map f (seq ()))
+  ;;
+
+  let rec map2 f seq1 seq2 =
+    match (seq1,seq2) with
+    | Empty,Empty -> Empty
+    | Empty,_ -> raise (Invalid_argument "1st sequence ran out of elements")
+    | _,Empty -> raise (Invalid_argument "2nd sequence ran out of elements")
+    | Element (e1,seq1), Element (e2,seq2) ->
+      Element (f e1 e2, fun () -> map2 f (seq1 ()) (seq2 ()))
   ;;
 
   let rec filter p = function

@@ -1,8 +1,6 @@
 // Advent of Code 2017 - Day 13
 // Peter Westerström (digimatic)
 
-#include "config.h"
-
 #include <cassert>
 #include <common/common.h>
 #include <iostream>

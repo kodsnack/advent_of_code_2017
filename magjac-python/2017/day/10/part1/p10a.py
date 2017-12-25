@@ -4,6 +4,15 @@ import sys
 
 from optparse import OptionParser
 
+def reverse_range_circular(list1, start, stop):
+    N = len(list1)
+    i = start
+    j = stop - 1
+    while i <= j:
+        list1[i % N], list1[j % N] = list1[j % N], list1[i % N]
+        i += 1
+        j -= 1
+
 def main():
 
     parser = OptionParser(usage='usage: %prog [options]')
@@ -22,12 +31,7 @@ def main():
     skip = 0
     pos = 0
     for length in lengths:
-        i = pos
-        j = pos + length - 1
-        while i <= j:
-            list1[i % N], list1[j % N] = list1[j % N], list1[i % N]
-            i += 1
-            j -= 1
+        reverse_range_circular(list1, pos, pos + length)
         pos = (pos + length + skip) % N
         skip = (skip + 1) % N
 

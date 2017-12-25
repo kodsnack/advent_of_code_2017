@@ -1,0 +1,12 @@
+* Run Instructions
+
+=day17.go= takes one argument; the puzzle input (number of steps to take each iteration)
+
+Example:
+
+#+BEGIN_SRC bash
+go run day17.go 3
+#+END_SRC
+
+
+Note that part 2 is very slow for large steps (approx 10 minutes for my puzzle input). 
