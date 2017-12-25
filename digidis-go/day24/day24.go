@@ -22,31 +22,30 @@ func main() {
 	for i, p := range ports {
 		if p[0] == 0 {
 			fmt.Printf("starting from %v\n", p)
-			solve(i, p[1])
+			solve(i, p[1], 1, p[1]+p[0])
 		}
 		if p[1] == 0 {
 			fmt.Printf("starting from %v\n", p)
-			solve(i, p[0])
+			solve(i, p[0], 1, p[1]+p[0])
 		}
 	}
 
-	fmt.Printf("Maxium strength %v\n", maxS)
-	fmt.Printf("Maxium strength and length %v\n", maxSL)
+	fmt.Printf("Maximum strength %v\n", maxS)
+	fmt.Printf("Maximum strength and length %v\n", maxSL)
 }
 
 var maxS, maxL, maxSL int
 
-func solve(start int, next int) {
+func solve(start, next, l, s int) {
 	used[start] = true
 	for i, p := range ports {
 		if !used[i] && p[0] == next {
-			solve(i, p[1])
+			solve(i, p[1], l+1, s+p[0]+p[1])
 		}
 		if !used[i] && p[1] == next {
-			solve(i, p[0])
+			solve(i, p[0], l+1, s+p[0]+p[1])
 		}
 	}
-	s, l := calc()
 	maxS = max(maxS, s)
 	maxL = max(maxL, l)
 	if l == maxL && s > maxSL {
@@ -60,14 +59,4 @@ func max(a, b int) int {
 		return a
 	}
 	return b
-}
-
-func calc() (s, l int) {
-	for i := range used {
-		if used[i] {
-			l++
-			s = s + ports[i][0] + ports[i][1]
-		}
-	}
-	return
 }
