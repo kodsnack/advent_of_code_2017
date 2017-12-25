@@ -45,7 +45,7 @@ dP = valueP <++ registerP
 regToInt state (Value x)    = x
 regToInt state (Register x) = M.findWithDefault 0 x state
 
-updateRegister state r f = M.alter (Just . maybe 0 f) r state
+updateRegister state r f = M.alter (Just . maybe (f 0) f) r state
 
 setRegister state r a = M.insert r (regToInt state a) state
 

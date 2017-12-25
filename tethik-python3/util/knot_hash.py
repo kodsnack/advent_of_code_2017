@@ -29,6 +29,18 @@ class ListNode(object):
             curr = curr.next
         return curr
 
+    def append(self, val):
+        _next = ListNode(val, self.pos + 1)
+        nn = self.next
+        self.next = _next
+        nn.prev = _next
+        _next.next = nn
+        # update positions
+        # curr = nn
+        # while curr.pos > 0:
+        #     curr.pos += 1
+        #     curr = curr.next
+
     def __str__(self):
         return f'{self.pos}:{self.val}'
 

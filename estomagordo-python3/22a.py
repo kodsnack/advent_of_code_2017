@@ -28,7 +28,7 @@ def solve(infected):
 
     return infectcount
 
-with open('input.txt', 'r') as f:
+with open('input_22.txt', 'r') as f:
     infected = defaultdict(bool)
     lines = f.readlines()
     height = len(lines)
