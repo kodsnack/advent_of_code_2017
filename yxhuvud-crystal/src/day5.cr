@@ -1,6 +1,5 @@
 input = File.read ARGV[0] # "0 3 0 1 -3"
 
-
 def go(input)
   pos = 0
   parsed = input.split.map &.to_i
