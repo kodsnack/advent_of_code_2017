@@ -7,7 +7,7 @@ All IO (reading input from file and printing solution to standard output) is don
 ## Compiling and running
 
 __Compile and run solutions:__  
-1. `ghc SolveAll.hs -o SolveAll`  
+1. `ghc -O SolveAll.hs -o SolveAll`  
 2. `./SolveAll` 
 
 _Run solution(s) for specific day(s) by providing one or more command line argument(s). For example, `./SolveAll 5 8 3` will run the solutions for day 5, day 8, and day 3. If no arguments are provided, all solutions will run._
