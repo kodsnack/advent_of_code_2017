@@ -68,11 +68,10 @@ step2 (infected, face, p@(x,y), g) = (infected', face', p', g')
 
 updateState :: Pos -> Grid2 -> (NodeState, Grid2)
 updateState p g = case Map.lookup p g of
-    Just Clean    -> (Clean   , Map.insert p Weakened g)
-    Nothing       -> (Clean   , Map.insert p Weakened g) -- nodes start as clean if not initialized
+    Nothing       -> (Clean   , Map.insert p Weakened g)
     Just Weakened -> (Weakened, Map.insert p Infected g)
     Just Infected -> (Infected, Map.insert p Flagged  g)
-    Just Flagged  -> (Flagged , Map.insert p Clean    g)
+    Just Flagged  -> (Flagged , Map.delete p          g)
     
 
 solve2 :: String -> Int
