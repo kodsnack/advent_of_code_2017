@@ -3,47 +3,61 @@ with Ada.Strings.Unbounded.Text_IO;
 
 package body AOC is
 
-   function Get_File_Rows (File_Name : in String)
-                           return String_Array
+   function To_Integer_Array (IV : in V_Integer.Vector)
+                              return Integer_Array
+   is
+      IA : Integer_Array (IV.First_Index .. IV.Last_Index);
+      I : Integer := IV.First_Index;
+   begin
+      for Value of IV loop
+      	IA (I) := Value;
+      	I := Integer'Succ (I);
+      end loop;
+
+      return IA;
+   end To_Integer_Array;
+
+   procedure Split_String_At_Char (S       : in     String;
+                                   Char    : in     Character;
+                                   Strings : in out V_String.Vector)
+   is
+      Start : Integer := S'First;
+   begin
+      Strings.Clear;
+
+      for I in S'Range loop
+         if S (I) = Char then
+            Strings.Append 
+               (To_Unbounded_String (S (Start .. I - 1)));
+            Start := I + 1;
+         end if;
+      end loop;
+
+      Strings.Append (To_Unbounded_String (S (Start .. S'Last)));
+   end Split_String_At_Char;
+
+   procedure Get_File_Rows (V         : in out V_String.Vector;
+                            File_Name : in     String)
    is
       use Ada.Text_IO;
 
       Input : File_Type;
-      N     : Natural := 0;
    begin
       Open (File => Input,
             Mode => In_File,
             Name => File_Name);
 
       while not End_Of_File (Input) loop
-         N := Natural'Succ (N);
-         Skip_Line (Input);
+         V.Append (Ada.Strings.Unbounded.Text_IO.Get_Line (Input));
       end loop;
 
-      Reset (Input);
-
-      declare
-         Rows : String_Array (1 .. N);
-      begin
-         N := Rows'First;
-
-         while not End_Of_File (Input) loop
-            Rows (N) := Ada.Strings.Unbounded.Text_IO.Get_Line (Input);
-            N := Natural'Succ (N);
-         end loop;
-
-         Close (Input);
-
-         return Rows;
-      end;
+      Close (Input);
 
    exception
       when End_Error =>
          if Is_Open (Input) then
             Close (Input);
          end if;
-
-      return Empty;
    end Get_File_Rows;
 
    function Get_File_String (File_Name : in String)

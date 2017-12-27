@@ -1,14 +1,27 @@
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Ada.Containers.Vectors;
 
 package AOC is
 
-   type String_Array is array (Positive range <>) of Unbounded_String;
+   package V_String is new Ada.Containers.Vectors
+      (Natural,
+       Unbounded_String);
 
-   Empty : constant String_Array (1 .. 0) := 
-      (others => Null_Unbounded_String);
+   package V_Integer is new Ada.Containers.Vectors
+      (Natural,
+       Integer);
 
-   function Get_File_Rows (File_Name : in String)
-                           return String_Array;
+   type Integer_Array is array (Integer range <>) of Integer;
+
+   function To_Integer_Array (IV : in V_Integer.Vector)
+                              return Integer_Array;
+
+   procedure Split_String_At_Char (S       : in     String;
+   	                               Char    : in     Character;
+   	                               Strings : in out V_String.Vector);
+
+   procedure Get_File_Rows (V         : in out V_String.Vector;
+   	                        File_Name : in     String);
 
    function Get_File_String (File_Name : in String)
                              return String;
