@@ -8,11 +8,13 @@ All IO (reading input from file and printing solution to standard output) is don
 
 __Compile and run solutions:__  
 1. `ghc -O SolveAll.hs -o SolveAll`  
-2. `./SolveAll [-t] [Int]` 
+2. `./SolveAll [-t] [-c] [Int]` 
 
 _Run solution(s) for specific day(s) by providing one or more integer command line argument(s). For example, `./SolveAll 5 8 3` will run the solutions for day 5, day 8, and day 3. If no integer arguments are provided, all solutions will run._
 
 _Add flag `-t` in order to measure running time of each solution that runs._
+
+_Add flag `-c` in order to additionally run a checking routine comparing the results to a set of expected results (assuming existence of a file named `correctOutput.txt` containing the expected results)._
 
 __Run solutions without compiling:__  
 `runGhc SolveAll.hs`
