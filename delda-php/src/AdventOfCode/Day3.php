@@ -92,7 +92,7 @@ class Day3 extends AbstractAdventOfCode
     private function distanceFromCenter(int $squareNumber): int
     {
         $numberOfSquares = $lenght = 1;
-        while($squareNumber > $numberOfSquares) {
+        while ($squareNumber > $numberOfSquares) {
             $numberOfSquares = $this->numberOfSquares($lenght++);
         }
 
@@ -117,10 +117,14 @@ class Day3 extends AbstractAdventOfCode
     private function neighborhoodCount(array $spiral, int $x, int $y): int
     {
         return array_reduce(
-            $this->neighborhoodOrdered($x, $y), function ($carry, $coordinates) use ($spiral) {
-                $carry += isset($spiral[$coordinates[0]][$coordinates[1]]) ? $spiral[$coordinates[0]][$coordinates[1]] : 0;
+            $this->neighborhoodOrdered($x, $y),
+            function ($carry, $coordinates) use ($spiral) {
+                $carry += isset($spiral[$coordinates[0]][$coordinates[1]])
+                    ? $spiral[$coordinates[0]][$coordinates[1]]
+                    : 0;
                 return $carry;
             },
-            0);
+            0
+        );
     }
 }

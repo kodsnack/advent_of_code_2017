@@ -1,0 +1,13 @@
+language: php
+
+php:
+  - '7.0'
+  - '7.1'
+  - nightly
+
+install:
+  - composer install
+
+script:
+  - vendor/bin/phpunit
+  - vendor/bin/phpcs --standard=ruleset.xml

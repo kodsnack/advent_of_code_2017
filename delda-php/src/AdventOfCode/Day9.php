@@ -46,12 +46,10 @@ class Day9 extends AbstractAdventOfCode
         $stream = $this->input;
         $garbage = false;
         $characters = 0;
-        echo PHP_EOL;
         for ($i = 0; $i < strlen($stream); $i++) {
             switch ($stream[$i]) {
                 case '<':
                     if ($garbage) {
-                        echo $stream[$i];
                         $characters++;
                     }
                     $garbage = true;
@@ -63,7 +61,6 @@ class Day9 extends AbstractAdventOfCode
                     $i++;
                     break;
                 default:
-                    echo $stream[$i];
                     if ($garbage) {
                         $characters++;
                     }

@@ -19,7 +19,7 @@ class Day13 extends AbstractAdventOfCode
     {
         $time = 0;
         $firewall = $this->parser();
-        while($this->scannerMoves($firewall, $time, true)) {
+        while ($this->scannerMoves($firewall, $time, true)) {
             $time++;
         }
 
@@ -44,7 +44,7 @@ class Day13 extends AbstractAdventOfCode
         $severity = 0;
         end($firewall);
         $firewallLenght = key($firewall);
-        for ($level = 0; $level <= $firewallLenght; $level++){
+        for ($level = 0; $level <= $firewallLenght; $level++) {
             if (!isset($firewall[$level])) {
                 $time++;
                 continue;
