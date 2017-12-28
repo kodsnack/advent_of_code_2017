@@ -25,7 +25,7 @@ class Day6 extends AbstractAdventOfCode
         $sizeOfMemoryBanks = sizeof($memoryBanks);
         $savedStates = [];
 
-        while(!in_array($memoryBanks, $savedStates)) {
+        while (!in_array($memoryBanks, $savedStates)) {
             $savedStates[] = $memoryBanks;
             $bloks = max($memoryBanks);
             $bankIdx = current(array_keys($memoryBanks, $bloks));

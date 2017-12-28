@@ -74,7 +74,8 @@ class Day4Test extends TestCase
         $this->assertEquals(0, $aoc->secondPart());
     }
 
-    public function testSecondPartOnePhraseOfInputWithoutRearrangedWord(){
+    public function testSecondPartOnePhraseOfInputWithoutRearrangedWord()
+    {
         $aoc = new Day4('xajf eyasx rupsyqx wubjwx bsrqi ripghci sbzxp sbz dhooax');
         $this->assertEquals(1, $aoc->secondPart());
     }

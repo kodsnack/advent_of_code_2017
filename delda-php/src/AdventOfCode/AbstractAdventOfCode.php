@@ -6,8 +6,8 @@ abstract class AbstractAdventOfCode
 {
     protected $input;
 
-    abstract function firstPart(): string;
-    abstract function secondPart(): string;
+    abstract public function firstPart(): string;
+    abstract public function secondPart(): string;
 
     public function __construct($input = null)
     {

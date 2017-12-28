@@ -63,7 +63,8 @@ class Day10 extends AbstractAdventOfCode
         $skipSize = $currentIdx = 0;
 
         for ($i = 0; $i < 64; $i++) {
-            list($circularList, $skipSize, $currentIdx) = $this->hashFunction($circularList, $sparseHash, $skipSize, $currentIdx);
+            list($circularList, $skipSize, $currentIdx) =
+            $this->hashFunction($circularList, $sparseHash, $skipSize, $currentIdx);
         }
 
         for ($i = 0; $i < 255; $i += 16) {
@@ -105,7 +106,7 @@ class Day10 extends AbstractAdventOfCode
         return $result;
     }
 
-    static public function hexadecimalRappresentation(array $denseHash): string
+    public static function hexadecimalRappresentation(array $denseHash): string
     {
         $knotHash = '';
         foreach ($denseHash as $number) {
@@ -115,7 +116,7 @@ class Day10 extends AbstractAdventOfCode
         return $knotHash;
     }
 
-    static public function zeroPadding(string $number, int $limit = 2): string
+    public static function zeroPadding(string $number, int $limit = 2): string
     {
         return (strlen($number) >= $limit) ? $number : self::zeroPadding("0" . $number);
     }

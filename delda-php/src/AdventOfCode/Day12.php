@@ -33,7 +33,7 @@ class Day12 extends AbstractAdventOfCode
     private function parser(): array
     {
         $graph = [];
-        foreach(explode(PHP_EOL, $this->input) as $line) {
+        foreach (explode(PHP_EOL, $this->input) as $line) {
             list($node, $nodes) = explode(' <-> ', $line);
             $graph[$node] = explode(', ', $nodes);
         }

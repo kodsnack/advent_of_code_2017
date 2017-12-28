@@ -53,7 +53,7 @@ class Day7 extends AbstractAdventOfCode
         $prevWeight = 0;
         $partialSum = [];
         $partialSumChildren = [];
-        while(true) {
+        while (true) {
             foreach ($this->tower[$currentProgram]->children as $children) {
                 $sum = $this->tower[$children]->weight;
                 if (isset($this->tower[$children]->children)) {
