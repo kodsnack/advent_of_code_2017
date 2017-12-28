@@ -8,7 +8,7 @@ use src\AdventOfCode\Day13;
 class Day13Test extends TestCase
 {
     private $test =
-'0: 3
+    '0: 3
 1: 2
 4: 4
 6: 4';
