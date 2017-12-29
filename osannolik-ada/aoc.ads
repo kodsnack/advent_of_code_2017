@@ -3,6 +3,8 @@ with Ada.Containers.Vectors;
 
 package AOC is
 
+   subtype UString is Unbounded_String;
+
    type Point is record
       X, Y : Integer := 0;
    end record;
@@ -22,6 +24,9 @@ package AOC is
    package V_Integer is new Ada.Containers.Vectors
       (Natural,
        Integer);
+
+   subtype Integer_Vec is V_Integer.Vector;
+   subtype String_Vec is V_String.Vector;
 
    type Integer_Array is array (Integer range <>) of Integer;
    type String_Array is array (Integer range <>) of Unbounded_String;
