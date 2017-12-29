@@ -23,6 +23,29 @@ package body AOC is
       return abs (P1.X - P2.X) + abs (P1.Y - P2.Y);
    end Manhattan_Distance;
 
+   function Max (IA    : in  Integer_Array;
+                 Index : out Integer)
+                 return Integer
+   is
+      Value : Integer;
+   begin
+      if IA'Length = 0 then
+         raise Constraint_Error;
+      end if;
+
+      Index := IA'First;
+      Value := IA (Index);
+      
+      for I in IA'First + 1 .. IA'Last loop
+         if IA (I) > Value then
+            Index := I;
+            Value := IA (I);
+         end if;
+      end loop;
+
+      return Value;
+   end Max;
+   
    function To_Integer_Array (IV : in V_Integer.Vector)
                               return Integer_Array
    is
@@ -35,6 +58,13 @@ package body AOC is
       end loop;
 
       return IA;
+   end To_Integer_Array;
+
+   function To_Integer_Array (SV : in V_String.Vector)
+                              return Integer_Array
+   is
+   begin
+      return To_Integer_Array (To_Integer_Vector (SV));
    end To_Integer_Array;
 
    function To_String_Array (SV : in V_String.Vector)
