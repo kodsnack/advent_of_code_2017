@@ -13,7 +13,7 @@ class Day5 extends AbstractAdventOfCode
         $steps = 0;
         $jumps = explode(PHP_EOL, $this->input);
         $offset = 0;
-        while($offset < sizeof($jumps) && ++$steps) {
+        while ($offset < sizeof($jumps) && ++$steps) {
             $offset += $jumps[$offset]++;
         }
 
@@ -25,7 +25,7 @@ class Day5 extends AbstractAdventOfCode
         $steps = 0;
         $jumps = explode(PHP_EOL, $this->input);
         $offset = 0;
-        while($offset < sizeof($jumps) && ++$steps) {
+        while ($offset < sizeof($jumps) && ++$steps) {
             $nextOffset = $offset + $jumps[$offset];
             $jumps[$offset] += ($jumps[$offset] > 2) ? -1 : 1;
             $offset = $nextOffset;

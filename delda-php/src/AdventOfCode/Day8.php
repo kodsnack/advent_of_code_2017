@@ -32,7 +32,8 @@ class Day8 extends AbstractAdventOfCode
             $parsedLine = $this->parser($line);
 
             ${$parsedLine->leftCondition} = isset(${$parsedLine->leftCondition}) ? ${$parsedLine->leftCondition} : 0;
-            $conditionEvaluation = eval('return $'.$parsedLine->leftCondition.' '.$parsedLine->condition.' '.$parsedLine->rightCondition.';');
+            $conditionEvaluation = eval('return $'.$parsedLine->leftCondition.' '.$parsedLine->condition
+            .' '.$parsedLine->rightCondition.';');
 
             if ($conditionEvaluation) {
                 ${$parsedLine->register} = isset(${$parsedLine->register}) ? ${$parsedLine->register} : 0;

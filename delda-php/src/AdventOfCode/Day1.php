@@ -13,7 +13,7 @@ class Day1 extends AbstractAdventOfCode
 
     public function secondPart(): string
     {
-       return $this->parser(strlen($this->input)/2);
+        return $this->parser(strlen($this->input)/2);
     }
 
     private function parser(int $step): string

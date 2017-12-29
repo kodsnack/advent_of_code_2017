@@ -8,7 +8,7 @@ use src\AdventOfCode\Day8;
 class Day8Test extends TestCase
 {
     private $testExample =
-"b inc 5 if a > 1
+        "b inc 5 if a > 1
 a inc 1 if b < 5
 c dec -10 if a >= 1
 c inc -20 if c == 10";
