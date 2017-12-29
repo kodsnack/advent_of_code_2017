@@ -3,6 +3,26 @@ with Ada.Strings.Unbounded.Text_IO;
 
 package body AOC is
 
+   function "+" (P1, P2 : in Point) return Point
+   is
+   begin
+      return Point'(X => P1.X + P2.X, Y => P1.Y + P2.Y);
+   end "+";
+
+   function Image (P : in Point) return String
+   is
+   begin
+      return P.X'Img & "," & P.Y'Img;
+   end Image;
+
+   function Manhattan_Distance (P1 : in Point;
+                                P2 : in Point := (0, 0))
+                                return Natural
+   is
+   begin
+      return abs (P1.X - P2.X) + abs (P1.Y - P2.Y);
+   end Manhattan_Distance;
+
    function To_Integer_Array (IV : in V_Integer.Vector)
                               return Integer_Array
    is

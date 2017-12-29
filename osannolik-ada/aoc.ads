@@ -3,6 +3,18 @@ with Ada.Containers.Vectors;
 
 package AOC is
 
+   type Point is record
+      X, Y : Integer := 0;
+   end record;
+
+   function "+" (P1, P2 : in Point) return Point;
+
+   function Image (P : in Point) return String;
+
+   function Manhattan_Distance (P1 : in Point;
+                                P2 : in Point := (0, 0))
+                                return Natural;
+
    package V_String is new Ada.Containers.Vectors
       (Natural,
        Unbounded_String);
@@ -12,6 +24,8 @@ package AOC is
        Integer);
 
    type Integer_Array is array (Integer range <>) of Integer;
+
+   type Natural_2D is array (Integer range <>, Integer range <>) of Natural;
 
    function To_Integer_Array (IV : in V_Integer.Vector)
                               return Integer_Array;
