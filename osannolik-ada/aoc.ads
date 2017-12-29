@@ -28,6 +28,9 @@ package AOC is
 
    type Natural_2D is array (Integer range <>, Integer range <>) of Natural;
 
+   function To_Integer_Vector (SV : in V_String.Vector)
+                               return V_Integer.Vector;
+
    function To_Integer_Array (IV : in V_Integer.Vector)
                               return Integer_Array;
 
@@ -38,6 +41,9 @@ package AOC is
    	                               Char    : in     Character;
    	                               Strings : in out V_String.Vector);
 
+   procedure Get_File_Rows (V         : in out V_Integer.Vector;
+                            File_Name : in     String);
+   
    procedure Get_File_Rows (V         : in out V_String.Vector;
    	                        File_Name : in     String);
 

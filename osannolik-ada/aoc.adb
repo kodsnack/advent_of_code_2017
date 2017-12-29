@@ -30,8 +30,8 @@ package body AOC is
       I : Integer := IV.First_Index;
    begin
       for Value of IV loop
-      	IA (I) := Value;
-      	I := Integer'Succ (I);
+         IA (I) := Value;
+         I := Integer'Succ (I);
       end loop;
 
       return IA;
@@ -44,12 +44,24 @@ package body AOC is
       I : Integer := SV.First_Index;
    begin
       for Value of SV loop
-      	SA (I) := Value;
-      	I := Integer'Succ (I);
+         SA (I) := Value;
+         I := Integer'Succ (I);
       end loop;
 
       return SA;
    end To_String_Array;
+
+   function To_Integer_Vector (SV : in V_String.Vector)
+                               return V_Integer.Vector
+   is
+      IV : V_Integer.Vector;
+   begin
+      for Value of SV loop
+         IV.Append (Integer'Value (To_String (Value)));
+      end loop;
+
+      return IV;
+   end To_Integer_Vector;
 
    procedure Split_String_At_Char (S       : in     String;
                                    Char    : in     Character;
@@ -69,6 +81,34 @@ package body AOC is
 
       Strings.Append (To_Unbounded_String (S (Start .. S'Last)));
    end Split_String_At_Char;
+
+   procedure Get_File_Rows (V         : in out V_Integer.Vector;
+                            File_Name : in     String)
+   is
+      use Ada.Text_IO;
+
+      Input : File_Type;
+   begin
+      Open (File => Input,
+            Mode => In_File,
+            Name => File_Name);
+
+      while not End_Of_File (Input) loop
+         declare
+            Row_Data : constant String := Get_Line (Input);
+         begin
+            V.Append (Integer'Value (Row_Data));
+         end;
+      end loop;
+
+      Close (Input);
+
+   exception
+      when End_Error =>
+         if Is_Open (Input) then
+            Close (Input);
+         end if;
+   end Get_File_Rows;
 
    procedure Get_File_Rows (V         : in out V_String.Vector;
                             File_Name : in     String)
