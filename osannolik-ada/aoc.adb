@@ -37,6 +37,20 @@ package body AOC is
       return IA;
    end To_Integer_Array;
 
+   function To_String_Array (SV : in V_String.Vector)
+                             return String_Array
+   is
+      SA : String_Array (SV.First_Index .. SV.Last_Index);
+      I : Integer := SV.First_Index;
+   begin
+      for Value of SV loop
+      	SA (I) := Value;
+      	I := Integer'Succ (I);
+      end loop;
+
+      return SA;
+   end To_String_Array;
+
    procedure Split_String_At_Char (S       : in     String;
                                    Char    : in     Character;
                                    Strings : in out V_String.Vector)

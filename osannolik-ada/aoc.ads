@@ -24,11 +24,15 @@ package AOC is
        Integer);
 
    type Integer_Array is array (Integer range <>) of Integer;
+   type String_Array is array (Integer range <>) of Unbounded_String;
 
    type Natural_2D is array (Integer range <>, Integer range <>) of Natural;
 
    function To_Integer_Array (IV : in V_Integer.Vector)
                               return Integer_Array;
+
+   function To_String_Array (SV : in V_String.Vector)
+                             return String_Array;
 
    procedure Split_String_At_Char (S       : in     String;
    	                               Char    : in     Character;
