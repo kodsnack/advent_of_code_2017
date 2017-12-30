@@ -37,6 +37,10 @@ package AOC is
                  Index : out Integer)
                  return Integer;
 
+   function Min (IA    : in  Integer_Array;
+                 Index : out Integer)
+                 return Integer;
+
    function To_Integer_Vector (SV : in V_String.Vector)
                                return V_Integer.Vector;
 
