@@ -128,10 +128,12 @@ package body AOC.Solver is
       end case;
    end Modify;
 
-   procedure Execute (Registers    : in out Integer_Array;
-                      Instructions : in     Instruction_Vec)
+   procedure Execute (Registers     : in out Integer_Array;
+                      Instructions  : in     Instruction_Vec;
+                      Maximum_Value :    out Integer)
    is
    begin
+      Maximum_Value := Max (Registers);
       for I of Instructions loop
          if Compare (Cmp => I.Comparison,
                      Lhs => Registers (I.Compared_Register),
@@ -140,6 +142,8 @@ package body AOC.Solver is
             Modify (Register     => Registers (I.Modified_Register),
                     Operation    => I.Operation,
                     Modify_Value => I.Modify_Value);
+            Maximum_Value := Integer'Max 
+               (Maximum_Value, Max (Registers));
          end if;
       end loop;
    end Execute;
@@ -147,8 +151,8 @@ package body AOC.Solver is
    procedure Run is
       use Ada.Text_IO;
 
-      Input : String_Vec;
-      R_Names : String_Vec;
+      Input        : String_Vec;
+      R_Names      : String_Vec;
       Instructions : Instruction_Vec;
    begin
       AOC.Get_File_Rows (Input, "day08/input.txt");
@@ -161,14 +165,15 @@ package body AOC.Solver is
       declare
          Registers : Integer_Array 
             (R_Names.First_Index .. R_Names.Last_Index) := (others => 0);
-         Max_Val, Max_Index : Integer;
-         pragma Unreferenced (Max_Index);
+         Max_Stop_Val : Integer;
+         Max_Ever_Val : Integer;
       begin
-         Execute (Registers, Instructions);
+         Execute (Registers, Instructions, Max_Ever_Val);
 
-         Max_Val := Max (Registers, Max_Index);
+         Max_Stop_Val := Max (Registers);
 
-         Put_Line ("Part 1: " & Max_Val'Img);
+         Put_Line ("Part 1: " & Max_Stop_Val'Img);
+         Put_Line ("Part 2: " & Max_Ever_Val'Img);
       end;
    end Run;
 

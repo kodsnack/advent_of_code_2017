@@ -37,6 +37,9 @@ package AOC is
                  Index : out Integer)
                  return Integer;
 
+   function Max (IA : in  Integer_Array)
+                 return Integer;
+
    function Min (IA    : in  Integer_Array;
                  Index : out Integer)
                  return Integer;

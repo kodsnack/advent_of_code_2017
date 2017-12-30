@@ -46,6 +46,18 @@ package body AOC is
       return Value;
    end Max;
    
+   function Max (IA : in Integer_Array)
+                 return Integer
+   is
+      Tmp : Integer := IA (IA'First);
+   begin
+      for I of IA loop
+         Tmp := Integer'Max (Tmp, I);
+      end loop;
+
+      return Tmp;
+   end Max;
+
    function Min (IA    : in  Integer_Array;
                  Index : out Integer)
                  return Integer
