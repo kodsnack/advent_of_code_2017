@@ -89,7 +89,7 @@ function val = solvePartTwo2(steps)
         [buffer, index] = stepForward(buffer, index, steps);
     end
 
-    index_0 = find(buffer == 0);sssssssssssssssssssssssssssssssswwwwww
+    index_0 = find(buffer == 0);
     buffer(index_2017 + 1)
 end
 
