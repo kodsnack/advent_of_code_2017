@@ -46,6 +46,41 @@ package body AOC is
       return Value;
    end Max;
    
+   function Max (IA : in Integer_Array)
+                 return Integer
+   is
+      Tmp : Integer := IA (IA'First);
+   begin
+      for I of IA loop
+         Tmp := Integer'Max (Tmp, I);
+      end loop;
+
+      return Tmp;
+   end Max;
+
+   function Min (IA    : in  Integer_Array;
+                 Index : out Integer)
+                 return Integer
+   is
+      Value : Integer;
+   begin
+      if IA'Length = 0 then
+         raise Constraint_Error;
+      end if;
+
+      Index := IA'First;
+      Value := IA (Index);
+      
+      for I in IA'First + 1 .. IA'Last loop
+         if IA (I) < Value then
+            Index := I;
+            Value := IA (I);
+         end if;
+      end loop;
+
+      return Value;
+   end Min;
+
    function To_Integer_Array (IV : in V_Integer.Vector)
                               return Integer_Array
    is

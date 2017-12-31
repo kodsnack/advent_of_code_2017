@@ -3,6 +3,8 @@ with Ada.Containers.Vectors;
 
 package AOC is
 
+   subtype UString is Unbounded_String;
+
    type Point is record
       X, Y : Integer := 0;
    end record;
@@ -23,12 +25,22 @@ package AOC is
       (Natural,
        Integer);
 
+   subtype Integer_Vec is V_Integer.Vector;
+   subtype String_Vec is V_String.Vector;
+
    type Integer_Array is array (Integer range <>) of Integer;
    type String_Array is array (Integer range <>) of Unbounded_String;
 
    type Natural_2D is array (Integer range <>, Integer range <>) of Natural;
 
    function Max (IA    : in  Integer_Array;
+                 Index : out Integer)
+                 return Integer;
+
+   function Max (IA : in  Integer_Array)
+                 return Integer;
+
+   function Min (IA    : in  Integer_Array;
                  Index : out Integer)
                  return Integer;
 
