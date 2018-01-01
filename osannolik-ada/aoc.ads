@@ -44,7 +44,14 @@ package AOC is
                  Index : out Integer)
                  return Integer;
 
+   function Integer_To_Hex (Hex_Int : Integer; 
+                            Width   : Positive := 2)
+                            return String;
+
    function To_Integer_Vector (SV : in V_String.Vector)
+                               return V_Integer.Vector;
+   
+   function To_Integer_Vector (IA : in Integer_Array)
                                return V_Integer.Vector;
 
    function To_Integer_Array (IV : in V_Integer.Vector)
@@ -62,6 +69,12 @@ package AOC is
 
    procedure Get_File_Rows (V         : in out V_Integer.Vector;
                             File_Name : in     String);
+
+   function Get_File_Integer_Vec (File_Name : in String)
+                                  return V_Integer.Vector;
+
+   function Get_File_Ascii (File_Name : in String)
+                            return V_Integer.Vector;
 
    procedure Get_File_Rows (V         : in out V_String.Vector;
    	                        File_Name : in     String);
