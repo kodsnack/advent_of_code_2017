@@ -1,5 +1,7 @@
 with Ada.Text_IO;
 with Ada.Strings.Unbounded.Text_IO;
+with Ada.Integer_Text_IO;
+with Ada.Strings.Fixed;
 
 package body AOC is
 
@@ -81,6 +83,26 @@ package body AOC is
       return Value;
    end Min;
 
+   function Integer_To_Hex (Hex_Int : Integer; 
+                            Width   : Positive := 2)
+                            return String
+   is
+      Hex_Prefix_Length : constant := 3;
+      Hexa   : String (1 .. Hex_Prefix_Length + Width + 1);
+      Result : String (1 .. Width);
+      Start  : Natural;
+   begin
+      Ada.Integer_Text_IO.Put (Hexa, Hex_Int, 16);
+      Start := Ada.Strings.Fixed.Index (Source => Hexa, Pattern => "#");
+      Ada.Strings.Fixed.Move
+         (Source  => Hexa (Start + 1 .. Hexa'Last - 1),
+          Target  => Result,
+          Justify => Ada.Strings.Right,
+          Pad     => '0');
+
+     return Result;
+   end Integer_To_Hex;
+
    function To_Integer_Array (IV : in V_Integer.Vector)
                               return Integer_Array
    is
@@ -123,6 +145,18 @@ package body AOC is
    begin
       for Value of SV loop
          IV.Append (Integer'Value (To_String (Value)));
+      end loop;
+
+      return IV;
+   end To_Integer_Vector;
+
+   function To_Integer_Vector (IA : in Integer_Array)
+                               return V_Integer.Vector
+   is
+      IV : V_Integer.Vector;
+   begin
+      for Value of IA loop
+         IV.Append (Value);
       end loop;
 
       return IV;
@@ -174,6 +208,78 @@ package body AOC is
             Close (Input);
          end if;
    end Get_File_Rows;
+
+   function Get_File_Integer_Vec (File_Name : in String)
+                                  return V_Integer.Vector
+   is
+      use Ada.Text_IO;
+
+      Input : File_Type;
+      Output : Integer_Vec;
+   begin
+      Open (File => Input,
+      	   Mode => In_File,
+      	   Name => File_Name);
+
+      declare
+         --  Assume single line file...
+         Content : constant String := Get_Line (Input);
+         Splitted : String_Vec;
+      begin
+
+         Split_String_At_Char (Content, ',', Splitted);
+
+         for S of Splitted loop
+            Output.Append (Integer'Value (To_String (S)));
+         end loop;
+
+         Close (Input);
+
+         return Output;
+      end;
+
+   exception
+      when End_Error =>
+         if Is_Open(Input) then
+            Close (Input);
+         end if;
+
+      return Output;
+   end Get_File_Integer_Vec;
+
+   function Get_File_Ascii (File_Name : in String)
+                            return V_Integer.Vector
+   is
+      use Ada.Text_IO;
+
+      Input : File_Type;
+      Ascii_Nr : V_Integer.Vector;
+   begin
+      Open (File => Input,
+      	   Mode => In_File,
+      	   Name => File_Name);
+
+      declare
+         --  Assume single line file...
+         Content : constant String := Get_Line (Input);
+      begin
+         for C of Content loop
+            Ascii_Nr.Append (Character'Pos (C));
+         end loop;
+
+         Close (Input);
+
+         return Ascii_Nr;
+      end;
+
+   exception
+      when End_Error =>
+         if Is_Open(Input) then
+            Close (Input);
+         end if;
+
+      return Ascii_Nr;
+   end Get_File_Ascii;
 
    procedure Get_File_Rows (V         : in out V_String.Vector;
                             File_Name : in     String)
