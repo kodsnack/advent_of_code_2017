@@ -66,6 +66,28 @@ package body AOC.Solver is
       return Get_Degree (Graph);
    end Part_1;
 
+   function Part_2 (Input : in String_Vec)
+                    return Natural
+   is
+      Graph : Graph_Type := Create_Graph (Input);
+      Nof_Groups : Natural := 0;
+      Start_Id : Natural := 0;
+   begin
+      while Get_Degree (Graph) < Graph'Length loop
+         for Id in Graph'Range loop
+            if not Graph (Id).Is_Marked then
+               Start_Id := Id;
+            end if;
+         end loop;
+
+         Mark_Connected_Vertices (Graph, Start_Id);
+
+         Nof_Groups := Natural'Succ (Nof_Groups);
+      end loop;
+
+      return Nof_Groups;
+   end Part_2;
+
    procedure Run is
       use Ada.Text_IO;
 
@@ -74,6 +96,7 @@ package body AOC.Solver is
       Get_File_Rows (Input, "day12/input.txt");
 
       Put_Line ("Part 1: " & Part_1 (Input)'Img);
+      Put_Line ("Part 2: " & Part_2 (Input)'Img);
    end Run;
 
 end AOC.Solver;
