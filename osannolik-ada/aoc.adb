@@ -25,6 +25,20 @@ package body AOC is
       return abs (P1.X - P2.X) + abs (P1.Y - P2.Y);
    end Manhattan_Distance;
 
+   function Image (IV : in V_Integer.Vector)
+                   return String
+   is
+      Tmp : UString;
+   begin
+      for I in IV.First_Index .. IV.Last_Index loop
+         Tmp := Tmp & To_Unbounded_String (IV.Element (I)'Img);
+         if I /= IV.Last_Index then
+            Tmp := Tmp & To_Unbounded_String (",");
+         end if;
+      end loop;
+      return To_String (Tmp);
+   end Image;
+
    function Max (IA    : in  Integer_Array;
                  Index : out Integer)
                  return Integer
@@ -339,6 +353,13 @@ package body AOC is
    is
    begin
       return Integer'Value (String' (1 => C));
+   end To_Integer;
+
+   function To_Integer (US : in UString)
+                        return Integer
+   is
+   begin
+      return Integer'Value (To_String (US));
    end To_Integer;
 
 end AOC;

@@ -33,6 +33,9 @@ package AOC is
 
    type Natural_2D is array (Integer range <>, Integer range <>) of Natural;
 
+   function Image (IV : in V_Integer.Vector)
+                   return String;
+
    function Max (IA    : in  Integer_Array;
                  Index : out Integer)
                  return Integer;
@@ -83,6 +86,9 @@ package AOC is
                              return String;
 
    function To_Integer (C : in Character) 
+                        return Integer;
+
+   function To_Integer (US : in UString)
                         return Integer;
 
 end AOC;
