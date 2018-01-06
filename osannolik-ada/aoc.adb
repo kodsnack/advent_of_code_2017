@@ -97,8 +97,8 @@ package body AOC is
       return Value;
    end Min;
 
-   function Integer_To_Hex (Hex_Int : Integer; 
-                            Width   : Positive := 2)
+   function Integer_To_Hex (I     : in Integer; 
+                            Width : in Positive := 2)
                             return String
    is
       Hex_Prefix_Length : constant := 3;
@@ -106,7 +106,7 @@ package body AOC is
       Result : String (1 .. Width);
       Start  : Natural;
    begin
-      Ada.Integer_Text_IO.Put (Hexa, Hex_Int, 16);
+      Ada.Integer_Text_IO.Put (Hexa, I, 16);
       Start := Ada.Strings.Fixed.Index (Source => Hexa, Pattern => "#");
       Ada.Strings.Fixed.Move
          (Source  => Hexa (Start + 1 .. Hexa'Last - 1),
@@ -117,6 +117,39 @@ package body AOC is
      return Result;
    end Integer_To_Hex;
 
+   function Integer_To_Bin (I     : in Integer; 
+                            Width : in Positive := 8)
+                            return String
+   is
+      Bin_Prefix_Length : constant := 3;
+      Bin    : String (1 .. Bin_Prefix_Length + Width + 1);
+      Result : String (1 .. Width);
+      Start  : Natural;
+   begin
+      Ada.Integer_Text_IO.Put (Bin, I, 2);
+      Start := Ada.Strings.Fixed.Index (Source => Bin, Pattern => "#");
+      Ada.Strings.Fixed.Move
+         (Source  => Bin (Start + 1 .. Bin'Last - 1),
+          Target  => Result,
+          Justify => Ada.Strings.Right,
+          Pad     => '0');
+
+     return Result;
+   end Integer_To_Bin;
+
+   function To_Boolean_Array (S : in String)
+                              return Boolean_Array
+   is
+      BA : Boolean_Array (0 .. S'Length - 1);
+      J : Natural := S'First;
+   begin
+      for I in BA'Range loop
+         BA (I) := (S (J) /= '0');
+         J := J + 1;
+      end loop;
+      return BA;
+   end To_Boolean_Array;
+   
    function To_Integer_Array (IV : in V_Integer.Vector)
                               return Integer_Array
    is
@@ -232,8 +265,8 @@ package body AOC is
       Output : Integer_Vec;
    begin
       Open (File => Input,
-      	   Mode => In_File,
-      	   Name => File_Name);
+            Mode => In_File,
+            Name => File_Name);
 
       declare
          --  Assume single line file...
@@ -261,26 +294,33 @@ package body AOC is
       return Output;
    end Get_File_Integer_Vec;
 
+   function To_Ascii_Vec (S : in String)
+                          return V_Integer.Vector
+   is
+      Ascii_Nr : V_Integer.Vector;
+   begin
+      for C of S loop
+         Ascii_Nr.Append (Character'Pos (C));
+      end loop;
+      return Ascii_Nr;
+   end To_Ascii_Vec;
+
    function Get_File_Ascii (File_Name : in String)
                             return V_Integer.Vector
    is
       use Ada.Text_IO;
 
       Input : File_Type;
-      Ascii_Nr : V_Integer.Vector;
    begin
       Open (File => Input,
-      	   Mode => In_File,
-      	   Name => File_Name);
+            Mode => In_File,
+            Name => File_Name);
 
       declare
          --  Assume single line file...
-         Content : constant String := Get_Line (Input);
+         Ascii_Nr : constant V_Integer.Vector := 
+            To_Ascii_Vec (Get_Line (Input));
       begin
-         for C of Content loop
-            Ascii_Nr.Append (Character'Pos (C));
-         end loop;
-
          Close (Input);
 
          return Ascii_Nr;
@@ -292,7 +332,7 @@ package body AOC is
             Close (Input);
          end if;
 
-      return Ascii_Nr;
+      return To_Ascii_Vec ("");
    end Get_File_Ascii;
 
    procedure Get_File_Rows (V         : in out V_String.Vector;
@@ -327,8 +367,8 @@ package body AOC is
       Input : File_Type;
    begin
       Open (File => Input,
-      	   Mode => In_File,
-      	   Name => File_Name);
+            Mode => In_File,
+            Name => File_Name);
 
       declare
          --  Assume single line file...
@@ -354,6 +394,15 @@ package body AOC is
    begin
       return Integer'Value (String' (1 => C));
    end To_Integer;
+
+   function Image (I : in Integer)
+                   return String
+   is
+      S : constant String := I'Img;
+   begin
+      --  Remove first blank...
+      return S (S'First + 1 .. S'Last);
+   end Image;
 
    function To_Integer (US : in UString)
                         return Integer
