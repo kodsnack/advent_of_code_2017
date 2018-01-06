@@ -59,6 +59,9 @@ package AOC is
                             Width : in Positive := 8)
                             return String;
 
+   function To_Boolean_Array (S : in String)
+                              return Boolean_Array;
+                              
    function To_Integer_Vector (SV : in V_String.Vector)
                                return V_Integer.Vector;
    

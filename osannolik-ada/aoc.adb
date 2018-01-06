@@ -137,6 +137,19 @@ package body AOC is
      return Result;
    end Integer_To_Bin;
 
+   function To_Boolean_Array (S : in String)
+                              return Boolean_Array
+   is
+      BA : Boolean_Array (0 .. S'Length - 1);
+      J : Natural := S'First;
+   begin
+      for I in BA'Range loop
+         BA (I) := (S (J) /= '0');
+         J := J + 1;
+      end loop;
+      return BA;
+   end To_Boolean_Array;
+   
    function To_Integer_Array (IV : in V_Integer.Vector)
                               return Integer_Array
    is
