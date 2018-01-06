@@ -66,6 +66,9 @@ package AOC is
    function To_String_Array (SV : in V_String.Vector)
                              return String_Array;
 
+   function To_Ascii_Vec (S : in String)
+                          return V_Integer.Vector;
+                          
    procedure Split_String_At_Char (S       : in     String;
    	                               Char    : in     Character;
    	                               Strings : in out V_String.Vector);

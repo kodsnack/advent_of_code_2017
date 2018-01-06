@@ -261,13 +261,23 @@ package body AOC is
       return Output;
    end Get_File_Integer_Vec;
 
+   function To_Ascii_Vec (S : in String)
+                          return V_Integer.Vector
+   is
+      Ascii_Nr : V_Integer.Vector;
+   begin
+   	for C of S loop
+         Ascii_Nr.Append (Character'Pos (C));
+      end loop;
+      return Ascii_Nr;
+   end To_Ascii_Vec;
+
    function Get_File_Ascii (File_Name : in String)
                             return V_Integer.Vector
    is
       use Ada.Text_IO;
 
       Input : File_Type;
-      Ascii_Nr : V_Integer.Vector;
    begin
       Open (File => Input,
       	   Mode => In_File,
@@ -275,12 +285,9 @@ package body AOC is
 
       declare
          --  Assume single line file...
-         Content : constant String := Get_Line (Input);
+         Ascii_Nr : constant V_Integer.Vector := 
+            To_Ascii_Vec (Get_Line (Input));
       begin
-         for C of Content loop
-            Ascii_Nr.Append (Character'Pos (C));
-         end loop;
-
          Close (Input);
 
          return Ascii_Nr;
@@ -292,7 +299,7 @@ package body AOC is
             Close (Input);
          end if;
 
-      return Ascii_Nr;
+      return To_Ascii_Vec ("");
    end Get_File_Ascii;
 
    procedure Get_File_Rows (V         : in out V_String.Vector;
