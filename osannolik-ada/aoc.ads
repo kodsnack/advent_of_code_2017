@@ -5,6 +5,9 @@ package AOC is
 
    subtype UString is Unbounded_String;
 
+   function To_UString (S : in String) return UString
+      renames To_Unbounded_String;
+
    type Point is record
       X, Y : Integer := 0;
    end record;
@@ -28,6 +31,7 @@ package AOC is
    subtype Integer_Vec is V_Integer.Vector;
    subtype String_Vec is V_String.Vector;
 
+   type Boolean_Array is array (Natural range <>) of Boolean;
    type Integer_Array is array (Integer range <>) of Integer;
    type String_Array is array (Integer range <>) of Unbounded_String;
 
@@ -47,8 +51,12 @@ package AOC is
                  Index : out Integer)
                  return Integer;
 
-   function Integer_To_Hex (Hex_Int : Integer; 
-                            Width   : Positive := 2)
+   function Integer_To_Hex (I     : in Integer; 
+                            Width : in Positive := 2)
+                            return String;
+
+   function Integer_To_Bin (I     : in Integer; 
+                            Width : in Positive := 8)
                             return String;
 
    function To_Integer_Vector (SV : in V_String.Vector)
@@ -68,7 +76,7 @@ package AOC is
 
    function To_Ascii_Vec (S : in String)
                           return V_Integer.Vector;
-                          
+
    procedure Split_String_At_Char (S       : in     String;
    	                               Char    : in     Character;
    	                               Strings : in out V_String.Vector);
@@ -87,6 +95,9 @@ package AOC is
 
    function Get_File_String (File_Name : in String)
                              return String;
+
+   function Image (I : in Integer)
+                   return String;
 
    function To_Integer (C : in Character) 
                         return Integer;

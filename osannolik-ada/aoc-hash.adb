@@ -69,13 +69,20 @@ package body AOC.Hash is
       end loop;
    end Knot_Sparse_Hash_Round;
 
-   function Get_Dense_Hash_16 (KH : in Knot_Hash_Type)
-                               return String
+   function Create_Representation (IA : in Dense_Hash_List_Type)
+                                   return String
    is
-      Nof_Dense_Elt : constant List_Index := 16;
+      Repr : UString;
+   begin
+      for Val of IA loop
+         Repr := Repr & Integer_To_Hex (Integer (Val));
+      end loop;
+      return To_String (Repr);
+   end Create_Representation;
 
-      type Dense_Hash_List_Type is array (0 .. Nof_Dense_Elt - 1) of Hash_Value;
-
+   function Get_Dense_Hash_16 (KH : in Knot_Hash_Type)
+                               return Dense_Hash_List_Type
+   is
       function Xor_Sum (IA : in Dense_Hash_List_Type)
                     return Hash_Value
       is
@@ -87,17 +94,6 @@ package body AOC.Hash is
          return Tmp;
       end Xor_Sum;
 
-      function Create_Representation (IA : in Dense_Hash_List_Type)
-                    return String
-      is
-         Repr : UString;
-      begin
-         for Val of IA loop
-            Repr := Repr & Integer_To_Hex (Integer (Val));
-         end loop;
-         return To_String (Repr);
-      end Create_Representation;
-
       Dense : Dense_Hash_List_Type;
       B : List_Index := 0;
    begin
@@ -107,11 +103,11 @@ package body AOC.Hash is
          B := B + Nof_Dense_Elt;
       end loop;
 
-      return Create_Representation (Dense);
+      return Dense;
    end Get_Dense_Hash_16;
 
    function Knot_Hash_Of_String (S : in String)
-                                 return String
+                                 return Dense_Hash_List_Type
    is
       Knot_Hash : Knot_Hash_Type;
       Tail : constant Integer_Vec := 
@@ -132,6 +128,13 @@ package body AOC.Hash is
       end;
 
       return Get_Dense_Hash_16 (Knot_Hash);
+   end Knot_Hash_Of_String;
+
+   function Knot_Hash_Of_String (S : in String)
+                                 return String
+   is
+   begin
+      return Create_Representation (Knot_Hash_Of_String (S));
    end Knot_Hash_Of_String;
 
 end AOC.Hash;
