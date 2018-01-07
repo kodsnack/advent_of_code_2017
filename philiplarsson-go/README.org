@@ -1,0 +1,19 @@
+* Advent of code 2017
+
+Jag ville testa på Go och såg advent of code som ett utmärkt tillfälle att göra
+det på. Hade inte skrivit Go innan denna "utmaningen", så det som finns här är
+i stort sätt de 25 första go "scripten" som jag har skrivit. 
+
+Personligen önskar jag skriva mer Go i framtiden, det är ett trevligt språk!
+
+** Tips 
+
+- Parsing är viktigt och nästan alltid något som behövs. Vill man vara snabb så
+  kan man ha en mall som man använder för varje dag.
+
+- Vissa problem kan verka övermäktiga till en början, men när man börjar nysta
+  i problemet och lösa smådelar så klarnar det mer och mer.
+
+- Go har =gofmt=, vilket formaterar koden. Mycket smidigt. Även =goimports= som
+  löser alla imports. Trevligt!
+
