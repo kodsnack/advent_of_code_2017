@@ -411,4 +411,11 @@ package body AOC is
       return Integer'Value (To_String (US));
    end To_Integer;
 
+   function First_Char (S : in String)
+                        return Character
+   is
+   begin
+      return S (S'First);
+   end First_Char;
+
 end AOC;
