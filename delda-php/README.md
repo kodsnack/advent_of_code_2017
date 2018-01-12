@@ -1,9 +1,11 @@
-# Advent of Code 2017 #
+# :christmas_tree: Advent of Code 2017 :christmas_tree: #
 
 My solutions to [advent of code 2017](https://adventofcode.com/2017)
- games.
+ game; there are not fast or particular solutions. There are just only to have some fun and test my abilities.
 
-## How to run ##
+There are all the solutions: if you not solve all, you aren't a real Man! :muscle:
+
+## :santa: How to run ##
 
 From root, run
 
@@ -16,7 +18,7 @@ E.g.
    bin/aoc 24
 ```
 
-## Tests
+## :santa: Tests
 ```
     composer install
     composer tests
