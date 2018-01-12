@@ -108,4 +108,7 @@ package AOC is
    function To_Integer (US : in UString)
                         return Integer;
 
+   function First_Char (S : in String)
+                        return Character;
+                        
 end AOC;

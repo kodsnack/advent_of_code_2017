@@ -121,7 +121,7 @@ package body AOC is
                             Width : in Positive := 8)
                             return String
    is
-      Bin_Prefix_Length : constant := 3;
+      Bin_Prefix_Length : constant := 2;
       Bin    : String (1 .. Bin_Prefix_Length + Width + 1);
       Result : String (1 .. Width);
       Start  : Natural;
@@ -149,7 +149,7 @@ package body AOC is
       end loop;
       return BA;
    end To_Boolean_Array;
-   
+
    function To_Integer_Array (IV : in V_Integer.Vector)
                               return Integer_Array
    is
@@ -410,5 +410,12 @@ package body AOC is
    begin
       return Integer'Value (To_String (US));
    end To_Integer;
+
+   function First_Char (S : in String)
+                        return Character
+   is
+   begin
+      return S (S'First);
+   end First_Char;
 
 end AOC;
