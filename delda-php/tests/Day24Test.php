@@ -37,6 +37,6 @@ class Day24Test extends TestCase
     public function testSecondPartSolution()
     {
         $aoc = new Day24();
-        $this->assertEquals(0, $aoc->secondPart());
+        $this->assertEquals(1928, $aoc->secondPart());
     }
 }

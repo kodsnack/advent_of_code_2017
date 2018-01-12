@@ -42,7 +42,11 @@ class Day25 extends AbstractAdventOfCode
             preg_match_all('/Move one slot to the ([lr])/', $rule[$i], $move);
             preg_match_all('/Continue with state ([A-Z])./', $rule[$i], $nextState);
             for ($j = 0; $j < 2; $j++) {
-                $rules[$state][$value[1][$j]] = (object)['write' => $write[1][$j], 'move' => $move[1][$j], 'state' => $nextState[1][$j]];
+                $rules[$state][$value[1][$j]] =
+                    (object)[
+                        'write' => $write[1][$j],
+                        'move' => $move[1][$j],
+                        'state' => $nextState[1][$j]];
             }
         }
 
@@ -64,7 +68,8 @@ class Day25 extends AbstractAdventOfCode
         $state = $rules[$state][$value]->state;
     }
 
-    private function printTape(array $tape) {
+    private function printTape(array $tape)
+    {
         foreach ($tape as $slot) {
             echo $slot;
         }

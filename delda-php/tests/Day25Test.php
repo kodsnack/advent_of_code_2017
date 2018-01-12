@@ -39,6 +39,6 @@ In state B:
     public function testFirstPartSolution()
     {
         $aoc = new Day25();
-        $this->assertEquals(0, $aoc->firstPart());
+        $this->assertEquals(3578, $aoc->firstPart());
     }
 }
