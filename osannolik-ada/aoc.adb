@@ -11,10 +11,22 @@ package body AOC is
       return Point'(X => P1.X + P2.X, Y => P1.Y + P2.Y);
    end "+";
 
+   function "+" (P1, P2 : in Point3) return Point3
+   is
+   begin
+      return Point3'(X => P1.X + P2.X, Y => P1.Y + P2.Y, Z => P1.Z + P2.Z);
+   end "+";
+
    function Image (P : in Point) return String
    is
    begin
       return P.X'Img & "," & P.Y'Img;
+   end Image;
+
+   function Image (P : in Point3) return String
+   is
+   begin
+      return P.X'Img & "," & P.Y'Img & "," & P.Z'Img;
    end Image;
 
    function Manhattan_Distance (P1 : in Point;
@@ -23,6 +35,14 @@ package body AOC is
    is
    begin
       return abs (P1.X - P2.X) + abs (P1.Y - P2.Y);
+   end Manhattan_Distance;
+
+   function Manhattan_Distance (P1 : in Point3;
+                                P2 : in Point3 := (0, 0, 0))
+                                return Natural
+   is
+   begin
+      return abs (P1.X - P2.X) + abs (P1.Y - P2.Y) + abs (P1.Z - P2.Z);
    end Manhattan_Distance;
 
    function Image (IV : in V_Integer.Vector)
