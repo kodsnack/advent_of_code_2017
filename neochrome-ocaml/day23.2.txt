@@ -1,0 +1,39 @@
+set b 79           ; b=79
+set c b            ; not necessary
+
+jnz a 2
+jnz 1 5            ; unreachable
+
+mul b 100          ; b=7900
+sub b -100000      ; b=107900
+
+set c b            ; c=107900
+sub c -17000       ; c=124900
+
+set f 1            ; do
+	set d 2          ; 
+	set e 2          ;   do
+		set g d        ;     do
+			mul g e      ;       g=d*e 
+			sub g b      ;
+			jnz g 2      ;
+			set f 0      ;       f=0 if d*e==b
+			sub e -1     ;       e++ 
+			set g e      ; 
+			sub g b      ; 
+		jnz g -8       ;     while e < b
+		sub d -1       ;     d++
+		set g d
+		sub g b        ;
+	jnz g -13        ;   while d < b
+
+	jnz f 2          ;
+	sub h -1         ;   h++ if f == 0
+
+	set g b          ;
+	sub g c          ;
+	jnz g 2          ; 
+	jnz 1 3          ;   exit if b == c
+
+	sub b -17        ;   b+=17
+jnz 1 -23          ; loop
