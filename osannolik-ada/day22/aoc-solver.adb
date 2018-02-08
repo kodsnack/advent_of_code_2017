@@ -4,25 +4,14 @@ package body AOC.Solver is
 
    type Direction_Type is (Up, Right, Down, Left);
 
-   function Turn_Right (Dir : in Direction_Type)
-                        return Direction_Type is
-   begin
-      if Dir = Left then
-         return Up;
-      else
-         return Direction_Type'Succ (Dir);
-      end if;
-   end Turn_Right;
+   Turn_Right : constant array (Direction_Type'Range) of Direction_Type :=
+      (Up => Right, Right => Down, Down => Left, Left => Up);
 
-   function Turn_Left (Dir : in Direction_Type)
-                       return Direction_Type is
-   begin
-      if Dir = Up then
-         return Left;
-      else
-         return Direction_Type'Pred (Dir);
-      end if;
-   end Turn_Left;
+   Turn_Left : constant array (Direction_Type'Range) of Direction_Type :=
+      (Up => Left, Right => Up, Down => Right, Left => Down);
+
+   Turn_Reverse : constant array (Direction_Type'Range) of Direction_Type :=
+      (Up => Down, Right => Left, Down => Up, Left => Right);
 
    type Virus_State is record
       Position     : Point          := (0, 0);
@@ -91,6 +80,93 @@ package body AOC.Solver is
       Virus := Move (Virus);
    end Infection_Burst;
 
+   function Part_1 (Input : in String_Vec) return Natural
+   is
+      Infected_Nodes : Nodes_Vec := Initialize_Map (Input);
+      Virus : Virus_State;
+   begin
+      for I in 1 .. 10_000 loop
+         Infection_Burst (Virus          => Virus,
+                          Infected_Nodes => Infected_Nodes);
+      end loop;
+
+      return Virus.Nof_Infected;
+   end Part_1;
+
+   function Part_2 (Input : in String_Vec) return Natural
+   is -- Pretty slow version! Vectors...
+      type States is (Clean, Weak, Infected, Flagged);
+      type Node_Lists is array (Weak .. Flagged) of Nodes_Vec;
+
+      Next : constant array (States'Range) of States :=
+         (Clean    => Weak,    Weak    => Infected, 
+          Infected => Flagged, Flagged => Clean);
+
+      function Node_State (Node  : in     Point;
+                           Nodes : in     Node_Lists;
+                           Index :    out Natural) 
+                           return States
+      is
+      begin
+         for State in Nodes'Range loop
+            Index := Nodes (State).Find_Index (Node);
+            if Index /= 0 then
+               return State;
+            end if;
+         end loop;
+         return Clean;
+      end Node_State;
+
+      procedure Infection_Burst
+         (Virus : in out Virus_State;
+          Nodes : in out Node_Lists)
+      is
+         Index : Natural;
+         Current_State : constant States :=
+            Node_State (Virus.Position, Nodes, Index);
+         Next_State : constant States :=
+            Next (Current_State);
+      begin
+         case Current_State is
+            when Clean =>
+               Virus.Direction := Turn_Left (Virus.Direction);
+            when Weak =>
+               null;
+            when Infected =>
+               Virus.Direction := Turn_Right (Virus.Direction);
+            when Flagged =>
+               Virus.Direction := Turn_Reverse (Virus.Direction);
+         end case;
+
+         if Current_State in Nodes'Range then
+            Nodes (Current_State).Delete (Index);
+         end if;
+
+         if Next_State in Nodes'Range then
+            Nodes (Next_State).Append (Virus.Position);
+         end if;
+
+         if Current_State /= Infected and then
+            Next_State = Infected then
+            Virus.Nof_Infected := Virus.Nof_Infected + 1;
+         end if;
+
+         Virus := Move (Virus);
+      end Infection_Burst;
+
+      Nodes : Node_Lists;
+      Virus : Virus_State;
+   begin
+      Nodes (Infected) := Initialize_Map (Input);
+
+      for I in 1 .. 10_000_000 loop
+         Infection_Burst (Virus => Virus,
+                          Nodes => Nodes);
+      end loop;
+
+      return Virus.Nof_Infected;
+   end Part_2;
+
    procedure Run is
       use Ada.Text_IO;
 
@@ -98,18 +174,8 @@ package body AOC.Solver is
    begin
       Get_File_Rows (Input, "day22/input.txt");
 
-      declare
-         Infected_Nodes : Nodes_Vec := Initialize_Map (Input);
-         Virus : Virus_State;
-      begin
-         for I in 1 .. 10_000 loop
-            Infection_Burst (Virus          => Virus,
-                             Infected_Nodes => Infected_Nodes);
-         end loop;
-
-         Put_Line ("Part 1: " & Virus.Nof_Infected'Img);
-      end;
-
+      Put_Line ("Part 1: " & Part_1 (Input)'Img);
+      Put_Line ("Part 2: " & Part_2 (Input)'Img);
    end Run;
 
 end AOC.Solver;
