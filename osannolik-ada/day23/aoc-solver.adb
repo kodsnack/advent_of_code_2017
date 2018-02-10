@@ -40,7 +40,7 @@ package body AOC.Solver is
 
    type Asm_List is array (Natural range <>) of Instruction_Type;
 
-   type Calls_Array is array (Instruction_Kind'Range) of Natural;
+   type Calls_Array is array (Instruction_Kind'Range) of Reg_Data;
 
    type Program_Type (Max_Idx : Natural) is record 
       Asm       : Asm_List (0 .. Max_Idx);
@@ -189,7 +189,7 @@ package body AOC.Solver is
    end Execute;
 
    function Part_1 (Input : in String_Vec)
-                    return Natural
+                    return Reg_Data
    is
       Name_Map : String_Vec;
    begin
@@ -202,9 +202,65 @@ package body AOC.Solver is
       begin
          Execute (Program, Registers);
 
+         Ada.Text_IO.Put_Line
+            (Registers (Get_Register_Index (Name_Map, To_UString ("h")))'Img);
+
          return Program.Nof_Calls (Multiply);
       end;
    end Part_1;
+
+   function Part_2 return Natural
+   is
+      --  Analyzing the instructions gives the following
+      --  program.
+      --  Some optimizations makes it take a reasonable
+      --  amount of time to run.
+      --  Further optimizations probably possible.
+      B : Natural := 93;
+      C : Natural := B;
+      D, H : Natural := 0;
+      F : Boolean;
+   begin
+      --  a = 1 =>
+      B := 100 * B + 100_000;
+      C := B + 17_000;
+
+      loop
+         F := False;
+         D := 2; -- Instead of 1
+
+         loop
+            -- E := 2;
+            -- loop
+            --    if E = B / D then
+            --       F := 0;
+            --    end if;
+            --    E := E + 1;
+            --    exit when E = B;
+            -- end loop;
+
+            -- The above can be replaced by:
+            if (B mod D) = 0 then
+               F := True;
+            end if;
+
+            D := D + 1;
+            exit when F or else D = B;
+         end loop;
+
+         if F then
+            H := H + 1;
+         end if;
+
+         exit when B = C;
+
+         B := B + 17;
+
+      end loop;
+
+      return H;
+
+   end Part_2;
 
    procedure Run is
       use Ada.Text_IO;
@@ -214,6 +270,7 @@ package body AOC.Solver is
       Get_File_Rows (Input, "day23/input.txt");
 
       Put_Line ("Part 1: " & Part_1 (Input)'Img);
+      Put_Line ("Part 2: " & Part_2'Img);
    end Run;
 
 end AOC.Solver;
