@@ -12,12 +12,24 @@ package AOC is
       X, Y : Integer := 0;
    end record;
 
+   type Point3 is record
+      X, Y, Z : Integer := 0;
+   end record;
+
    function "+" (P1, P2 : in Point) return Point;
+
+   function "+" (P1, P2 : in Point3) return Point3;
 
    function Image (P : in Point) return String;
 
+   function Image (P : in Point3) return String;
+
    function Manhattan_Distance (P1 : in Point;
                                 P2 : in Point := (0, 0))
+                                return Natural;
+
+   function Manhattan_Distance (P1 : in Point3;
+                                P2 : in Point3 := (0, 0, 0))
                                 return Natural;
 
    package V_String is new Ada.Containers.Vectors
