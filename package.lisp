@@ -28,6 +28,7 @@
 (defpackage #:aoc2017.day21 (:use #:cl))
 (defpackage #:aoc2017.day22 (:use #:cl))
 (defpackage #:aoc2017.day23 (:use #:cl))
+(defpackage #:aoc2017.day24 (:use #:cl))
 
 (fiasco:define-test-package #:aoc2017.tests
   (:use #:aoc))

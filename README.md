@@ -61,8 +61,9 @@ ALL-TESTS (Suite)
     DAY21                                                                 [ OK ]
     DAY22                                                                 [ OK ]
     DAY23                                                                 [ OK ]
+    DAY24                                                                 [ OK ]
 
 T
-(#<test-run of ALL-TESTS: 26 tests, 48 assertions, 0 failures in 8.516 sec>)
+(#<test-run of ALL-TESTS: 27 tests, 50 assertions, 0 failures in 9.469 sec>)
 CL-USER>
 ```
