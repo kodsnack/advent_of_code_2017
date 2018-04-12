@@ -103,3 +103,6 @@
 (deftest day24 ()
   (is (= 1906 (aoc2017.day24::part1 (input-for 2017 24))))
   (is (= 1824 (aoc2017.day24::part2 (input-for 2017 24)))))
+
+(deftest day25 ()
+  (is (= 3745 (aoc2017.day25::part1 (input-for 2017 25)))))
