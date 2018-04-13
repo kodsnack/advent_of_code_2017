@@ -87,3 +87,22 @@
 (deftest day20 ()
   (is (= 170 (aoc2017.day20::part1 (input-for 2017 20))))
   (is (= 571 (aoc2017.day20::part2 (input-for 2017 20)))))
+
+(deftest day21 ()
+  (is (= 136 (aoc2017.day21::part1 (input-for 2017 21))))
+  (is (= 1911767 (aoc2017.day21::part2 (input-for 2017 21)))))
+
+(deftest day22 ()
+  (is (= 5266 (aoc2017.day22::part1 (input-for 2017 22))))
+  (is (= 2511895 (aoc2017.day22::part2 (input-for 2017 22)))))
+
+(deftest day23 ()
+  (is (= 4225 (aoc2017.day23::part1 (input-for 2017 23))))
+  (is (= 905 (aoc2017.day23::part2))))
+
+(deftest day24 ()
+  (is (= 1906 (aoc2017.day24::part1 (input-for 2017 24))))
+  (is (= 1824 (aoc2017.day24::part2 (input-for 2017 24)))))
+
+(deftest day25 ()
+  (is (= 3745 (aoc2017.day25::part1 (input-for 2017 25)))))
